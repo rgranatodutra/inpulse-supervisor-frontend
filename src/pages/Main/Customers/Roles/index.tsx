@@ -10,8 +10,6 @@ import { customRequest } from "../../../../api";
 import { useEffect } from "react";
 
 const CustomersRolesPage = () => {
-	const roleNameState = useCustomState<string>("");
-
 	const roleName = useCustomState<string>("");
 	const roles = useCustomState<Array<Position>>([]);
 	const addRoleButtonDisabled = useCustomState(true);

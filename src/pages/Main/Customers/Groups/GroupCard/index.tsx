@@ -6,13 +6,19 @@ import EditGroupModal from "../EditGroupModal";
 import { useContext } from "react";
 import { GlobalContext } from "../../../../../contexts/global";
 import DeleteGroupModal from "../DeleteGroupModal";
+import { Link } from "react-router-dom";
 
 interface GroupCardProps {
 	groupData: CustomerGroup;
-	update: (groupData: CustomerGroup) => void;
+	updateOnEdit: (groupData: CustomerGroup) => void;
+	updateOnDelete: (groupData: CustomerGroup) => void;
 }
 
-const GroupCard = ({ groupData, update }: GroupCardProps) => {
+const GroupCard = ({
+	groupData,
+	updateOnEdit,
+	updateOnDelete,
+}: GroupCardProps) => {
 	const { modalState } = useContext(GlobalContext);
 
 	return (
@@ -28,7 +34,7 @@ const GroupCard = ({ groupData, update }: GroupCardProps) => {
 				<ButtonType3
 					onClick={() => {
 						modalState.set(
-							<EditGroupModal group={groupData} update={update} />
+							<EditGroupModal group={groupData} update={updateOnEdit} />
 						);
 					}}
 				>
@@ -37,14 +43,19 @@ const GroupCard = ({ groupData, update }: GroupCardProps) => {
 				<ButtonType3
 					onClick={() => {
 						modalState.set(
-							<DeleteGroupModal group={groupData} update={update} />
+							<DeleteGroupModal
+								group={groupData}
+								updateOnDelete={updateOnDelete}
+							/>
 						);
 					}}
 				>
 					<a> Remover </a>
 				</ButtonType3>
 				<ButtonType3>
-					<a> Visualizar Clientes </a>
+					<Link to={`/clientes?GRUPO=${groupData.CODIGO}`}>
+						Visualizar Clientes
+					</Link>
 				</ButtonType3>
 			</div>
 		</StyledGroupCard>

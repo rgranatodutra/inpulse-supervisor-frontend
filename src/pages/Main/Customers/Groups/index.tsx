@@ -12,7 +12,8 @@ import { customRequest } from "../../../../api";
 const CustomerGroupsPage = () => {
 	const groupName = useCustomState<string>("");
 	const groups = useCustomState<Array<CustomerGroup>>([]);
-	const update = (data: CustomerGroup) => {
+	const addGroupButtonDisabled = useCustomState(true);
+	const updateOnEdit = (data: CustomerGroup) => {
 		groups.set((prev) =>
 			prev.map((v) => {
 				if (v.CODIGO === data.CODIGO) {
@@ -22,6 +23,26 @@ const CustomerGroupsPage = () => {
 				return v;
 			})
 		);
+	};
+
+	const updateOnDelete = (data: CustomerGroup) => {
+		groups.set((prev) => prev.filter((v) => v.CODIGO != data.CODIGO));
+	};
+
+	const addGroup = (newGroupName: string) => {
+		customRequest<
+			{ message: String; data: CustomerGroup },
+			{ DESCRICAO: string }
+		>({
+			endpoint: "/customer-groups",
+			method: "post",
+			service: "customers",
+			requestData: { DESCRICAO: newGroupName },
+			onSuccess: (responseData) => {
+				const newGroups = [...groups.value, responseData.data];
+				groups.set(newGroups);
+			},
+		});
 	};
 
 	useEffect(() => {
@@ -34,6 +55,15 @@ const CustomerGroupsPage = () => {
 			},
 		});
 	}, []);
+
+	const inputChangeFn = (e) => {
+		groupName.set(e.target.value);
+		if (e.target.value.trim().length && addGroupButtonDisabled.value) {
+			addGroupButtonDisabled.set(false);
+		} else if (!e.target.value.trim().length && !addGroupButtonDisabled.value) {
+			addGroupButtonDisabled.set(true);
+		}
+	};
 
 	return (
 		<StyledCustomerGroupsPage>
@@ -50,21 +80,26 @@ const CustomerGroupsPage = () => {
 						$width={"100%"}
 						leftIcon={null}
 						rightIcon={null}
-						onChange={(e) => groupName.set(e.target.value)}
+						onChange={(e) => inputChangeFn(e)}
 						value={groupName.value}
+						maxLength={35}
 						placeholder="Digite o nome do grupo aqui..."
 					/>
 				</div>
-				<ButtonType2
-					style={{
-						fontSize: "1rem",
-						height: "1.25rem",
-						boxSizing: "content-box",
-					}}
-				>
-					<FaUsersLine />
-					Adicionar Grupo
-				</ButtonType2>
+				{(addGroupButtonDisabled.value && (
+					<ButtonType2 disabled>
+						<FaUsersLine />
+						Adicionar Grupo
+					</ButtonType2>
+				)) || (
+					<ButtonType2
+						type="button"
+						onClick={() => addGroup(groupName.value.trim())}
+					>
+						<FaUsersLine />
+						Adicionar Grupo
+					</ButtonType2>
+				)}
 			</form>
 			<ul>
 				{groups.value.map((group) => {
@@ -72,7 +107,8 @@ const CustomerGroupsPage = () => {
 						<GroupCard
 							key={`group_${group.CODIGO}`}
 							groupData={group}
-							update={update}
+							updateOnEdit={updateOnEdit}
+							updateOnDelete={updateOnDelete}
 						/>
 					);
 				})}

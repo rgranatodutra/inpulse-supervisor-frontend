@@ -21,7 +21,7 @@ function EditRoleModal({ role, update }: EditRoleModalProps) {
 	async function updateName() {
 		customRequest<{ message: string; data: Position }, { DESCRICAO: string }>({
 			endpoint: `/positions/${role.CODIGO}`,
-			requestData: { DESCRICAO: RoleNameState.value },
+			requestData: { DESCRICAO: RoleNameState.value.trim() },
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {

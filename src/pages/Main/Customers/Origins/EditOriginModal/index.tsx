@@ -21,7 +21,7 @@ function EditOriginModal({ origin, update }: EditOriginModalProps) {
 	async function updateName() {
 		customRequest<{ message: string; data: Origin }, { DESCRICAO: string }>({
 			endpoint: `/origins/${origin.CODIGO}`,
-			requestData: { DESCRICAO: OriginNameState.value },
+			requestData: { DESCRICAO: OriginNameState.value.trim() },
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {

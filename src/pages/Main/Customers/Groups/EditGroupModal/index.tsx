@@ -24,7 +24,7 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 			{ DESCRICAO: string }
 		>({
 			endpoint: `/customer-groups/${group.CODIGO}`,
-			requestData: { DESCRICAO: groupNameState.value },
+			requestData: { DESCRICAO: groupNameState.value.trim() },
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {

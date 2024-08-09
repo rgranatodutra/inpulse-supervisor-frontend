@@ -21,7 +21,7 @@ function EditBrandModal({ brand, update }: EditBrandModalProps) {
 	async function updateName() {
 		customRequest<{ message: string; data: Brand }, { DESCRICAO: string }>({
 			endpoint: `/brands/${brand.CODIGO}`,
-			requestData: { DESCRICAO: BrandNameState.value },
+			requestData: { DESCRICAO: BrandNameState.value.trim() },
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {

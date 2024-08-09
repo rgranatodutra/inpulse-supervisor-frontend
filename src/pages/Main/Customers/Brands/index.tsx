@@ -39,11 +39,16 @@ const CustomersBrandsPage = () => {
 	};
 
 	const addBrand = () => {
+		const brandToAdd = {
+			...newBrand.value,
+			DESCRICAO: newBrand.value.DESCRICAO?.trim(),
+		};
+
 		customRequest<{ message: String; data: Brand }, Partial<Brand>>({
 			endpoint: "/brands",
 			method: "post",
 			service: "customers",
-			requestData: newBrand.value,
+			requestData: brandToAdd,
 			onSuccess: (responseData) => {
 				const newBrands = [...brands.value, responseData.data];
 				brands.set(newBrands);

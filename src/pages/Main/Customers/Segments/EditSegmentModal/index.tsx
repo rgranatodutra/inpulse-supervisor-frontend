@@ -21,7 +21,7 @@ function EditSegmentModal({ segment, update }: EditSegmentModalProps) {
 	async function updateName() {
 		customRequest<{ message: string; data: Segment }, { NOME: string }>({
 			endpoint: `/segments/${segment.CODIGO}`,
-			requestData: { NOME: segmentNameState.value },
+			requestData: { NOME: segmentNameState.value.trim() },
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {

@@ -38,11 +38,18 @@ const CustomerSegmentPage = () => {
 	};
 
 	const addSegment = () => {
+		const segmentToAdd = {
+			...newSegment.value,
+			NOME: newSegment.value.NOME?.trim(),
+		};
+
+		console.log(segmentToAdd);
+
 		customRequest<{ message: String; data: Segment }, Partial<Segment>>({
 			endpoint: "/segments",
 			method: "post",
 			service: "customers",
-			requestData: newSegment.value,
+			requestData: segmentToAdd,
 			onSuccess: (responseData) => {
 				const newsegments = [...segments.value, responseData.data];
 				segments.set(newsegments);

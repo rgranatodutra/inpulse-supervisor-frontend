@@ -14,7 +14,7 @@ const Modal = ({ children, title, modalState }: ModalProps) => {
 		<StyledModal>
 			<div>
 				<header>
-					<h2> {title} </h2>
+					<h1> {title} </h1>
 					<button onClick={() => modalState.reset()}>
 						<FaXmark />
 					</button>

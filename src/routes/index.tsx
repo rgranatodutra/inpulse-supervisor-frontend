@@ -19,6 +19,8 @@ import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
 import BreaksTaken from "../pages/Main/Monitor/BreaksTaken";
 import Home from "../pages/Main/Home";
 import UnitsPage from "../pages/Main/Campaigns/Main";
+import StyledCustomerGroupsPage from "../pages/Main/Operators/Groups/style";
+import OperatorsGroupsPage from "../pages/Main/Operators/Groups";
 
 const setTitle = (title: string) => document.title = title;
 
@@ -48,7 +50,7 @@ export const RenderingPage = () => {
                 <Route path="/operadores" element={<OperatorsPage />} />
                 <Route path="/operadores/cadastrar" element={<OperatorProvider><OperatorForm mode="create" /></OperatorProvider>} />
                 <Route path="/operadores/:operatorId" element={<OperatorProvider><OperatorForm mode="edit" /></OperatorProvider>} />
-                <Route path="/operadores/grupos" element={<> Operadores {'->'} Grupos  </>} />
+                <Route path="/operadores/grupos" element={<OperatorsGroupsPage />} />
                 <Route path="/operadores/turnos" element={<OperatorsShiftsPage />} />
                 <Route path="/operadores/pausas" element={<OperatorsPausesPage />} />
                 <Route path="/operadores/metas" element={<OperatorsGoalsPage />} />

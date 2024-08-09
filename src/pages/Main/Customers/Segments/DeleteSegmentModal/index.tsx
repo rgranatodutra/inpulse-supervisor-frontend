@@ -36,7 +36,7 @@ function DeleteSegmentModal({
 	}
 
 	return (
-		<Modal modalState={modalState} title="Remover Grupo">
+		<Modal modalState={modalState} title="Remover Segmento">
 			<StyledsegmentModal>
 				<Input
 					{...defaultInput100}

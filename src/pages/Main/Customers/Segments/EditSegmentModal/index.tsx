@@ -33,11 +33,11 @@ function EditSegmentModal({ segment, update }: EditSegmentModalProps) {
 	}
 
 	return (
-		<Modal modalState={modalState} title="Editar Grupo">
+		<Modal modalState={modalState} title="Editar Segmento">
 			<StyledsegmentModal>
 				<Input
 					{...defaultInput100}
-					placeholder="Digite o nome do grupo"
+					placeholder="Digite o nome do segmento"
 					value={segmentNameState.value}
 					onChange={(e) => {
 						segmentNameState.set(e.target.value);

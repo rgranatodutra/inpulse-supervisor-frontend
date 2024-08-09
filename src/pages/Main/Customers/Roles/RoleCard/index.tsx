@@ -52,12 +52,6 @@ const RoleCard = ({
 				>
 					<a> Remover </a>
 				</ButtonType3>
-
-				<ButtonType3>
-					<Link to={`/clientes?GRUPO=${roleData.CODIGO}`}>
-						Visualizar Clientes
-					</Link>
-				</ButtonType3>
 			</div>
 		</StyledRoleCard>
 	);

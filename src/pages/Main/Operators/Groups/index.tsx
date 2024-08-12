@@ -1,20 +1,21 @@
+import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
-import GroupCard from "./GroupCard";
-import StyledOperatorGroupsPage from "./style";
+import { customRequest } from "../../../../api";
 import Input from "../../../../components/Input";
+import { User } from "../../../../interfaces/User.type";
+import { UserGroup } from "../../../../interfaces/UserGroup.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
 import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
-import { useEffect } from "react";
-import { OperatorGroup } from "../../../../interfaces/OperatorGroup.type";
-import { customRequest } from "../../../../api";
-import { toast } from "react-toastify";
+import GroupCard from "./GroupCard";
+import StyledOperatorGroupsPage from "./style";
 
 const OperatorsGroupsPage = () => {
 	const groupName = useCustomState<string>("");
-	const groups = useCustomState<Array<OperatorGroup>>([]);
+	const usersState = useCustomState<User[]>([]);
+	const groups = useCustomState<Array<UserGroup>>([]);
 	const addGroupButtonDisabled = useCustomState(true);
-	const updateOnEdit = (data: OperatorGroup) => {
+	const updateOnEdit = (data: UserGroup) => {
 		groups.set((prev) =>
 			prev.map((v) => {
 				if (v.CODIGO === data.CODIGO) {
@@ -26,16 +27,24 @@ const OperatorsGroupsPage = () => {
 		);
 	};
 
-	const updateOnDelete = (data: OperatorGroup) => {
+	useEffect(() => {
+		customRequest<{ message: String; data: User[] }, undefined>({
+			endpoint: "/users",
+			method: "get",
+			service: "users",
+			onSuccess: (responseData) => {
+				usersState.set(responseData.data.filter((v) => v.CODIGO > 0));
+			},
+		});
+	}, []);
+
+	const updateOnDelete = (data: UserGroup) => {
 		groups.set((prev) => prev.filter((v) => v.CODIGO != data.CODIGO));
 	};
 
 	const addGroup = (newGroupName: string) => {
 		console.log(newGroupName);
-		customRequest<
-			{ message: String; data: OperatorGroup },
-			{ DESCRICAO: string }
-		>({
+		customRequest<{ message: String; data: UserGroup }, { DESCRICAO: string }>({
 			endpoint: "/user-groups",
 			method: "post",
 			service: "users",
@@ -48,7 +57,7 @@ const OperatorsGroupsPage = () => {
 	};
 
 	useEffect(() => {
-		customRequest<{ message: String; data: OperatorGroup[] }, undefined>({
+		customRequest<{ message: String; data: UserGroup[] }, undefined>({
 			endpoint: "/user-groups",
 			method: "get",
 			service: "users",
@@ -62,10 +71,7 @@ const OperatorsGroupsPage = () => {
 		groupName.set(e.target.value);
 		if (e.target.value.trim().length >= 3 && addGroupButtonDisabled.value) {
 			addGroupButtonDisabled.set(false);
-		} else if (
-			e.target.value.trim().length < 3 &&
-			!addGroupButtonDisabled.value
-		) {
+		} else if (e.target.value.trim().length < 3 && !addGroupButtonDisabled.value) {
 			addGroupButtonDisabled.set(true);
 		}
 	};
@@ -97,10 +103,7 @@ const OperatorsGroupsPage = () => {
 						Adicionar Grupo
 					</ButtonType2>
 				)) || (
-					<ButtonType2
-						type="button"
-						onClick={() => addGroup(groupName.value.trim())}
-					>
+					<ButtonType2 type="button" onClick={() => addGroup(groupName.value.trim())}>
 						<FaUsersLine />
 						Adicionar Grupo
 					</ButtonType2>
@@ -112,6 +115,7 @@ const OperatorsGroupsPage = () => {
 						<GroupCard
 							key={`group_${group.CODIGO}`}
 							groupData={group}
+							usersState={usersState}
 							updateOnEdit={updateOnEdit}
 							updateOnDelete={updateOnDelete}
 						/>

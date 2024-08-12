@@ -1,17 +1,17 @@
-import Modal from "../../../../../components/Modal";
 import { useContext } from "react";
-import { GlobalContext } from "../../../../../contexts/global";
-import Input from "../../../../../components/Input";
+import { toast } from "react-toastify";
+import { customRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
+import Input from "../../../../../components/Input";
+import Modal from "../../../../../components/Modal";
+import { GlobalContext } from "../../../../../contexts/global";
+import { UserGroup } from "../../../../../interfaces/UserGroup.type";
 import useCustomState from "../../../../../utils/customState.hook";
 import StyledGroupModal from "./style";
-import { customRequest } from "../../../../../api";
-import { toast } from "react-toastify";
-import { OperatorGroup } from "../../../../../interfaces/OperatorGroup.type";
 
 interface EditGroupModalProps {
-	group: OperatorGroup;
-	update: (data: OperatorGroup) => void;
+	group: UserGroup;
+	update: (data: UserGroup) => void;
 }
 
 function EditGroupModal({ group, update }: EditGroupModalProps) {
@@ -23,10 +23,7 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 		groupNameState.set(e.target.value);
 		if (e.target.value.trim().length >= 3 && addGroupButtonDisabled.value) {
 			addGroupButtonDisabled.set(false);
-		} else if (
-			e.target.value.trim().length < 3 &&
-			!addGroupButtonDisabled.value
-		) {
+		} else if (e.target.value.trim().length < 3 && !addGroupButtonDisabled.value) {
 			addGroupButtonDisabled.set(true);
 		}
 	};
@@ -35,10 +32,7 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 		if (groupNameState.value.trim().length < 3) {
 			toast.error("Minimo de 3 caracteres no nome do grupo");
 		} else {
-			customRequest<
-				{ message: string; data: OperatorGroup },
-				{ DESCRICAO: string }
-			>({
+			customRequest<{ message: string; data: UserGroup }, { DESCRICAO: string }>({
 				endpoint: `/user-groups/${group.CODIGO}`,
 				requestData: { DESCRICAO: groupNameState.value },
 				method: "patch",
@@ -64,9 +58,9 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 					}}
 				/>
 
-				{(addGroupButtonDisabled.value && (
-					<button disabled>Confirmar</button>
-				)) || <button onClick={updateName}>Confirmar</button>}
+				{(addGroupButtonDisabled.value && <button disabled>Confirmar</button>) || (
+					<button onClick={updateName}>Confirmar</button>
+				)}
 			</StyledGroupModal>
 		</Modal>
 	);

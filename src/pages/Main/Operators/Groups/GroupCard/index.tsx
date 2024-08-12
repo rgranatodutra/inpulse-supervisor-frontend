@@ -1,24 +1,23 @@
-import { FaTag } from "react-icons/fa6";
-import StyledGroupCard from "./style";
-import { ButtonType3 } from "../../../../../styles/buttons.style";
-import { OperatorGroup } from "../../../../../interfaces/OperatorGroup.type";
-import EditGroupModal from "../EditGroupModal";
 import { useContext } from "react";
+import { FaTag } from "react-icons/fa6";
 import { GlobalContext } from "../../../../../contexts/global";
+import { User } from "../../../../../interfaces/User.type";
+import { UserGroup } from "../../../../../interfaces/UserGroup.type";
+import { ButtonType3 } from "../../../../../styles/buttons.style";
+import { CustomState } from "../../../../../utils/customState.hook";
 import DeleteGroupModal from "../DeleteGroupModal";
+import EditGroupModal from "../EditGroupModal";
 import ManageGroupModal from "../ManageGroupModal";
+import StyledGroupCard from "./style";
 
 interface GroupCardProps {
-	groupData: OperatorGroup;
-	updateOnEdit: (groupData: OperatorGroup) => void;
-	updateOnDelete: (groupData: OperatorGroup) => void;
+	usersState: CustomState<User[]>;
+	groupData: UserGroup;
+	updateOnEdit: (groupData: UserGroup) => void;
+	updateOnDelete: (groupData: UserGroup) => void;
 }
 
-const GroupCard = ({
-	groupData,
-	updateOnEdit,
-	updateOnDelete,
-}: GroupCardProps) => {
+const GroupCard = ({ usersState, groupData, updateOnEdit, updateOnDelete }: GroupCardProps) => {
 	const { modalState } = useContext(GlobalContext);
 
 	return (
@@ -33,31 +32,24 @@ const GroupCard = ({
 			<div>
 				<ButtonType3
 					onClick={() => {
-						modalState.set(
-							<EditGroupModal group={groupData} update={updateOnEdit} />
-						);
+						modalState.set(<EditGroupModal group={groupData} update={updateOnEdit} />);
 					}}
 				>
-					<a> Editar </a>
+					Editar
 				</ButtonType3>
 				<ButtonType3
 					onClick={() => {
-						modalState.set(
-							<DeleteGroupModal
-								group={groupData}
-								updateOnDelete={updateOnDelete}
-							/>
-						);
+						modalState.set(<DeleteGroupModal group={groupData} updateOnDelete={updateOnDelete} />);
 					}}
 				>
-					<a> Remover </a>
+					Remover
 				</ButtonType3>
 				<ButtonType3
 					onClick={() => {
-						modalState.set(<ManageGroupModal group={groupData} />);
+						modalState.set(<ManageGroupModal usersState={usersState} />);
 					}}
 				>
-					<a> Gerenciar Grupo</a>
+					Gerenciar Grupo
 				</ButtonType3>
 			</div>
 		</StyledGroupCard>

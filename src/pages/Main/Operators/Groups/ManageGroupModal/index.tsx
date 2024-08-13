@@ -45,7 +45,7 @@ function ManageGroupModal({ usersState, groupData }: ManageGroupModalProps) {
 				service: "users",
 				requestData: { OPERADOR: id },
 				onSuccess: (responseData) => {
-					toast("Usuario adicionado com sucesso!");
+					toast.success("Operador adicionado com sucesso!");
 					groupUsersState.set((prev) => [...prev, responseData.data]);
 				},
 			});
@@ -55,7 +55,7 @@ function ManageGroupModal({ usersState, groupData }: ManageGroupModalProps) {
 				method: "delete",
 				service: "users",
 				onSuccess: () => {
-					toast("Usuario remove com sucesso!");
+					toast.success("Operador removido com sucesso!");
 					groupUsersState.set((prev) => prev.filter((gu) => gu.CODIGO !== id));
 				},
 			});

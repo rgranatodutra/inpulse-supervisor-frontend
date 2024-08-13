@@ -4,27 +4,25 @@ import { ReactNode } from "react";
 import { CustomState } from "../../utils/customState.hook";
 
 type ModalProps = {
-    children: ReactNode;
-    title: string;
-    modalState: CustomState<any>;
-}
+	children?: ReactNode;
+	title: string;
+	modalState: CustomState<any>;
+};
 
 const Modal = ({ children, title, modalState }: ModalProps) => {
-    return (
-        <StyledModal>
-            <div>
-                <header>
-                    <h2> {title} </h2>
-                    <button onClick={() => modalState.reset()}>
-                        <FaXmark />
-                    </button>
-                </header>
-                <div>
-                    {children}
-                </div>
-            </div>
-        </StyledModal>
-    );
-}
+	return (
+		<StyledModal>
+			<div>
+				<header>
+					<h1> {title} </h1>
+					<button onClick={() => modalState.reset()}>
+						<FaXmark />
+					</button>
+				</header>
+				<div>{children}</div>
+			</div>
+		</StyledModal>
+	);
+};
 
 export default Modal;

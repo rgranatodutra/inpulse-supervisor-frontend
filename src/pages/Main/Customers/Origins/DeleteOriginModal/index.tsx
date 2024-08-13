@@ -24,8 +24,8 @@ function DeleteOriginModal({ origin, updateOnDelete }: DeleteOriginModalProps) {
 			endpoint: `/origins/${origin.CODIGO}`,
 			method: "delete",
 			service: "customers",
-			onSuccess: (res) => {
-				toast.success(res.message);
+			onSuccess: () => {
+				toast.success("Origem deletada com sucesso");
 				modalState.reset();
 				updateOnDelete(origin);
 			},

@@ -24,8 +24,8 @@ function DeleteRoleModal({ role, updateOnDelete }: DeleteRoleModalProps) {
 			endpoint: `/positions/${role.CODIGO}`,
 			method: "delete",
 			service: "customers",
-			onSuccess: (res) => {
-				toast.success(res.message);
+			onSuccess: () => {
+				toast.success("Cargo deletado com sucesso");
 				modalState.reset();
 				updateOnDelete(role);
 			},

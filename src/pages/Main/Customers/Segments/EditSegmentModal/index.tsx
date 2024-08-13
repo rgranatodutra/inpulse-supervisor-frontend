@@ -25,7 +25,7 @@ function EditSegmentModal({ segment, update }: EditSegmentModalProps) {
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {
-				toast.success(res.message);
+				toast.success("Segmento atualizado com sucesso");
 				modalState.reset();
 				update(res.data);
 			},

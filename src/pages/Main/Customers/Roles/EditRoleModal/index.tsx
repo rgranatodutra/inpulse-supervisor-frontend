@@ -25,7 +25,7 @@ function EditRoleModal({ role, update }: EditRoleModalProps) {
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {
-				toast.success(res.message);
+				toast.success("Cargo atualizado com sucesso");
 				modalState.reset();
 				update(res.data);
 			},

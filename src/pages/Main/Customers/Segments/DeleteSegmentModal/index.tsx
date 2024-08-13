@@ -24,8 +24,8 @@ function DeleteSegmentModal({ segment, updateOnDelete }: DeletesegmentModalProps
 			endpoint: `/segments/${segment.CODIGO}`,
 			method: "delete",
 			service: "customers",
-			onSuccess: (res) => {
-				toast.success(res.message);
+			onSuccess: () => {
+				toast.success("Segmento deletado com sucesso");
 				modalState.reset();
 				updateOnDelete(segment);
 			},

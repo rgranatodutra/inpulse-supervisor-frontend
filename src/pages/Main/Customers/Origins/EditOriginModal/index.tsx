@@ -25,7 +25,7 @@ function EditOriginModal({ origin, update }: EditOriginModalProps) {
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {
-				toast.success(res.message);
+				toast.success("Origem atualizada com sucesso");
 				modalState.reset();
 				update(res.data);
 			},

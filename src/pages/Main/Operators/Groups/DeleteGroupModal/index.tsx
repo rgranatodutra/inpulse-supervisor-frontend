@@ -24,8 +24,8 @@ function DeleteGroupModal({ group, updateOnDelete }: DeleteGroupModalProps) {
 			endpoint: `/user-groups/${group.CODIGO}`,
 			method: "delete",
 			service: "users",
-			onSuccess: (res) => {
-				toast.success(res.message);
+			onSuccess: () => {
+				toast.success("Grupo deletado com sucesso");
 				modalState.reset();
 				updateOnDelete(group);
 			},

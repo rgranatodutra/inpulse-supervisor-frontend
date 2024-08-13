@@ -25,7 +25,7 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {
-				toast.success(res.message);
+				toast.success("Grupo atualizado com sucesso");
 				modalState.reset();
 				update(res.data);
 			},

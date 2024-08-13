@@ -25,7 +25,7 @@ function EditBrandModal({ brand, update }: EditBrandModalProps) {
 			method: "patch",
 			service: "customers",
 			onSuccess: (res) => {
-				toast.success(res.message);
+				toast.success("Marca atualizada com sucesso");
 				modalState.reset();
 				update(res.data);
 			},

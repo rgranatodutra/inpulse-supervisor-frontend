@@ -34,11 +34,11 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 		} else {
 			useCustomRequest<{ message: string; data: UserGroup }, { DESCRICAO: string }>({
 				endpoint: `/user-groups/${group.CODIGO}`,
-				requestData: { DESCRICAO: groupNameState.value },
+				requestData: { DESCRICAO: groupNameState.value.trim() },
 				method: "patch",
 				service: "users",
 				onSuccess: (res) => {
-					toast.success(res.message);
+					toast.success("Nome atualizado com sucesso");
 					modalState.reset();
 					update(res.data);
 				},

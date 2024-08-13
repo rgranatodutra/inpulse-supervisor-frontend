@@ -18,26 +18,6 @@ function ManageGroupModal({ usersState, groupData }: ManageGroupModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const groupUsersState = useCustomState<GroupUser[]>([]);
 
-	/* async function updateName() {
-		if (group.DESCRICAO.trim().length < 3) {
-			toast.error("Minimo de 3 caracteres no nome do grupo");
-		} else {
-			customRequest<
-				{ message: string; data: OperatorGroup },
-				{ DESCRICAO: string }
-			>({
-				endpoint: `/user-group/${group.CODIGO}`,
-				requestData: { DESCRICAO: groupNameState.value },
-				method: "patch",
-				service: "users",
-				onSuccess: (res) => {
-					toast.success(res.message);
-					modalState.reset();
-				},
-			});
-		}
-	}  */
-
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: GroupUser[] }, undefined>({
 			endpoint: `/user-groups/${groupData.CODIGO}/members`,

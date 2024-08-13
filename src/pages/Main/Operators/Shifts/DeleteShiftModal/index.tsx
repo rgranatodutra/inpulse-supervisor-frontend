@@ -24,8 +24,8 @@ function DeleteShiftModal({ shift, updateOnDelete }: DeleteShiftModalProps) {
 			endpoint: `/Shifts/${shift.CODIGO}`,
 			method: "delete",
 			service: "users",
-			onSuccess: (res) => {
-				toast.success(res.message);
+			onSuccess: () => {
+				toast.success("Turno deletado com sucesso");
 				modalState.reset();
 				updateOnDelete(shift);
 			},

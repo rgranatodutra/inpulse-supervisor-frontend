@@ -24,7 +24,7 @@ function DeleteBrandModal({ brand, updateOnDelete }: DeleteBrandModalProps) {
 			endpoint: `/brands/${brand.CODIGO}`,
 			method: "delete",
 			service: "customers",
-			onSuccess: (res) => {
+			onSuccess: () => {
 				toast.success("Marca deletada com sucesso");
 				modalState.reset();
 				updateOnDelete(brand);

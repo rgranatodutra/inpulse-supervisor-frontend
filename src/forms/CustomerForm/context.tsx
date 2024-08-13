@@ -10,7 +10,7 @@ import {
 	FaNoteSticky,
 	FaPhone,
 } from "react-icons/fa6";
-import { customRequest } from "../../api";
+import { useCustomRequest } from "../../api";
 import { City } from "../../interfaces/City.type";
 import { Contact } from "../../interfaces/Contact.type";
 import { Customer } from "../../interfaces/Customer.type";
@@ -227,7 +227,7 @@ const CustomerProvider = ({ children }: CustomerProviderProps) => {
 	};
 
 	useEffect(() => {
-		customRequest<{ message: string; data: City[] }, never>({
+		useCustomRequest<{ message: string; data: City[] }, never>({
 			method: "get",
 			service: "customers",
 			endpoint: "/cities",
@@ -236,7 +236,7 @@ const CustomerProvider = ({ children }: CustomerProviderProps) => {
 			loadingState,
 		});
 
-		customRequest<{ message: string; data: Segment[] }, never>({
+		useCustomRequest<{ message: string; data: Segment[] }, never>({
 			method: "get",
 			service: "customers",
 			endpoint: "/segments",
@@ -245,7 +245,7 @@ const CustomerProvider = ({ children }: CustomerProviderProps) => {
 			loadingState,
 		});
 
-		customRequest<{ message: string; data: Media[] }, never>({
+		useCustomRequest<{ message: string; data: Media[] }, never>({
 			method: "get",
 			service: "customers",
 			endpoint: "/medias",
@@ -254,7 +254,7 @@ const CustomerProvider = ({ children }: CustomerProviderProps) => {
 			loadingState,
 		});
 
-		customRequest<{ message: string; data: User[] }, never>({
+		useCustomRequest<{ message: string; data: User[] }, never>({
 			method: "get",
 			service: "users",
 			endpoint: "/users",
@@ -263,7 +263,7 @@ const CustomerProvider = ({ children }: CustomerProviderProps) => {
 			loadingState,
 		});
 
-		customRequest<{ message: string; data: Origin[] }, never>({
+		useCustomRequest<{ message: string; data: Origin[] }, never>({
 			method: "get",
 			service: "customers",
 			endpoint: "/origins",
@@ -272,7 +272,7 @@ const CustomerProvider = ({ children }: CustomerProviderProps) => {
 			loadingState,
 		});
 
-		customRequest<{ message: string; data: CustomerGroup[] }, never>({
+		useCustomRequest<{ message: string; data: CustomerGroup[] }, never>({
 			method: "get",
 			service: "customers",
 			endpoint: "/customer-groups",
@@ -281,7 +281,7 @@ const CustomerProvider = ({ children }: CustomerProviderProps) => {
 			loadingState,
 		});
 
-		customRequest<{ message: string; data: Position[] }, never>({
+		useCustomRequest<{ message: string; data: Position[] }, never>({
 			method: "get",
 			service: "customers",
 			endpoint: "/positions",

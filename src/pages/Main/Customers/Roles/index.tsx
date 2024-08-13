@@ -1,13 +1,13 @@
+import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
-import StyledCustomersRolesPage from "./style";
-import RoleCard from "./RoleCard";
+import { useCustomRequest } from "../../../../api";
 import Input from "../../../../components/Input";
+import { Position } from "../../../../interfaces/Position.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
 import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
-import { Position } from "../../../../interfaces/Position.type";
-import { customRequest } from "../../../../api";
-import { useEffect } from "react";
+import RoleCard from "./RoleCard";
+import StyledCustomersRolesPage from "./style";
 
 const CustomersRolesPage = () => {
 	const roleName = useCustomState<string>("");
@@ -30,7 +30,7 @@ const CustomersRolesPage = () => {
 	};
 
 	const addRole = (newRoleName: string) => {
-		customRequest<{ message: String; data: Position }, { DESCRICAO: string }>({
+		useCustomRequest<{ message: String; data: Position }, { DESCRICAO: string }>({
 			endpoint: "/positions",
 			method: "post",
 			service: "customers",
@@ -43,7 +43,7 @@ const CustomersRolesPage = () => {
 	};
 
 	useEffect(() => {
-		customRequest<{ message: String; data: Position[] }, undefined>({
+		useCustomRequest<{ message: String; data: Position[] }, undefined>({
 			endpoint: "/positions",
 			method: "get",
 			service: "customers",
@@ -89,10 +89,7 @@ const CustomersRolesPage = () => {
 						Adicionar Cargo
 					</ButtonType2>
 				)) || (
-					<ButtonType2
-						type="button"
-						onClick={() => addRole(roleName.value.trim())}
-					>
+					<ButtonType2 type="button" onClick={() => addRole(roleName.value.trim())}>
 						<FaUsersLine />
 						Adicionar Cargo
 					</ButtonType2>

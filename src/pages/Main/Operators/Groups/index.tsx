@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
-import { customRequest } from "../../../../api";
+import { useCustomRequest } from "../../../../api";
 import Input from "../../../../components/Input";
 import { User } from "../../../../interfaces/User.type";
 import { UserGroup } from "../../../../interfaces/UserGroup.type";
@@ -28,7 +28,7 @@ const OperatorsGroupsPage = () => {
 	};
 
 	useEffect(() => {
-		customRequest<{ message: String; data: User[] }, undefined>({
+		useCustomRequest<{ message: String; data: User[] }, undefined>({
 			endpoint: "/users",
 			method: "get",
 			service: "users",
@@ -44,7 +44,7 @@ const OperatorsGroupsPage = () => {
 
 	const addGroup = (newGroupName: string) => {
 		console.log(newGroupName);
-		customRequest<{ message: String; data: UserGroup }, { DESCRICAO: string }>({
+		useCustomRequest<{ message: String; data: UserGroup }, { DESCRICAO: string }>({
 			endpoint: "/user-groups",
 			method: "post",
 			service: "users",
@@ -57,7 +57,7 @@ const OperatorsGroupsPage = () => {
 	};
 
 	useEffect(() => {
-		customRequest<{ message: String; data: UserGroup[] }, undefined>({
+		useCustomRequest<{ message: String; data: UserGroup[] }, undefined>({
 			endpoint: "/user-groups",
 			method: "get",
 			service: "users",

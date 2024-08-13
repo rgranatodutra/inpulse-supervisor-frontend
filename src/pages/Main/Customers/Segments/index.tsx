@@ -1,14 +1,14 @@
+import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
-import SegmentCard from "./SegmentCard";
-import StyledCustomerSegmentPage from "./style";
+import { useCustomRequest } from "../../../../api";
 import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
+import { Segment } from "../../../../interfaces/Segment.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
 import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
-import { Segment } from "../../../../interfaces/Segment.type";
-import { useEffect } from "react";
-import { customRequest } from "../../../../api";
+import SegmentCard from "./SegmentCard";
+import StyledCustomerSegmentPage from "./style";
 
 const CustomerSegmentPage = () => {
 	const segments = useCustomState<Array<Segment>>([]);
@@ -45,7 +45,7 @@ const CustomerSegmentPage = () => {
 
 		console.log(segmentToAdd);
 
-		customRequest<{ message: String; data: Segment }, Partial<Segment>>({
+		useCustomRequest<{ message: String; data: Segment }, Partial<Segment>>({
 			endpoint: "/segments",
 			method: "post",
 			service: "customers",
@@ -58,7 +58,7 @@ const CustomerSegmentPage = () => {
 	};
 
 	useEffect(() => {
-		customRequest<{ message: String; data: Segment[] }, undefined>({
+		useCustomRequest<{ message: String; data: Segment[] }, undefined>({
 			endpoint: "/segments",
 			method: "get",
 			service: "customers",
@@ -72,10 +72,7 @@ const CustomerSegmentPage = () => {
 		newSegment.set((prev) => ({ ...prev, NOME: e.target.value }));
 		if (e.target.value.trim().length && addSegmentButtonDisabled.value) {
 			addSegmentButtonDisabled.set(false);
-		} else if (
-			!addSegmentButtonDisabled.value &&
-			!e.target.value.trim().length
-		) {
+		} else if (!addSegmentButtonDisabled.value && !e.target.value.trim().length) {
 			addSegmentButtonDisabled.set(true);
 		}
 	};
@@ -109,9 +106,7 @@ const CustomerSegmentPage = () => {
 						$padding={[0.5, 1]}
 						$fontSize={1}
 						$width={"100%"}
-						onChange={(v) =>
-							newSegment.set((prev) => ({ ...prev, COD_UNIDADE: v }))
-						}
+						onChange={(v) => newSegment.set((prev) => ({ ...prev, COD_UNIDADE: v }))}
 						options={units.value.map((v) => ({
 							name: v.DESCRICAO,
 							value: v.CODIGO,

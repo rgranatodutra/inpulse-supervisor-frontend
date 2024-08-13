@@ -1,29 +1,26 @@
-import Modal from "../../../../../components/Modal";
 import { useContext } from "react";
-import { GlobalContext } from "../../../../../contexts/global";
-import Input from "../../../../../components/Input";
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
+import Input from "../../../../../components/Input";
+import Modal from "../../../../../components/Modal";
+import { GlobalContext } from "../../../../../contexts/global";
+import { Segment } from "../../../../../interfaces/Segment.type";
 import useCustomState from "../../../../../utils/customState.hook";
 import StyledsegmentModal from "./style";
-import { customRequest } from "../../../../../api";
-import { toast } from "react-toastify";
-import { Segment } from "../../../../../interfaces/Segment.type";
 
 interface DeletesegmentModalProps {
 	segment: Segment;
 	updateOnDelete: (data: Segment) => void;
 }
 
-function DeleteSegmentModal({
-	segment,
-	updateOnDelete,
-}: DeletesegmentModalProps) {
+function DeleteSegmentModal({ segment, updateOnDelete }: DeletesegmentModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const segmentNameState = useCustomState("");
 	const buttonState = useCustomState(false);
 
 	async function deletesegment() {
-		customRequest<{ message: string; data: Segment }, { NOME: string }>({
+		useCustomRequest<{ message: string; data: Segment }, { NOME: string }>({
 			endpoint: `/segments/${segment.CODIGO}`,
 			method: "delete",
 			service: "customers",
@@ -51,9 +48,9 @@ function DeleteSegmentModal({
 						}
 					}}
 				/>
-				{(buttonState.value && (
-					<button onClick={deletesegment}>Confirmar</button>
-				)) || <button disabled>Confirmar</button>}
+				{(buttonState.value && <button onClick={deletesegment}>Confirmar</button>) || (
+					<button disabled>Confirmar</button>
+				)}
 			</StyledsegmentModal>
 		</Modal>
 	);

@@ -1,13 +1,13 @@
+import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
-import GroupCard from "./GroupCard";
-import StyledCustomerGroupsPage from "./style";
+import { useCustomRequest } from "../../../../api";
 import Input from "../../../../components/Input";
+import { CustomerGroup } from "../../../../interfaces/CustomerGroup.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
 import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
-import { useEffect } from "react";
-import { CustomerGroup } from "../../../../interfaces/CustomerGroup.type";
-import { customRequest } from "../../../../api";
+import GroupCard from "./GroupCard";
+import StyledCustomerGroupsPage from "./style";
 
 const CustomerGroupsPage = () => {
 	const groupName = useCustomState<string>("");
@@ -30,10 +30,7 @@ const CustomerGroupsPage = () => {
 	};
 
 	const addGroup = (newGroupName: string) => {
-		customRequest<
-			{ message: String; data: CustomerGroup },
-			{ DESCRICAO: string }
-		>({
+		useCustomRequest<{ message: String; data: CustomerGroup }, { DESCRICAO: string }>({
 			endpoint: "/customer-groups",
 			method: "post",
 			service: "customers",
@@ -46,7 +43,7 @@ const CustomerGroupsPage = () => {
 	};
 
 	useEffect(() => {
-		customRequest<{ message: String; data: CustomerGroup[] }, undefined>({
+		useCustomRequest<{ message: String; data: CustomerGroup[] }, undefined>({
 			endpoint: "/customer-groups",
 			method: "get",
 			service: "customers",
@@ -92,10 +89,7 @@ const CustomerGroupsPage = () => {
 						Adicionar Grupo
 					</ButtonType2>
 				)) || (
-					<ButtonType2
-						type="button"
-						onClick={() => addGroup(groupName.value.trim())}
-					>
+					<ButtonType2 type="button" onClick={() => addGroup(groupName.value.trim())}>
 						<FaUsersLine />
 						Adicionar Grupo
 					</ButtonType2>

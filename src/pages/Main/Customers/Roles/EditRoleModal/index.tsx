@@ -1,13 +1,13 @@
-import Modal from "../../../../../components/Modal";
 import { useContext } from "react";
-import { GlobalContext } from "../../../../../contexts/global";
-import Input from "../../../../../components/Input";
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
+import Input from "../../../../../components/Input";
+import Modal from "../../../../../components/Modal";
+import { GlobalContext } from "../../../../../contexts/global";
+import { Position } from "../../../../../interfaces/Position.type";
 import useCustomState from "../../../../../utils/customState.hook";
 import StyledRoleModal from "./style";
-import { customRequest } from "../../../../../api";
-import { toast } from "react-toastify";
-import { Position } from "../../../../../interfaces/Position.type";
 
 interface EditRoleModalProps {
 	role: Position;
@@ -19,7 +19,7 @@ function EditRoleModal({ role, update }: EditRoleModalProps) {
 	const RoleNameState = useCustomState(role.DESCRICAO);
 
 	async function updateName() {
-		customRequest<{ message: string; data: Position }, { DESCRICAO: string }>({
+		useCustomRequest<{ message: string; data: Position }, { DESCRICAO: string }>({
 			endpoint: `/positions/${role.CODIGO}`,
 			requestData: { DESCRICAO: RoleNameState.value.trim() },
 			method: "patch",

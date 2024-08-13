@@ -35,21 +35,21 @@ const GroupCard = ({ usersState, groupData, updateOnEdit, updateOnDelete }: Grou
 						modalState.set(<EditGroupModal group={groupData} update={updateOnEdit} />);
 					}}
 				>
-					Editar
+					<a>Editar</a>
 				</ButtonType3>
 				<ButtonType3
 					onClick={() => {
 						modalState.set(<DeleteGroupModal group={groupData} updateOnDelete={updateOnDelete} />);
 					}}
 				>
-					Remover
+					<a>Remover</a>
 				</ButtonType3>
 				<ButtonType3
 					onClick={() => {
-						modalState.set(<ManageGroupModal usersState={usersState} />);
+						modalState.set(<ManageGroupModal usersState={usersState} groupData={groupData} />);
 					}}
 				>
-					Gerenciar Grupo
+					<a> Gerenciar Grupo</a>
 				</ButtonType3>
 			</div>
 		</StyledGroupCard>

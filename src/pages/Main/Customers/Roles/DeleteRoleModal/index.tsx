@@ -1,13 +1,13 @@
-import Modal from "../../../../../components/Modal";
 import { useContext } from "react";
-import { GlobalContext } from "../../../../../contexts/global";
-import Input from "../../../../../components/Input";
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
+import Input from "../../../../../components/Input";
+import Modal from "../../../../../components/Modal";
+import { GlobalContext } from "../../../../../contexts/global";
+import { Position } from "../../../../../interfaces/Position.type";
 import useCustomState from "../../../../../utils/customState.hook";
 import StyledRoleModal from "./style";
-import { customRequest } from "../../../../../api";
-import { toast } from "react-toastify";
-import { Position } from "../../../../../interfaces/Position.type";
 
 interface DeleteRoleModalProps {
 	role: Position;
@@ -20,7 +20,7 @@ function DeleteRoleModal({ role, updateOnDelete }: DeleteRoleModalProps) {
 	const buttonState = useCustomState(false);
 
 	async function deleteRole() {
-		customRequest<{ message: string; data: Position }, { DESCRICAO: string }>({
+		useCustomRequest<{ message: string; data: Position }, { DESCRICAO: string }>({
 			endpoint: `/positions/${role.CODIGO}`,
 			method: "delete",
 			service: "customers",
@@ -48,9 +48,7 @@ function DeleteRoleModal({ role, updateOnDelete }: DeleteRoleModalProps) {
 						}
 					}}
 				/>
-				{(buttonState.value && (
-					<button onClick={deleteRole}>Confirmar</button>
-				)) || <button disabled>Confirmar</button>}
+				{(buttonState.value && <button onClick={deleteRole}>Confirmar</button>) || <button disabled>Confirmar</button>}
 			</StyledRoleModal>
 		</Modal>
 	);

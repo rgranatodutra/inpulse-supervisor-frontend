@@ -1,14 +1,14 @@
+import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
-import StyledCustomersBrandsPage from "./style";
-import BrandCard from "./BrandCard";
+import { useCustomRequest } from "../../../../api";
 import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
+import { Brand } from "../../../../interfaces/Brand.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
 import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
-import { Brand } from "../../../../interfaces/Brand.type";
-import { customRequest } from "../../../../api";
-import { useEffect } from "react";
+import BrandCard from "./BrandCard";
+import StyledCustomersBrandsPage from "./style";
 
 const CustomersBrandsPage = () => {
 	const brands = useCustomState<Array<Brand>>([]);
@@ -44,7 +44,7 @@ const CustomersBrandsPage = () => {
 			DESCRICAO: newBrand.value.DESCRICAO?.trim(),
 		};
 
-		customRequest<{ message: String; data: Brand }, Partial<Brand>>({
+		useCustomRequest<{ message: String; data: Brand }, Partial<Brand>>({
 			endpoint: "/brands",
 			method: "post",
 			service: "customers",
@@ -57,7 +57,7 @@ const CustomersBrandsPage = () => {
 	};
 
 	useEffect(() => {
-		customRequest<{ message: String; data: Brand[] }, undefined>({
+		useCustomRequest<{ message: String; data: Brand[] }, undefined>({
 			endpoint: "/brands",
 			method: "get",
 			service: "customers",

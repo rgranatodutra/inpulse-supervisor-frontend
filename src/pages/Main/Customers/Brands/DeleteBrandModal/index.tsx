@@ -1,13 +1,13 @@
-import Modal from "../../../../../components/Modal";
 import { useContext } from "react";
-import { GlobalContext } from "../../../../../contexts/global";
-import Input from "../../../../../components/Input";
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
+import Input from "../../../../../components/Input";
+import Modal from "../../../../../components/Modal";
+import { GlobalContext } from "../../../../../contexts/global";
+import { Brand } from "../../../../../interfaces/Brand.type";
 import useCustomState from "../../../../../utils/customState.hook";
 import StyledBrandModal from "./style";
-import { customRequest } from "../../../../../api";
-import { toast } from "react-toastify";
-import { Brand } from "../../../../../interfaces/Brand.type";
 
 interface DeleteBrandModalProps {
 	brand: Brand;
@@ -20,7 +20,7 @@ function DeleteBrandModal({ brand, updateOnDelete }: DeleteBrandModalProps) {
 	const buttonState = useCustomState(false);
 
 	async function deleteBrand() {
-		customRequest<{ message: string; data: Brand }, { DESCRICAO: string }>({
+		useCustomRequest<{ message: string; data: Brand }, { DESCRICAO: string }>({
 			endpoint: `/brands/${brand.CODIGO}`,
 			method: "delete",
 			service: "customers",
@@ -48,9 +48,7 @@ function DeleteBrandModal({ brand, updateOnDelete }: DeleteBrandModalProps) {
 						}
 					}}
 				/>
-				{(buttonState.value && (
-					<button onClick={deleteBrand}>Confirmar</button>
-				)) || <button disabled>Confirmar</button>}
+				{(buttonState.value && <button onClick={deleteBrand}>Confirmar</button>) || <button disabled>Confirmar</button>}
 			</StyledBrandModal>
 		</Modal>
 	);

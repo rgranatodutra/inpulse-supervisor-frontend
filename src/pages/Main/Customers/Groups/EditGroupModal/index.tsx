@@ -1,13 +1,13 @@
-import Modal from "../../../../../components/Modal";
 import { useContext } from "react";
-import { GlobalContext } from "../../../../../contexts/global";
-import Input from "../../../../../components/Input";
-import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
-import useCustomState from "../../../../../utils/customState.hook";
-import { CustomerGroup } from "../../../../../interfaces/CustomerGroup.type";
-import StyledGroupModal from "./style";
-import { customRequest } from "../../../../../api";
 import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
+import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
+import Input from "../../../../../components/Input";
+import Modal from "../../../../../components/Modal";
+import { GlobalContext } from "../../../../../contexts/global";
+import { CustomerGroup } from "../../../../../interfaces/CustomerGroup.type";
+import useCustomState from "../../../../../utils/customState.hook";
+import StyledGroupModal from "./style";
 
 interface EditGroupModalProps {
 	group: CustomerGroup;
@@ -19,10 +19,7 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 	const groupNameState = useCustomState(group.DESCRICAO);
 
 	async function updateName() {
-		customRequest<
-			{ message: string; data: CustomerGroup },
-			{ DESCRICAO: string }
-		>({
+		useCustomRequest<{ message: string; data: CustomerGroup }, { DESCRICAO: string }>({
 			endpoint: `/customer-groups/${group.CODIGO}`,
 			requestData: { DESCRICAO: groupNameState.value.trim() },
 			method: "patch",

@@ -1,13 +1,13 @@
-import Modal from "../../../../../components/Modal";
 import { useContext } from "react";
-import { GlobalContext } from "../../../../../contexts/global";
-import Input from "../../../../../components/Input";
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
+import Input from "../../../../../components/Input";
+import Modal from "../../../../../components/Modal";
+import { GlobalContext } from "../../../../../contexts/global";
+import { Origin } from "../../../../../interfaces/Origin.type";
 import useCustomState from "../../../../../utils/customState.hook";
 import StyledOriginModal from "./style";
-import { customRequest } from "../../../../../api";
-import { toast } from "react-toastify";
-import { Origin } from "../../../../../interfaces/Origin.type";
 
 interface EditOriginModalProps {
 	origin: Origin;
@@ -19,7 +19,7 @@ function EditOriginModal({ origin, update }: EditOriginModalProps) {
 	const OriginNameState = useCustomState(origin.DESCRICAO);
 
 	async function updateName() {
-		customRequest<{ message: string; data: Origin }, { DESCRICAO: string }>({
+		useCustomRequest<{ message: string; data: Origin }, { DESCRICAO: string }>({
 			endpoint: `/origins/${origin.CODIGO}`,
 			requestData: { DESCRICAO: OriginNameState.value.trim() },
 			method: "patch",

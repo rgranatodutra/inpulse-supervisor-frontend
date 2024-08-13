@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
-import { customRequest } from "../../api";
+import { useCustomRequest } from "../../api";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { User } from "../../interfaces/User.type";
 import useCustomState from "../../utils/customState.hook";
@@ -38,7 +38,7 @@ const OperatorForm = ({ mode }: OperatorFormProps) => {
 			const operatorId = params.operatorId;
 
 			// Carrega cliente
-			customRequest<User, never>({
+			useCustomRequest<User, never>({
 				method: "get",
 				service: "users",
 				endpoint: `/users/${operatorId}`,

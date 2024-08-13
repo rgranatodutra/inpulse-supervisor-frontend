@@ -1,13 +1,13 @@
-import Modal from "../../../../../components/Modal";
 import { useContext } from "react";
-import { GlobalContext } from "../../../../../contexts/global";
-import Input from "../../../../../components/Input";
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
+import Input from "../../../../../components/Input";
+import Modal from "../../../../../components/Modal";
+import { GlobalContext } from "../../../../../contexts/global";
+import { Segment } from "../../../../../interfaces/Segment.type";
 import useCustomState from "../../../../../utils/customState.hook";
 import StyledsegmentModal from "./style";
-import { customRequest } from "../../../../../api";
-import { toast } from "react-toastify";
-import { Segment } from "../../../../../interfaces/Segment.type";
 
 interface EditSegmentModalProps {
 	segment: Segment;
@@ -19,7 +19,7 @@ function EditSegmentModal({ segment, update }: EditSegmentModalProps) {
 	const segmentNameState = useCustomState(segment.NOME);
 
 	async function updateName() {
-		customRequest<{ message: string; data: Segment }, { NOME: string }>({
+		useCustomRequest<{ message: string; data: Segment }, { NOME: string }>({
 			endpoint: `/segments/${segment.CODIGO}`,
 			requestData: { NOME: segmentNameState.value.trim() },
 			method: "patch",

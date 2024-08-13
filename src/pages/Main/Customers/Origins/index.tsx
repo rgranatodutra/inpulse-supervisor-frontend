@@ -1,13 +1,13 @@
+import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
-import OriginCard from "./OriginCard";
-import StyledCustomersOriginsPage from "./style";
+import { useCustomRequest } from "../../../../api";
 import Input from "../../../../components/Input";
+import { Origin } from "../../../../interfaces/Origin.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
 import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
-import { Origin } from "../../../../interfaces/Origin.type";
-import { customRequest } from "../../../../api";
-import { useEffect } from "react";
+import OriginCard from "./OriginCard";
+import StyledCustomersOriginsPage from "./style";
 
 const CustomersOriginsPage = () => {
 	const originName = useCustomState<string>("");
@@ -30,7 +30,7 @@ const CustomersOriginsPage = () => {
 	};
 
 	const addOrigin = (newOriginName: string) => {
-		customRequest<{ message: String; data: Origin }, { DESCRICAO: string }>({
+		useCustomRequest<{ message: String; data: Origin }, { DESCRICAO: string }>({
 			endpoint: "/origins",
 			method: "post",
 			service: "customers",
@@ -43,7 +43,7 @@ const CustomersOriginsPage = () => {
 	};
 
 	useEffect(() => {
-		customRequest<{ message: String; data: Origin[] }, undefined>({
+		useCustomRequest<{ message: String; data: Origin[] }, undefined>({
 			endpoint: "/origins",
 			method: "get",
 			service: "customers",
@@ -57,10 +57,7 @@ const CustomersOriginsPage = () => {
 		originName.set(e.target.value);
 		if (e.target.value.trim().length && addOriginButtonDisabled.value) {
 			addOriginButtonDisabled.set(false);
-		} else if (
-			!e.target.value.trim().length &&
-			!addOriginButtonDisabled.value
-		) {
+		} else if (!e.target.value.trim().length && !addOriginButtonDisabled.value) {
 			addOriginButtonDisabled.set(true);
 		}
 	};
@@ -92,10 +89,7 @@ const CustomersOriginsPage = () => {
 						Adicionar Origem
 					</ButtonType2>
 				)) || (
-					<ButtonType2
-						type="button"
-						onClick={() => addOrigin(originName.value.trim())}
-					>
+					<ButtonType2 type="button" onClick={() => addOrigin(originName.value.trim())}>
 						<FaUsersLine />
 						Adicionar Origem
 					</ButtonType2>

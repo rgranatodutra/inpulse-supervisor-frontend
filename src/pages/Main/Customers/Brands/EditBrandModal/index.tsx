@@ -1,13 +1,13 @@
-import Modal from "../../../../../components/Modal";
 import { useContext } from "react";
-import { GlobalContext } from "../../../../../contexts/global";
-import Input from "../../../../../components/Input";
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
+import Input from "../../../../../components/Input";
+import Modal from "../../../../../components/Modal";
+import { GlobalContext } from "../../../../../contexts/global";
+import { Brand } from "../../../../../interfaces/Brand.type";
 import useCustomState from "../../../../../utils/customState.hook";
 import StyledBrandModal from "./style";
-import { customRequest } from "../../../../../api";
-import { toast } from "react-toastify";
-import { Brand } from "../../../../../interfaces/Brand.type";
 
 interface EditBrandModalProps {
 	brand: Brand;
@@ -19,7 +19,7 @@ function EditBrandModal({ brand, update }: EditBrandModalProps) {
 	const BrandNameState = useCustomState(brand.DESCRICAO);
 
 	async function updateName() {
-		customRequest<{ message: string; data: Brand }, { DESCRICAO: string }>({
+		useCustomRequest<{ message: string; data: Brand }, { DESCRICAO: string }>({
 			endpoint: `/brands/${brand.CODIGO}`,
 			requestData: { DESCRICAO: BrandNameState.value.trim() },
 			method: "patch",

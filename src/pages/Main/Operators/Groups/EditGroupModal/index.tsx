@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { toast } from "react-toastify";
-import { customRequest } from "../../../../../api";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
 import Input from "../../../../../components/Input";
 import Modal from "../../../../../components/Modal";
@@ -32,7 +32,7 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 		if (groupNameState.value.trim().length < 3) {
 			toast.error("Minimo de 3 caracteres no nome do grupo");
 		} else {
-			customRequest<{ message: string; data: UserGroup }, { DESCRICAO: string }>({
+			useCustomRequest<{ message: string; data: UserGroup }, { DESCRICAO: string }>({
 				endpoint: `/user-groups/${group.CODIGO}`,
 				requestData: { DESCRICAO: groupNameState.value },
 				method: "patch",

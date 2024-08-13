@@ -3,12 +3,13 @@ import { User } from "../../../../../../interfaces/User.type";
 import StyledGroupCard from "./style";
 
 interface GroupUserCardProps {
+	groupUserId?: number;
 	user: User;
 	manageOperator: (operatorId: number, addOperator: boolean) => void;
 	isGroupMember: boolean;
 }
 
-const GroupUserCard = ({ user, manageOperator, isGroupMember }: GroupUserCardProps) => {
+const GroupUserCard = ({ user, manageOperator, isGroupMember, groupUserId }: GroupUserCardProps) => {
 	return (
 		<StyledGroupCard>
 			<div>
@@ -20,7 +21,7 @@ const GroupUserCard = ({ user, manageOperator, isGroupMember }: GroupUserCardPro
 					<h2> {user.NOME} </h2>
 				</div>
 				{isGroupMember ? (
-					<button onClick={() => manageOperator(user.CODIGO, false)}>
+					<button onClick={() => manageOperator(groupUserId!, false)}>
 						<FaMinus />
 					</button>
 				) : (

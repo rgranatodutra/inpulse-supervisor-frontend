@@ -6,7 +6,6 @@ import { useContext } from "react";
 import { GlobalContext } from "../../../../../contexts/global";
 import EditRoleModal from "../EditRoleModal";
 import DeleteRoleModal from "../DeleteRoleModal";
-import { Link } from "react-router-dom";
 
 interface RoleCardProps {
 	roleData: Position;

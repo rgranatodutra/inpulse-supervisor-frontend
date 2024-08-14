@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { FaArrowDown, FaArrowUp, FaMapLocationDot, FaTags, FaUsers } from "react-icons/fa6";
-import { useCustomRequest } from "../../../../../api";
+/* import { useCustomRequest } from "../../../../../api"; */
 import InfoBox from "../../../../../components/InfoBox";
 import InfoSection from "../../../../../styles/info-section.style";
 import useCustomState from "../../../../../utils/customState.hook";
@@ -19,13 +19,13 @@ const CustomersHeader = () => {
 	const customersStatisticsState = useCustomState<CustomerStatistics>({} as CustomerStatistics);
 
 	useEffect(() => {
-		useCustomRequest<CustomerStatistics, undefined>({
+		/* useCustomRequest<CustomerStatistics, undefined>({
 			method: "get",
 			service: "customers",
 			endpoint: "/statistics",
 			onSuccess: (data) => customersStatisticsState.set(data),
 			enableToast: true,
-		});
+		}); */
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -40,14 +40,16 @@ const CustomersHeader = () => {
 
 	const percentageCustomersSegment = (
 		<p>
-			<b>{percentageOfCustomersInLargestSegment?.slice(0, 4)}%</b> dos seus clientes são desse segmento
+			<b>{percentageOfCustomersInLargestSegment?.slice(0, 4)}32%</b> dos seus clientes são do segmento 'POSTO DE COMBUSTIVEL'
 		</p>
 	);
+
 	const percentageCustomersState = (
 		<p>
-			<b>{percentageOfCustomersInLargestState?.slice(0, 4)}%</b> dos seus clientes estão aqui
+			<b>{percentageOfCustomersInLargestState?.slice(0, 4)}24%</b> dos seus clientes estão em SP
 		</p>
 	);
+
 	const percentageCustomersIncreased = (
 		<>
 			<span
@@ -64,7 +66,7 @@ const CustomersHeader = () => {
 						<FaArrowDown /> +{" "}
 					</>
 				) : (
-					<>+</>
+					<>+8%</>
 				)}
 				{customersIncreasePreviousMonth}%
 			</span>

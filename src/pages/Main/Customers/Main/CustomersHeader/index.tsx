@@ -66,7 +66,7 @@ const CustomersHeader = () => {
 						<FaArrowDown /> +{" "}
 					</>
 				) : (
-					<>+8%</>
+					<>+8</>
 				)}
 				{customersIncreasePreviousMonth}%
 			</span>

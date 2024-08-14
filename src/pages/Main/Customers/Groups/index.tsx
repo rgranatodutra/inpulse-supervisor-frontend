@@ -44,7 +44,7 @@ const CustomerGroupsPage = () => {
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: CustomerGroup[] }, undefined>({
-			endpoint: "/customer-groups",
+			endpoint: "/customer-groups?perPage=9999",
 			method: "get",
 			service: "customers",
 			onSuccess: (responseData) => {

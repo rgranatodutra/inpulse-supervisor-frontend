@@ -49,7 +49,7 @@ const OperatorsShiftsPage = () => {
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: Shift[] }, undefined>({
-			endpoint: "/shifts",
+			endpoint: "/shifts?perPage=9999",
 			method: "get",
 			service: "users",
 			onSuccess: (responseData) => {

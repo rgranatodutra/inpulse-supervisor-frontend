@@ -29,7 +29,7 @@ const OperatorsGroupsPage = () => {
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: User[] }, undefined>({
-			endpoint: "/users",
+			endpoint: "/users?perPage=9999",
 			method: "get",
 			service: "users",
 			onSuccess: (responseData) => {
@@ -58,7 +58,7 @@ const OperatorsGroupsPage = () => {
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: UserGroup[] }, undefined>({
-			endpoint: "/user-groups",
+			endpoint: "/user-groups?perPage=9999",
 			method: "get",
 			service: "users",
 			onSuccess: (responseData) => {

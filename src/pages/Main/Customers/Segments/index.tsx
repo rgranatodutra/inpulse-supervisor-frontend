@@ -59,7 +59,7 @@ const CustomerSegmentPage = () => {
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: Segment[] }, undefined>({
-			endpoint: "/segments",
+			endpoint: "/segments?perPage=9999",
 			method: "get",
 			service: "customers",
 			onSuccess: (responseData) => {

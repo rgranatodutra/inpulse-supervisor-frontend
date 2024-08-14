@@ -44,7 +44,7 @@ const CustomersOriginsPage = () => {
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: Origin[] }, undefined>({
-			endpoint: "/origins",
+			endpoint: "/origins?perPage=9999",
 			method: "get",
 			service: "customers",
 			onSuccess: (responseData) => {

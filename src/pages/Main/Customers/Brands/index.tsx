@@ -58,7 +58,7 @@ const CustomersBrandsPage = () => {
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: Brand[] }, undefined>({
-			endpoint: "/brands",
+			endpoint: "/brands?perPage=9999",
 			method: "get",
 			service: "customers",
 			onSuccess: (responseData) => {

@@ -44,7 +44,7 @@ const CustomersRolesPage = () => {
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: Position[] }, undefined>({
-			endpoint: "/positions",
+			endpoint: "/positions?perPage=9999",
 			method: "get",
 			service: "customers",
 			onSuccess: (responseData) => {

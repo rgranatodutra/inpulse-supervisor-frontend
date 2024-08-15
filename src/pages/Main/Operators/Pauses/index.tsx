@@ -59,8 +59,8 @@ const OperatorsPausesPage = () => {
 	}, []);
 
 	const disabled =
-		!newPause.value.DESCRICAO ||
-		!((newPause.value.DESCRICAO.length || 0) < 25) ||
+		!newPause.value.DESCRICAO?.trim() ||
+		!((newPause.value.DESCRICAO.trim().length || 0) < 25) ||
 		!newPause.value.PRODUTIVIDADE ||
 		!newPause.value.TEMPO_MAX_SEG ||
 		!(newPause.value.TEMPO_MAX_SEG > 0);

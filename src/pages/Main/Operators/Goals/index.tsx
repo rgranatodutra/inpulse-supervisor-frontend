@@ -1,81 +1,120 @@
+import { useEffect } from "react";
 import { FaCheck } from "react-icons/fa6";
-import StyledOperatorsGoalsPage from "./style"
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../api";
 import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
+import { Goal } from "../../../../interfaces/Goal.type";
+import { User } from "../../../../interfaces/User.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
 import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
+import GoalsTable from "./GoalsTable/table";
+import StyledOperatorsGoalsPage from "./style";
 
 const OperatorsGoalsPage = () => {
-    const operatorState = useCustomState<number>(0);
-    const monthState = useCustomState<string>("");
-    const yearState = useCustomState<number>(new Date().getFullYear());
-    const goalState = useCustomState<number>(0);
+	const usersState = useCustomState<User[]>([]);
+	const newGoal = useCustomState<Partial<Goal>>({});
+	const goals = useCustomState<Goal[]>([]);
+	const addGoalButtonDisabled = useCustomState(true);
 
-    return (
-        <StyledOperatorsGoalsPage>
-            <h2> Operadores {'->'} Metas </h2>
-            <form>
-                <div style={{ width: "20rem" }}>
-                    <h3> Operador </h3>
-                    <Select
-                        $color={cssVars.colorGrey[3]}
-                        $focusColor={cssVars.colorGrey[0]}
-                        $borderColor={cssVars.colorGrey[5]}
-                        $padding={[0.5, 0.5]}
-                        $fontSize={1}
-                        $width={"100%"}
-                        leftIcon={null}
-                        onChange={(v) => operatorState.set(v || 0)}
-                        options={[{ name: "Teste", value: 1 }]}
-                        defaultValue={{ name: "Teste", value: 1 }}
-                    />
-                </div>
-                <div style={{ width: "20rem" }}>
-                    <h3> Mês / Ano </h3>
-                    <Input
-                        $color={cssVars.colorGrey[3]}
-                        $focusColor={cssVars.colorGrey[0]}
-                        $borderColor={cssVars.colorGrey[5]}
-                        $padding={[0.5, 0.5]}
-                        $fontSize={1}
-                        $width={"100%"}
-                        leftIcon={null}
-                        rightIcon={null}
-                        onChange={(e) => {
-                            yearState.set(+e.target.value.slice(0, 4));
-                            monthState.set(e.target.value.slice(5));
-                        }}
-                        value={monthState.value}
-                        type="month"
-                    />
-                </div>
-                <div style={{ width: "10rem" }}>
-                    <h3> Meta </h3>
-                    <Input
-                        $color={cssVars.colorGrey[3]}
-                        $focusColor={cssVars.colorGrey[0]}
-                        $borderColor={cssVars.colorGrey[5]}
-                        $padding={[0.5, 0.5]}
-                        $fontSize={1}
-                        $width={"100%"}
-                        leftIcon={<span> R$ </span>}
-                        rightIcon={null}
-                        value={goalState.value}
-                        type="number"
-                        onChange={(e) => goalState.set(+e.target.value)}
-                    />
-                </div>
-                <ButtonType2 style={{ fontSize: "1rem", height: "1.25rem", boxSizing: "content-box" }}>
-                    <FaCheck />
-                    Adicionar Meta
-                </ButtonType2>
+	useEffect(() => {
+		useCustomRequest<{ message: String; data: User[] }, undefined>({
+			endpoint: "/users?perPage=9999",
+			method: "get",
+			service: "users",
+			onSuccess: (responseData) => {
+				usersState.set(responseData.data);
+			},
+		});
+	}, []);
 
-            </form>
-            <ul>
-            </ul>
-        </StyledOperatorsGoalsPage >
-    );
-}
+	const addGoal = () => {
+		useCustomRequest<{ message: String; data: Goal }, Partial<Goal>>({
+			endpoint: "/goals",
+			method: "post",
+			service: "users",
+			requestData: newGoal.value,
+			onSuccess: () => {
+				toast.success("Nova meta adicionada");
+			},
+		});
+	};
+
+	const disabled =
+		!newGoal.value.OPERADOR ||
+		!newGoal.value.ANO ||
+		!newGoal.value.MES ||
+		!newGoal.value.VALOR_META ||
+		!(+newGoal.value.VALOR_META > 0);
+
+	const options = usersState.value.map((u) => ({ name: u.NOME, value: u.CODIGO }));
+
+	return (
+		<StyledOperatorsGoalsPage>
+			<h2> Operadores {"->"} Metas </h2>
+			<form>
+				<div style={{ width: "20rem" }}>
+					<h3> Operador </h3>
+					<Select
+						$color={cssVars.colorGrey[3]}
+						$focusColor={cssVars.colorGrey[0]}
+						$borderColor={cssVars.colorGrey[5]}
+						$padding={[0.5, 0.5]}
+						$fontSize={1}
+						$width={"100%"}
+						leftIcon={null}
+						options={options}
+						placeholder="Selecione o operador"
+						onChange={(e) => newGoal.set((prev) => ({ ...prev, OPERADOR: e || undefined }))}
+					/>
+				</div>
+				<div style={{ width: "20rem" }}>
+					<h3> Mês / Ano </h3>
+					<Input
+						$color={cssVars.colorGrey[3]}
+						$focusColor={cssVars.colorGrey[0]}
+						$borderColor={cssVars.colorGrey[5]}
+						$padding={[0.5, 0.5]}
+						$fontSize={1}
+						$width={"100%"}
+						leftIcon={null}
+						rightIcon={null}
+						onChange={(e) =>
+							newGoal.set((prev) => ({ ...prev, MES: e.target.value.slice(5), ANO: +e.target.value.slice(0, 4) }))
+						}
+						type="month"
+					/>
+				</div>
+				<div style={{ width: "10rem" }}>
+					<h3> Meta </h3>
+					<Input
+						$color={cssVars.colorGrey[3]}
+						$focusColor={cssVars.colorGrey[0]}
+						$borderColor={cssVars.colorGrey[5]}
+						$padding={[0.5, 0.5]}
+						$fontSize={1}
+						$width={"100%"}
+						leftIcon={<span> R$ </span>}
+						rightIcon={null}
+						type="number"
+						onChange={(e) => newGoal.set((prev) => ({ ...prev, VALOR_META: +e.target.value }))}
+					/>
+				</div>
+				<ButtonType2
+					style={{ fontSize: "1rem", height: "1.25rem", boxSizing: "content-box" }}
+					disabled={disabled}
+					onClick={() => addGoal()}
+				>
+					<FaCheck />
+					Adicionar Meta
+				</ButtonType2>
+			</form>
+			<ul>
+				<GoalsTable users={usersState.value} />
+			</ul>
+		</StyledOperatorsGoalsPage>
+	);
+};
 
 export default OperatorsGoalsPage;

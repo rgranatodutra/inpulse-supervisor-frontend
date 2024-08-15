@@ -17,7 +17,6 @@ interface DeleteBrandModalProps {
 function DeleteBrandModal({ brand, updateOnDelete }: DeleteBrandModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const BrandNameState = useCustomState("");
-	const buttonState = useCustomState(false);
 
 	async function deleteBrand() {
 		useCustomRequest<{ message: string; data: Brand }, { DESCRICAO: string }>({
@@ -32,6 +31,8 @@ function DeleteBrandModal({ brand, updateOnDelete }: DeleteBrandModalProps) {
 		});
 	}
 
+	const disabled = !BrandNameState.value || !(BrandNameState.value.trim() === brand.DESCRICAO);
+
 	return (
 		<Modal modalState={modalState} title="Remover Marca">
 			<StyledBrandModal>
@@ -40,15 +41,12 @@ function DeleteBrandModal({ brand, updateOnDelete }: DeleteBrandModalProps) {
 					placeholder={`Digite '${brand.DESCRICAO}' para confirmar`}
 					value={BrandNameState.value}
 					onChange={(e) => {
-						BrandNameState.set(e.target.value);
-						if (e.target.value === brand.DESCRICAO) {
-							buttonState.set(true);
-						} else if (buttonState.value != false) {
-							buttonState.set(false);
-						}
+						BrandNameState.set(e.target.value.trim());
 					}}
 				/>
-				{(buttonState.value && <button onClick={deleteBrand}>Confirmar</button>) || <button disabled>Confirmar</button>}
+				<button onClick={deleteBrand} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledBrandModal>
 		</Modal>
 	);

@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
 import { useCustomRequest } from "../../../../api";
+import { defaultInput100 } from "../../../../components-variants/defaultInputs";
 import Input from "../../../../components/Input";
 import { Shift } from "../../../../interfaces/Shift.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
-import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
 import ShiftCard from "./ShiftCard";
 import StyledOperatorsShiftsPage from "./style";
@@ -13,7 +13,6 @@ const OperatorsShiftsPage = () => {
 	const shifts = useCustomState<Array<Shift>>([]);
 	const newShift = useCustomState<Partial<Shift>>({});
 
-	const addShiftButtonDisabled = useCustomState(true);
 	const updateOnEdit = (data: Shift) => {
 		shifts.set((prev) =>
 			prev.map((v) => {
@@ -60,19 +59,20 @@ const OperatorsShiftsPage = () => {
 
 	const inputChangeFn = (e, type) => {
 		if (type === "name") {
-			newShift.set((prev) => ({ ...prev, DESCRICAO: e.target.value }));
+			newShift.set((prev) => ({ ...prev, DESCRICAO: e.target.value.trim() }));
 		} else if (type === "entry") {
 			newShift.set((prev) => ({ ...prev, ENTRADA_1: e.target.value }));
 		} else {
 			newShift.set((prev) => ({ ...prev, SAIDA_1: e.target.value }));
 		}
-
-		if (e.target.value.trim().length && addShiftButtonDisabled.value) {
-			addShiftButtonDisabled.set(false);
-		} else if (!addShiftButtonDisabled.value && !e.target.value.trim().length) {
-			addShiftButtonDisabled.set(true);
-		}
 	};
+
+	const disabled =
+		!newShift.value ||
+		!newShift.value.DESCRICAO ||
+		!(newShift.value.DESCRICAO.trim().length > 0) ||
+		!newShift.value.ENTRADA_1 ||
+		!newShift.value.SAIDA_1;
 
 	return (
 		<StyledOperatorsShiftsPage>
@@ -80,63 +80,24 @@ const OperatorsShiftsPage = () => {
 			<form>
 				<div style={{ width: "14rem" }}>
 					<h3> Início do Expediente </h3>
-					<Input
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 1]}
-						$fontSize={0.875}
-						$width={"100%"}
-						leftIcon={null}
-						rightIcon={null}
-						onChange={(e) => inputChangeFn(e, "entry")}
-						type="time"
-						style={{ height: "2.375rem" }}
-					/>
+					<Input {...defaultInput100} onChange={(e) => inputChangeFn(e, "entry")} type="time" />
 				</div>
 				<div style={{ width: "14rem" }}>
 					<h3> Fim do Expediente </h3>
-					<Input
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 1]}
-						$fontSize={0.875}
-						$width={"100%"}
-						leftIcon={null}
-						rightIcon={null}
-						onChange={(e) => inputChangeFn(e, "exit")}
-						type="time"
-						style={{ height: "2.375rem" }}
-					/>
+					<Input {...defaultInput100} onChange={(e) => inputChangeFn(e, "exit")} type="time" />
 				</div>
 				<div style={{ width: "20rem" }}>
 					<h3> Nome do Turno </h3>
 					<Input
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 1]}
-						$fontSize={1}
-						$width={"100%"}
-						leftIcon={null}
-						rightIcon={null}
+						{...defaultInput100}
 						onChange={(e) => inputChangeFn(e, "name")}
 						placeholder="Digite o nome do turno aqui..."
-						style={{ height: "2.375rem" }}
 					/>
 				</div>
-				{(addShiftButtonDisabled.value && (
-					<ButtonType2 disabled>
-						<FaUsersLine />
-						Adicionar Turno
-					</ButtonType2>
-				)) || (
-					<ButtonType2 type="button" onClick={() => addShift()}>
-						<FaUsersLine />
-						Adicionar Turno
-					</ButtonType2>
-				)}
+				<ButtonType2 disabled={disabled} type="button" onClick={() => addShift()}>
+					<FaUsersLine />
+					Adicionar Turno
+				</ButtonType2>
 			</form>
 			<ul>
 				{shifts.value.map((shift) => {

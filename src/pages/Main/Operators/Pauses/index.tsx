@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { FaClock, FaNoteSticky, FaUsersLine } from "react-icons/fa6";
 import { useCustomRequest } from "../../../../api";
+import { defaultInput100, defaultSelect100 } from "../../../../components-variants/defaultInputs";
 import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
 import { PauseReason } from "../../../../interfaces/PauseReason.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
-import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
 import PauseCard from "./PauseCard";
 import StyledOperatorsPausesPage from "./style";
@@ -72,14 +72,8 @@ const OperatorsPausesPage = () => {
 				<div style={{ width: "20rem" }}>
 					<h3> Motivo / Descrição </h3>
 					<Input
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 0.5]}
-						$fontSize={1}
-						$width={"100%"}
+						{...defaultInput100}
 						leftIcon={<FaNoteSticky />}
-						rightIcon={null}
 						onChange={(e) => newPause.set((prev) => ({ ...prev, DESCRICAO: e.target.value }))}
 						placeholder="Digite o motivo da pausa aqui..."
 					/>
@@ -87,14 +81,8 @@ const OperatorsPausesPage = () => {
 				<div style={{ width: "10rem" }}>
 					<h3> Tempo Limite (seg.)</h3>
 					<Input
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 0.5]}
-						$fontSize={1}
-						$width={"100%"}
+						{...defaultInput100}
 						leftIcon={<FaClock />}
-						rightIcon={null}
 						defaultValue={600}
 						min={1}
 						onChange={(e) => newPause.set((prev) => ({ ...prev, TEMPO_MAX_SEG: +e.target.value }))}
@@ -104,12 +92,7 @@ const OperatorsPausesPage = () => {
 				<div style={{ width: "10rem" }}>
 					<h3> Produtiva </h3>
 					<Select
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 0.5]}
-						$fontSize={1}
-						$width={"100%"}
+						{...defaultSelect100}
 						onChange={(e) => newPause.set((prev) => ({ ...prev, PRODUTIVIDADE: e || undefined }))}
 						options={[
 							{ name: "Sim", value: "SIM" },

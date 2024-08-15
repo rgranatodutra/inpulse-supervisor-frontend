@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
 import { useCustomRequest } from "../../../../api";
+import { defaultInput100 } from "../../../../components-variants/defaultInputs";
 import Input from "../../../../components/Input";
 import { CustomerGroup } from "../../../../interfaces/CustomerGroup.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
-import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
 import GroupCard from "./GroupCard";
 import StyledCustomerGroupsPage from "./style";
@@ -12,7 +12,6 @@ import StyledCustomerGroupsPage from "./style";
 const CustomerGroupsPage = () => {
 	const groupName = useCustomState<string>("");
 	const groups = useCustomState<Array<CustomerGroup>>([]);
-	const addGroupButtonDisabled = useCustomState(true);
 	const updateOnEdit = (data: CustomerGroup) => {
 		groups.set((prev) =>
 			prev.map((v) => {
@@ -53,14 +52,8 @@ const CustomerGroupsPage = () => {
 		});
 	}, []);
 
-	const inputChangeFn = (e) => {
-		groupName.set(e.target.value);
-		if (e.target.value.trim().length && addGroupButtonDisabled.value) {
-			addGroupButtonDisabled.set(false);
-		} else if (!e.target.value.trim().length && !addGroupButtonDisabled.value) {
-			addGroupButtonDisabled.set(true);
-		}
-	};
+	const disabled =
+		!groupName.value.trim() || !(groupName.value.trim().length > 0) || !(groupName.value.trim().length < 36);
 
 	return (
 		<StyledCustomerGroupsPage>
@@ -69,31 +62,18 @@ const CustomerGroupsPage = () => {
 				<div style={{ width: "20rem" }}>
 					<h3> Nome do Grupo </h3>
 					<Input
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 1]}
-						$fontSize={1}
-						$width={"100%"}
-						leftIcon={null}
-						rightIcon={null}
-						onChange={(e) => inputChangeFn(e)}
+						{...defaultInput100}
+						onChange={(e) => groupName.set(e.target.value.trim())}
 						value={groupName.value}
 						maxLength={35}
 						placeholder="Digite o nome do grupo aqui..."
 					/>
 				</div>
-				{(addGroupButtonDisabled.value && (
-					<ButtonType2 disabled>
-						<FaUsersLine />
-						Adicionar Grupo
-					</ButtonType2>
-				)) || (
-					<ButtonType2 type="button" onClick={() => addGroup(groupName.value.trim())}>
-						<FaUsersLine />
-						Adicionar Grupo
-					</ButtonType2>
-				)}
+
+				<ButtonType2 type="button" onClick={() => addGroup(groupName.value.trim())} disabled={disabled}>
+					<FaUsersLine />
+					Adicionar Grupo
+				</ButtonType2>
 			</form>
 			<ul>
 				{groups.value.map((group) => {

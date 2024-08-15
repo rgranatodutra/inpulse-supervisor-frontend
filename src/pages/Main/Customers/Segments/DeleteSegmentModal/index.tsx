@@ -17,7 +17,6 @@ interface DeletesegmentModalProps {
 function DeleteSegmentModal({ segment, updateOnDelete }: DeletesegmentModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const segmentNameState = useCustomState("");
-	const buttonState = useCustomState(false);
 
 	async function deletesegment() {
 		useCustomRequest<{ message: string; data: Segment }, { NOME: string }>({
@@ -32,6 +31,8 @@ function DeleteSegmentModal({ segment, updateOnDelete }: DeletesegmentModalProps
 		});
 	}
 
+	const disabled = !segmentNameState.value.trim() || !(segmentNameState.value.trim() === segment.NOME);
+
 	return (
 		<Modal modalState={modalState} title="Remover Segmento">
 			<StyledsegmentModal>
@@ -40,17 +41,12 @@ function DeleteSegmentModal({ segment, updateOnDelete }: DeletesegmentModalProps
 					placeholder={`Digite '${segment.NOME}' para confirmar`}
 					value={segmentNameState.value}
 					onChange={(e) => {
-						segmentNameState.set(e.target.value);
-						if (e.target.value === segment.NOME) {
-							buttonState.set(true);
-						} else if (buttonState.value != false) {
-							buttonState.set(false);
-						}
+						segmentNameState.set(e.target.value.trim());
 					}}
 				/>
-				{(buttonState.value && <button onClick={deletesegment}>Confirmar</button>) || (
-					<button disabled>Confirmar</button>
-				)}
+				<button onClick={deletesegment} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledsegmentModal>
 		</Modal>
 	);

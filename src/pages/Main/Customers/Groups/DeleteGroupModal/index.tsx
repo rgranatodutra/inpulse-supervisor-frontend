@@ -17,7 +17,6 @@ interface DeleteGroupModalProps {
 function DeleteGroupModal({ group, updateOnDelete }: DeleteGroupModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const groupNameState = useCustomState("");
-	const buttonState = useCustomState(false);
 
 	async function deleteGroup() {
 		useCustomRequest<{ message: string; data: CustomerGroup }, { DESCRICAO: string }>({
@@ -32,6 +31,8 @@ function DeleteGroupModal({ group, updateOnDelete }: DeleteGroupModalProps) {
 		});
 	}
 
+	const disabled = !groupNameState.value.trim() || !(groupNameState.value.trim() === group.DESCRICAO);
+
 	return (
 		<Modal modalState={modalState} title="Remover Grupo">
 			<StyledGroupModal>
@@ -41,14 +42,11 @@ function DeleteGroupModal({ group, updateOnDelete }: DeleteGroupModalProps) {
 					value={groupNameState.value}
 					onChange={(e) => {
 						groupNameState.set(e.target.value);
-						if (e.target.value === group.DESCRICAO) {
-							buttonState.set(true);
-						} else if (buttonState.value != false) {
-							buttonState.set(false);
-						}
 					}}
 				/>
-				{(buttonState.value && <button onClick={deleteGroup}>Confirmar</button>) || <button disabled>Confirmar</button>}
+				<button onClick={deleteGroup} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledGroupModal>
 		</Modal>
 	);

@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { FaUsersLine } from "react-icons/fa6";
 import { useCustomRequest } from "../../../../api";
+import { defaultInput100 } from "../../../../components-variants/defaultInputs";
 import Input from "../../../../components/Input";
 import { Origin } from "../../../../interfaces/Origin.type";
 import { ButtonType2 } from "../../../../styles/buttons.style";
-import cssVars from "../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../utils/customState.hook";
 import OriginCard from "./OriginCard";
 import StyledCustomersOriginsPage from "./style";
@@ -12,7 +12,6 @@ import StyledCustomersOriginsPage from "./style";
 const CustomersOriginsPage = () => {
 	const originName = useCustomState<string>("");
 	const origins = useCustomState<Array<Origin>>([]);
-	const addOriginButtonDisabled = useCustomState(true);
 	const updateOnEdit = (data: Origin) => {
 		origins.set((prev) =>
 			prev.map((v) => {
@@ -53,14 +52,7 @@ const CustomersOriginsPage = () => {
 		});
 	}, []);
 
-	const inputChangeFn = (e) => {
-		originName.set(e.target.value);
-		if (e.target.value.trim().length && addOriginButtonDisabled.value) {
-			addOriginButtonDisabled.set(false);
-		} else if (!e.target.value.trim().length && !addOriginButtonDisabled.value) {
-			addOriginButtonDisabled.set(true);
-		}
-	};
+	const disabled = !originName.value.trim() || !(originName.value.trim().length > 0);
 
 	return (
 		<StyledCustomersOriginsPage>
@@ -69,31 +61,18 @@ const CustomersOriginsPage = () => {
 				<div style={{ width: "20rem" }}>
 					<h3> Nome da Origem </h3>
 					<Input
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 1]}
-						$fontSize={1}
-						$width={"100%"}
-						leftIcon={null}
-						rightIcon={null}
-						onChange={(e) => inputChangeFn(e)}
+						{...defaultInput100}
+						onChange={(e) => originName.set(e.target.value)}
 						value={originName.value}
 						maxLength={35}
 						placeholder="Digite o nome da origem aqui..."
 					/>
 				</div>
-				{(addOriginButtonDisabled.value && (
-					<ButtonType2 disabled>
-						<FaUsersLine />
-						Adicionar Origem
-					</ButtonType2>
-				)) || (
-					<ButtonType2 type="button" onClick={() => addOrigin(originName.value.trim())}>
-						<FaUsersLine />
-						Adicionar Origem
-					</ButtonType2>
-				)}
+
+				<ButtonType2 type="button" onClick={() => addOrigin(originName.value.trim())} disabled={disabled}>
+					<FaUsersLine />
+					Adicionar Origem
+				</ButtonType2>
 			</form>
 			<ul>
 				{origins.value.map((group) => {

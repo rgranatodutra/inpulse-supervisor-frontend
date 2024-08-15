@@ -32,6 +32,8 @@ function EditRoleModal({ role, update }: EditRoleModalProps) {
 		});
 	}
 
+	const disabled = !RoleNameState.value.trim() || !(RoleNameState.value.trim().length > 0);
+
 	return (
 		<Modal modalState={modalState} title="Editar Cargo">
 			<StyledRoleModal>
@@ -40,10 +42,12 @@ function EditRoleModal({ role, update }: EditRoleModalProps) {
 					placeholder="Digite o nome do cargo"
 					value={RoleNameState.value}
 					onChange={(e) => {
-						RoleNameState.set(e.target.value);
+						RoleNameState.set(e.target.value.trim());
 					}}
 				/>
-				<button onClick={updateName}>Confirmar</button>
+				<button onClick={updateName} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledRoleModal>
 		</Modal>
 	);

@@ -29,7 +29,7 @@ function DeleteGoalModal({ goal }: DeleteGoalModalProps) {
 		});
 	}
 
-	const disabled = !GoalNameState.value.trim() || !(GoalNameState.value.trim().length > 0);
+	const disabled = !GoalNameState.value.trim() || !(GoalNameState.value.trim() === goal.NOME);
 
 	return (
 		<Modal modalState={modalState} title="Remover Meta">

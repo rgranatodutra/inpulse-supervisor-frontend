@@ -17,7 +17,6 @@ interface DeletePauseModalProps {
 function DeletePauseModal({ pause, updateOnDelete }: DeletePauseModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const PauseNameState = useCustomState("");
-	const buttonState = useCustomState(false);
 
 	async function deletePause() {
 		useCustomRequest<{ message: string; data: PauseReason }, { DESCRICAO: string }>({
@@ -32,6 +31,8 @@ function DeletePauseModal({ pause, updateOnDelete }: DeletePauseModalProps) {
 		});
 	}
 
+	const disabled = !PauseNameState.value.trim() || !(PauseNameState.value.trim() === pause.DESCRICAO);
+
 	return (
 		<Modal modalState={modalState} title="Remover Pausa">
 			<StyledPauseModal>
@@ -40,15 +41,12 @@ function DeletePauseModal({ pause, updateOnDelete }: DeletePauseModalProps) {
 					placeholder={`Digite '${pause.DESCRICAO}' para confirmar`}
 					value={PauseNameState.value}
 					onChange={(e) => {
-						PauseNameState.set(e.target.value);
-						if (e.target.value === pause.DESCRICAO) {
-							buttonState.set(true);
-						} else if (buttonState.value != false) {
-							buttonState.set(false);
-						}
+						PauseNameState.set(e.target.value.trim());
 					}}
 				/>
-				{(buttonState.value && <button onClick={deletePause}>Confirmar</button>) || <button disabled>Confirmar</button>}
+				<button onClick={deletePause} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledPauseModal>
 		</Modal>
 	);

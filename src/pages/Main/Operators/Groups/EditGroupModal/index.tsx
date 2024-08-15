@@ -17,16 +17,6 @@ interface EditGroupModalProps {
 function EditGroupModal({ group, update }: EditGroupModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const groupNameState = useCustomState(group.DESCRICAO);
-	const addGroupButtonDisabled = useCustomState(false);
-
-	const inputChangeFn = (e) => {
-		groupNameState.set(e.target.value);
-		if (e.target.value.trim().length >= 3 && addGroupButtonDisabled.value) {
-			addGroupButtonDisabled.set(false);
-		} else if (e.target.value.trim().length < 3 && !addGroupButtonDisabled.value) {
-			addGroupButtonDisabled.set(true);
-		}
-	};
 
 	async function updateName() {
 		if (groupNameState.value.trim().length < 3) {
@@ -46,6 +36,8 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 		}
 	}
 
+	const disabled = !groupNameState.value.trim() || !(groupNameState.value.trim().length > 0);
+
 	return (
 		<Modal modalState={modalState} title="Editar Grupo">
 			<StyledGroupModal>
@@ -54,13 +46,13 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 					placeholder="Digite o nome do grupo"
 					value={groupNameState.value}
 					onChange={(e) => {
-						inputChangeFn(e);
+						groupNameState.set(e.target.value.trim());
 					}}
 				/>
 
-				{(addGroupButtonDisabled.value && <button disabled>Confirmar</button>) || (
-					<button onClick={updateName}>Confirmar</button>
-				)}
+				<button onClick={updateName} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledGroupModal>
 		</Modal>
 	);

@@ -17,7 +17,6 @@ interface DeleteRoleModalProps {
 function DeleteRoleModal({ role, updateOnDelete }: DeleteRoleModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const RoleNameState = useCustomState("");
-	const buttonState = useCustomState(false);
 
 	async function deleteRole() {
 		useCustomRequest<{ message: string; data: Position }, { DESCRICAO: string }>({
@@ -32,6 +31,8 @@ function DeleteRoleModal({ role, updateOnDelete }: DeleteRoleModalProps) {
 		});
 	}
 
+	const disabled = !RoleNameState.value.trim() || !(RoleNameState.value.trim() === role.DESCRICAO);
+
 	return (
 		<Modal modalState={modalState} title="Remover Cargo">
 			<StyledRoleModal>
@@ -41,14 +42,12 @@ function DeleteRoleModal({ role, updateOnDelete }: DeleteRoleModalProps) {
 					value={RoleNameState.value}
 					onChange={(e) => {
 						RoleNameState.set(e.target.value);
-						if (e.target.value === role.DESCRICAO) {
-							buttonState.set(true);
-						} else if (buttonState.value != false) {
-							buttonState.set(false);
-						}
 					}}
 				/>
-				{(buttonState.value && <button onClick={deleteRole}>Confirmar</button>) || <button disabled>Confirmar</button>}
+				<button onClick={deleteRole} disabled={disabled}>
+					Confirmar
+				</button>
+				)
 			</StyledRoleModal>
 		</Modal>
 	);

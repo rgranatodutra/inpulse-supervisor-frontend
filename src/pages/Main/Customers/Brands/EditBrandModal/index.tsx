@@ -32,6 +32,8 @@ function EditBrandModal({ brand, update }: EditBrandModalProps) {
 		});
 	}
 
+	const disabled = !BrandNameState.value.trim() || !(BrandNameState.value.trim().length > 0);
+
 	return (
 		<Modal modalState={modalState} title="Editar Marca">
 			<StyledBrandModal>
@@ -40,10 +42,12 @@ function EditBrandModal({ brand, update }: EditBrandModalProps) {
 					placeholder="Digite o nome da marca"
 					value={BrandNameState.value}
 					onChange={(e) => {
-						BrandNameState.set(e.target.value);
+						BrandNameState.set(e.target.value.trim());
 					}}
 				/>
-				<button onClick={updateName}>Confirmar</button>
+				<button onClick={updateName} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledBrandModal>
 		</Modal>
 	);

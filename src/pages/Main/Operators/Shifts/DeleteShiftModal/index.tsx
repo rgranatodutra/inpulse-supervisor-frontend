@@ -17,7 +17,6 @@ interface DeleteShiftModalProps {
 function DeleteShiftModal({ shift, updateOnDelete }: DeleteShiftModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const ShiftNameState = useCustomState("");
-	const buttonState = useCustomState(false);
 
 	async function deleteShift() {
 		useCustomRequest<{ message: string; data: Shift }, { NOME: string }>({
@@ -32,6 +31,8 @@ function DeleteShiftModal({ shift, updateOnDelete }: DeleteShiftModalProps) {
 		});
 	}
 
+	const disabled = !ShiftNameState.value.trim() || !(ShiftNameState.value.trim() === shift.DESCRICAO);
+
 	return (
 		<Modal modalState={modalState} title="Remover Turno">
 			<StyledShiftModal>
@@ -40,15 +41,12 @@ function DeleteShiftModal({ shift, updateOnDelete }: DeleteShiftModalProps) {
 					placeholder={`Digite '${shift.DESCRICAO}' para confirmar`}
 					value={ShiftNameState.value}
 					onChange={(e) => {
-						ShiftNameState.set(e.target.value);
-						if (e.target.value === shift.DESCRICAO) {
-							buttonState.set(true);
-						} else if (buttonState.value != false) {
-							buttonState.set(false);
-						}
+						ShiftNameState.set(e.target.value.trim());
 					}}
 				/>
-				{(buttonState.value && <button onClick={deleteShift}>Confirmar</button>) || <button disabled>Confirmar</button>}
+				<button onClick={deleteShift} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledShiftModal>
 		</Modal>
 	);

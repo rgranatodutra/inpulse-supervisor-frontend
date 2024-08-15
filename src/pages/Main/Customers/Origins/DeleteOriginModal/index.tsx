@@ -17,7 +17,6 @@ interface DeleteOriginModalProps {
 function DeleteOriginModal({ origin, updateOnDelete }: DeleteOriginModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const OriginNameState = useCustomState("");
-	const buttonState = useCustomState(false);
 
 	async function deleteOrigin() {
 		useCustomRequest<{ message: string; data: Origin }, { DESCRICAO: string }>({
@@ -32,6 +31,8 @@ function DeleteOriginModal({ origin, updateOnDelete }: DeleteOriginModalProps) {
 		});
 	}
 
+	const disabled = !OriginNameState.value.trim() || !(OriginNameState.value.trim() === origin.DESCRICAO);
+
 	return (
 		<Modal modalState={modalState} title="Remover Origem">
 			<StyledOriginModal>
@@ -41,16 +42,11 @@ function DeleteOriginModal({ origin, updateOnDelete }: DeleteOriginModalProps) {
 					value={OriginNameState.value}
 					onChange={(e) => {
 						OriginNameState.set(e.target.value);
-						if (e.target.value === origin.DESCRICAO) {
-							buttonState.set(true);
-						} else if (buttonState.value != false) {
-							buttonState.set(false);
-						}
 					}}
 				/>
-				{(buttonState.value && <button onClick={deleteOrigin}>Confirmar</button>) || (
-					<button disabled>Confirmar</button>
-				)}
+				<button onClick={deleteOrigin} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledOriginModal>
 		</Modal>
 	);

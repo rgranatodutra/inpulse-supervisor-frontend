@@ -32,6 +32,8 @@ function EditOriginModal({ origin, update }: EditOriginModalProps) {
 		});
 	}
 
+	const disabled = !OriginNameState.value.trim() || !(OriginNameState.value.trim().length > 0);
+
 	return (
 		<Modal modalState={modalState} title="Editar Origem">
 			<StyledOriginModal>
@@ -40,10 +42,12 @@ function EditOriginModal({ origin, update }: EditOriginModalProps) {
 					placeholder="Digite o nome da origem"
 					value={OriginNameState.value}
 					onChange={(e) => {
-						OriginNameState.set(e.target.value);
+						OriginNameState.set(e.target.value.trim());
 					}}
 				/>
-				<button onClick={updateName}>Confirmar</button>
+				<button onClick={updateName} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledOriginModal>
 		</Modal>
 	);

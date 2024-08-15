@@ -32,6 +32,11 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 		});
 	}
 
+	const disabled =
+		!groupNameState.value.trim() ||
+		!(groupNameState.value.trim().length > 0) ||
+		!(groupNameState.value.trim().length < 36);
+
 	return (
 		<Modal modalState={modalState} title="Editar Grupo">
 			<StyledGroupModal>
@@ -40,10 +45,12 @@ function EditGroupModal({ group, update }: EditGroupModalProps) {
 					placeholder="Digite o nome do grupo"
 					value={groupNameState.value}
 					onChange={(e) => {
-						groupNameState.set(e.target.value);
+						groupNameState.set(e.target.value.trim());
 					}}
 				/>
-				<button onClick={updateName}>Confirmar</button>
+				<button onClick={updateName} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledGroupModal>
 		</Modal>
 	);

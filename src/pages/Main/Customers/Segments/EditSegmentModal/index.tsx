@@ -32,6 +32,8 @@ function EditSegmentModal({ segment, update }: EditSegmentModalProps) {
 		});
 	}
 
+	const disabled = !segmentNameState.value || !(segmentNameState.value.trim().length > 0);
+
 	return (
 		<Modal modalState={modalState} title="Editar Segmento">
 			<StyledsegmentModal>
@@ -43,7 +45,9 @@ function EditSegmentModal({ segment, update }: EditSegmentModalProps) {
 						segmentNameState.set(e.target.value);
 					}}
 				/>
-				<button onClick={updateName}>Confirmar</button>
+				<button onClick={updateName} disabled={disabled}>
+					Confirmar
+				</button>
 			</StyledsegmentModal>
 		</Modal>
 	);

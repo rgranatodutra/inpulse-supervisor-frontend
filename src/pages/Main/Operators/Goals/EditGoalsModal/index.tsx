@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { useCustomRequest } from "../../../../../api";
+import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
 import Input from "../../../../../components/Input";
 import Modal from "../../../../../components/Modal";
 import Select from "../../../../../components/Select";
 import { GlobalContext } from "../../../../../contexts/global";
 import { Goal } from "../../../../../interfaces/Goal.type";
 import { User } from "../../../../../interfaces/User.type";
-import cssVars from "../../../../../utils/cssVariables.vars";
 import useCustomState from "../../../../../utils/customState.hook";
 import StyledGoalModal from "./style";
 
@@ -51,60 +51,34 @@ function EditGoalModal({ goal, users }: EditGoalModalProps) {
 	return (
 		<Modal modalState={modalState} title="Editar Meta">
 			<StyledGoalModal>
-				<div style={{ width: "18rem" }}>
-					<h3> Operador </h3>
-					<Select
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 0.5]}
-						$fontSize={1}
-						$width={"100%"}
-						leftIcon={null}
-						options={options}
-						placeholder="Selecione o operador"
-						defaultValue={{ name: goal.NOME, value: goal.OPERADOR }}
-						onChange={(e) => editedGoalState.set((prev) => ({ ...prev, OPERADOR: e || -1 }))}
-					/>
-				</div>
-				<div style={{ width: "18rem" }}>
-					<h3> Mês / Ano </h3>
-					<Input
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 0.5]}
-						$fontSize={1}
-						$width={"100%"}
-						leftIcon={null}
-						rightIcon={null}
-						onChange={(e) =>
-							editedGoalState.set((prev) => ({
-								...prev,
-								MES: e.target.value.slice(5),
-								ANO: +e.target.value.slice(0, 4),
-							}))
-						}
-						defaultValue={`${goal.ANO}-${goal.MES}`}
-						type="month"
-					/>
-				</div>
-				<div style={{ width: "18rem" }}>
-					<h3> Meta </h3>
-					<Input
-						$color={cssVars.colorGrey[3]}
-						$focusColor={cssVars.colorGrey[0]}
-						$borderColor={cssVars.colorGrey[5]}
-						$padding={[0.5, 0.5]}
-						$fontSize={1}
-						$width={"100%"}
-						leftIcon={<span> R$ </span>}
-						rightIcon={null}
-						type="number"
-						defaultValue={goal.VALOR_META}
-						onChange={(e) => editedGoalState.set((prev) => ({ ...prev, VALOR_META: +e.target.value }))}
-					/>
-				</div>
+				<Select
+					{...defaultInput100}
+					options={options}
+					placeholder="Selecione o operador"
+					defaultValue={{ name: goal.NOME, value: goal.OPERADOR }}
+					onChange={(e) => editedGoalState.set((prev) => ({ ...prev, OPERADOR: e || -1 }))}
+				/>
+				<Input
+					{...defaultInput100}
+					onChange={(e) =>
+						editedGoalState.set((prev) => ({
+							...prev,
+							MES: e.target.value.slice(5),
+							ANO: +e.target.value.slice(0, 4),
+						}))
+					}
+					defaultValue={`${goal.ANO}-${goal.MES}`}
+					type="month"
+				/>
+
+				<Input
+					{...defaultInput100}
+					leftIcon={<span> R$ </span>}
+					type="number"
+					defaultValue={goal.VALOR_META}
+					onChange={(e) => editedGoalState.set((prev) => ({ ...prev, VALOR_META: +e.target.value }))}
+				/>
+
 				<button onClick={updateName} disabled={disabled}>
 					Confirmar
 				</button>

@@ -19,6 +19,9 @@ const StyledGroupModal = styled.div`
 			filter: opacity(0.75);
 		}
 	}
+	> button:disabled {
+		opacity: 0.35;
+	}
 `;
 
 export default StyledGroupModal;

@@ -15,8 +15,6 @@ import StyledOperatorsGoalsPage from "./style";
 const OperatorsGoalsPage = () => {
 	const usersState = useCustomState<User[]>([]);
 	const newGoal = useCustomState<Partial<Goal>>({});
-	const goals = useCustomState<Goal[]>([]);
-	const addGoalButtonDisabled = useCustomState(true);
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: User[] }, undefined>({

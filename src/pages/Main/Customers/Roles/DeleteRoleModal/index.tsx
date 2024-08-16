@@ -47,7 +47,6 @@ function DeleteRoleModal({ role, updateOnDelete }: DeleteRoleModalProps) {
 				<button onClick={deleteRole} disabled={disabled}>
 					Confirmar
 				</button>
-				)
 			</StyledRoleModal>
 		</Modal>
 	);

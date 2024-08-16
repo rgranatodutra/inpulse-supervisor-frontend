@@ -3,8 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import { PaginatedResponse, useCustomRequest } from "../../api";
 import useCustomState from "../../utils/customState.hook";
 import LoadingSpinner from "../LoadingSpinner";
-import StyledTable from "./style";
 import TableHeader from "./TableHeader";
+import StyledTable from "./style";
 import { TableColumn, TableProps } from "./types";
 
 function Table<T>({
@@ -120,10 +120,12 @@ function Table<T>({
 					</thead>
 					<tbody>
 						{rowsState.value.map((row, index) => (
-							<tr key={`row_${index}`}>
+							<tr key={`${tableName}row_${index}`}>
 								{displayActionsState.value && actions && <td> {actions(row)} </td>}
 								{displayColumnsState.value.map((c, i) => (
-									<td key={`row_${index}_column_${i}`}>{c.format ? c.format(row) : getRowKey(row, c.key)}</td>
+									<td key={`${tableName}row_${index}_column_${i}`}>
+										{c.format ? c.format(row) : getRowKey(row, c.key)}
+									</td>
 								))}
 							</tr>
 						))}

@@ -62,9 +62,9 @@ function DealsTable({ users }: DealsTableProps) {
 			},
 		},
 		{
-			key: "CLIENTE",
+			key: "RAZAO",
 			header: "Razão social",
-			width: 24,
+			width: 40,
 			filter: {
 				type: "input",
 				width: "20rem",

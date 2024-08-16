@@ -7,6 +7,7 @@ import { Purchase } from "../../../../../interfaces/Purchase.type";
 import { User } from "../../../../../interfaces/User.type";
 import { ButtonType3 } from "../../../../../styles/buttons.style";
 import months from "../../../../../utils/months.array";
+import DeleteDealModal from "../DeleteDealsModal";
 import EditDealModal from "../EditDealsModal";
 
 interface DealsTableProps {
@@ -95,7 +96,7 @@ function DealsTable({ users }: DealsTableProps) {
 			header: "Operador",
 			format: (row) => {
 				if (row.OPERADOR) {
-					const rowUser = users.find((u) => (u.CODIGO = row.OPERADOR));
+					const rowUser = users.find((u) => u.CODIGO === row.OPERADOR);
 					return rowUser?.NOME;
 				} else {
 					return "Não Existe";
@@ -128,7 +129,7 @@ function DealsTable({ users }: DealsTableProps) {
 					</ButtonType3>,
 					<ButtonType3
 						onClick={() => {
-							modalState.set(<DeleteDealModal Deal={row} />);
+							modalState.set(<DeleteDealModal deal={row} />);
 						}}
 					>
 						<FaTrash />

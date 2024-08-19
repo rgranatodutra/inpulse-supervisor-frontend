@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import Services from "./services/users.service";
 import { CustomState } from "./utils/customState.hook";
 
-export type ServiceName = "users" | "customers" | "exceptions" | "monitoring";
+export type ServiceName = "users" | "customers" | "exceptions" | "monitoring" | "mock";
 
 type CustomRequestOptions<TResponseData, TRequestData> = {
 	method: "get" | "post" | "patch" | "put" | "delete";

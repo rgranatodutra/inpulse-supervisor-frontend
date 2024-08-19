@@ -39,7 +39,6 @@ function DeletePauseModal({ pause, updateOnDelete }: DeletePauseModalProps) {
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${pause.DESCRICAO}' para confirmar`}
-					value={PauseNameState.value}
 					onChange={(e) => {
 						PauseNameState.set(e.target.value.trim());
 					}}

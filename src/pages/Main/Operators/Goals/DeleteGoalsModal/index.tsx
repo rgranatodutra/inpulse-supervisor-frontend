@@ -37,7 +37,6 @@ function DeleteGoalModal({ goal }: DeleteGoalModalProps) {
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${goal.NOME}' para confirmar`}
-					value={GoalNameState.value}
 					onChange={(e) => {
 						GoalNameState.set(e.target.value);
 					}}

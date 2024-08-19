@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { FaUserGear } from "react-icons/fa6";
-import Table from "../../../../../../components/Table";
+import TableSPA from "../../../../../../components-variants/Table";
 import { GlobalContext } from "../../../../../../contexts/global";
 import { Customer } from "../../../../../../interfaces/Customer.type";
 import { ButtonType3 } from "../../../../../../styles/buttons.style";
@@ -14,8 +14,8 @@ const CustomersTable = ({ addCustomer }: CustomerTableProps) => {
 	const { modalState } = useContext(GlobalContext);
 
 	return (
-		<Table<Customer>
-			$tableHeight="100%"
+		<TableSPA<Customer>
+			$tableHeight="40rem"
 			$tableWidth="100%"
 			$fontSize={0.75}
 			columns={customerColumns}

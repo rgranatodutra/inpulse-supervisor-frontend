@@ -39,7 +39,6 @@ function DeleteBrandModal({ brand, updateOnDelete }: DeleteBrandModalProps) {
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${brand.DESCRICAO}' para confirmar`}
-					value={BrandNameState.value}
 					onChange={(e) => {
 						BrandNameState.set(e.target.value.trim());
 					}}

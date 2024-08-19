@@ -39,7 +39,6 @@ function DeleteShiftModal({ shift, updateOnDelete }: DeleteShiftModalProps) {
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${shift.DESCRICAO}' para confirmar`}
-					value={ShiftNameState.value}
 					onChange={(e) => {
 						ShiftNameState.set(e.target.value.trim());
 					}}

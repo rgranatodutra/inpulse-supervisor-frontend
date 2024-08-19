@@ -39,7 +39,6 @@ function DeleteRoleModal({ role, updateOnDelete }: DeleteRoleModalProps) {
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${role.DESCRICAO}' para confirmar`}
-					value={RoleNameState.value}
 					onChange={(e) => {
 						RoleNameState.set(e.target.value);
 					}}

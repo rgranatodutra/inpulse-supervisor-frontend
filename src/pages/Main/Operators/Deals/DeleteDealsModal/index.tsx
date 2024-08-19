@@ -37,7 +37,6 @@ function DeleteDealModal({ deal }: DeleteDealModalProps) {
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${deal.DESCRICAO}' para confirmar`}
-					value={DealNameState.value}
 					onChange={(e) => {
 						DealNameState.set(e.target.value.trim());
 					}}

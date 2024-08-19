@@ -39,7 +39,6 @@ function DeleteOriginModal({ origin, updateOnDelete }: DeleteOriginModalProps) {
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${origin.DESCRICAO}' para confirmar`}
-					value={OriginNameState.value}
 					onChange={(e) => {
 						OriginNameState.set(e.target.value);
 					}}

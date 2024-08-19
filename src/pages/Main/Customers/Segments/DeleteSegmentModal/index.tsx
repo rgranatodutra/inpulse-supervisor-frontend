@@ -39,7 +39,6 @@ function DeleteSegmentModal({ segment, updateOnDelete }: DeletesegmentModalProps
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${segment.NOME}' para confirmar`}
-					value={segmentNameState.value}
 					onChange={(e) => {
 						segmentNameState.set(e.target.value.trim());
 					}}

@@ -39,7 +39,6 @@ function DeleteGroupModal({ group, updateOnDelete }: DeleteGroupModalProps) {
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${group.DESCRICAO}' para confirmar`}
-					value={groupNameState.value}
 					onChange={(e) => {
 						groupNameState.set(e.target.value.trim());
 					}}

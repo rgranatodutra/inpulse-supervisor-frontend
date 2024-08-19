@@ -41,7 +41,6 @@ function DeleteUnitModal({ unit }: DeleteUnitModalProps) {
 				<Input
 					{...defaultInput100}
 					placeholder={`Digite '${unit.DESCRICAO}' para confirmar`}
-					value={UnitNameState.value}
 					onChange={(e) => {
 						UnitNameState.set(e.target.value.trim());
 					}}

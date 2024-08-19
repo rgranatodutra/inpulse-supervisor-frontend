@@ -12,6 +12,7 @@ const StyledOperatorsGoalsPage = styled.div`
 		flex-wrap: wrap;
 		gap: 1rem;
 		padding: 1rem 0;
+		margin-left: 1rem;
 
 		> div {
 			display: flex;

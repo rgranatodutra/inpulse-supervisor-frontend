@@ -4,7 +4,9 @@ import CustomerForm from "../forms/CustomerForm";
 import { CustomerProvider } from "../forms/CustomerForm/context";
 import OperatorForm from "../forms/OperatorForm";
 import { OperatorProvider } from "../forms/OperatorForm/context";
+import CampaignsPage from "../pages/Main/Campaigns/Campaigns";
 import UnitsPage from "../pages/Main/Campaigns/Main";
+import ResultsPage from "../pages/Main/Campaigns/Results";
 import CustomersBrandsPage from "../pages/Main/Customers/Brands";
 import CustomerGroupsPage from "../pages/Main/Customers/Groups";
 import CustomersPage from "../pages/Main/Customers/Main";
@@ -27,13 +29,7 @@ export const RenderingPage = () => {
 	const location = useLocation();
 
 	useEffect(() => {
-		setTitle(
-			"inPulse: " +
-				location.pathname
-					.replace("/", "")
-					.replace("/", " -> ")
-					.replace("_", " ")
-		);
+		setTitle("inPulse: " + location.pathname.replace("/", "").replace("/", " -> ").replace("_", " "));
 	}, [location]);
 
 	return (
@@ -92,6 +88,8 @@ export const RenderingPage = () => {
 			<>
 				{/* Rotas de Campanhas */}
 				<Route path="/campanhas/unidades" element={<UnitsPage />} />
+				<Route path="/campanhas/resultados" element={<ResultsPage />} />
+				<Route path="/campanhas" element={<CampaignsPage />} />
 			</>
 			<>
 				{/* Rotas de Monitoria */}

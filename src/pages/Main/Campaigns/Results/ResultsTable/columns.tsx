@@ -1,3 +1,4 @@
+import { FaTag } from "react-icons/fa6";
 import { TableColumn } from "../../../../../components/Table/types";
 import { Result } from "../../../../../interfaces/Result.type";
 
@@ -8,6 +9,11 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		width: 7,
 		primarykey: true,
 		alignContent: "start",
+		filter: {
+			type: "input",
+			width: "20rem",
+			icon: <FaTag />,
+		},
 	},
 	{
 		key: "NOME",
@@ -16,6 +22,10 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.NOME ? row.NOME : "não resgistrado";
 		},
+		filter: {
+			type: "input",
+			width: "20rem",
+		},
 	},
 	{
 		key: "TIPO",
@@ -23,6 +33,15 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		width: 12,
 		format: (row) => {
 			return row.TIPO ? row.TIPO : "não resgistrado";
+		},
+		filter: {
+			type: "select",
+			width: "13rem",
+			options: [
+				{ name: "Ativo", value: "ATIVO" },
+				{ name: "Recep", value: "RECEP" },
+				{ name: "Ambos", value: "AMBOS" },
+			],
 		},
 	},
 	{
@@ -33,6 +52,14 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.ESUCESSO ? row.ESUCESSO : "não resgistrado";
 		},
+		filter: {
+			type: "select",
+			width: "13rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
+		},
 	},
 	{
 		key: "EVENDA",
@@ -42,6 +69,14 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.EVENDA ? row.EVENDA : "não resgistrado";
 		},
+		filter: {
+			type: "select",
+			width: "13rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
+		},
 	},
 	{
 		key: "NOME_ACAO",
@@ -50,12 +85,24 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.NOME_ACAO ? row.NOME_ACAO : "não resgistrado";
 		},
+		filter: {
+			type: "input",
+			width: "20rem",
+		},
 	},
 	{
 		key: "ECONTATO",
 		header: "Contato",
 		width: 6,
 		defaultDisabled: true,
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
+		},
 	},
 	{
 		key: "COD_ACAO",
@@ -64,6 +111,10 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		defaultDisabled: true,
 		format: (row) => {
 			return row.COD_ACAO ? row.COD_ACAO : "não resgistrado";
+		},
+		filter: {
+			type: "input",
+			width: "20rem",
 		},
 	},
 	{
@@ -74,6 +125,14 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.PRIORIDADE ? row.PRIORIDADE : "não resgistrado";
 		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
+		},
 	},
 	{
 		key: "PROPOSTA",
@@ -82,6 +141,14 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		defaultDisabled: true,
 		format: (row) => {
 			return row.PROPOSTA ? row.PROPOSTA : "não resgistrado";
+		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
 		},
 	},
 	{
@@ -92,11 +159,27 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.FIDELIZARCOTACAO ? row.FIDELIZARCOTACAO : "não resgistrado";
 		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
+		},
 	},
 	{
 		key: "PESQUISA_SATISFACAO",
 		header: "Pesquisa de satisfação",
 		width: 10,
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "N" },
+				{ name: "Sim", value: "S" },
+			],
+		},
 	},
 	{
 		key: "EPEDIDO",
@@ -105,6 +188,14 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		defaultDisabled: true,
 		format: (row) => {
 			return row.EPEDIDO ? row.EPEDIDO : "não resgistrado";
+		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
 		},
 	},
 	{
@@ -115,6 +206,10 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.QTDE_FIDELIZARCOTACAO ? row.QTDE_FIDELIZARCOTACAO : "não resgistrado";
 		},
+		filter: {
+			type: "input",
+			width: "20rem",
+		},
 	},
 	{
 		key: "ALTERA_DURACAO",
@@ -124,11 +219,27 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.ALTERA_DURACAO ? row.ALTERA_DURACAO : "não resgistrado";
 		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "N" },
+				{ name: "Sim", value: "S" },
+			],
+		},
 	},
 	{
 		key: "CANCELAPROPOSTA",
 		header: "Cancelar proposta",
 		width: 10,
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
+		},
 	},
 	{
 		key: "UTILIZAR_AGENDA",
@@ -137,6 +248,14 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		defaultDisabled: true,
 		format: (row) => {
 			return row.UTILIZAR_AGENDA ? row.UTILIZAR_AGENDA : "não resgistrado";
+		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
 		},
 	},
 	{
@@ -147,6 +266,14 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.ECOMPRA ? row.ECOMPRA : "não resgistrado";
 		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
+		},
 	},
 	{
 		key: "ENEGOCIACAO",
@@ -155,6 +282,14 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		defaultDisabled: true,
 		format: (row) => {
 			return row.ENEGOCIACAO ? row.ENEGOCIACAO : "não resgistrado";
+		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
 		},
 	},
 	{
@@ -165,6 +300,14 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.NAOECOMPRA ? row.NAOECOMPRA : "não resgistrado";
 		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
+		},
 	},
 	{
 		key: "WHATS_ACAO",
@@ -173,6 +316,10 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		defaultDisabled: true,
 		format: (row) => {
 			return row.WHATS_ACAO ? row.WHATS_ACAO : "não resgistrado";
+		},
+		filter: {
+			type: "input",
+			width: "20rem",
 		},
 	},
 	{
@@ -183,11 +330,25 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		format: (row) => {
 			return row.WHATS_URGENCIA_AGENDAMENTO ? row.WHATS_URGENCIA_AGENDAMENTO : "não resgistrado";
 		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Muito alta", value: "MUITO_ALTA" },
+				{ name: "Alta", value: "ALTA" },
+				{ name: "Média", value: "MEDIA" },
+				{ name: "Normal", value: "NORMAL" },
+			],
+		},
 	},
 	{
 		key: "WHATS_ALTERAR_AGENDAMENTO",
 		header: "Alterar agendamento whatsApp",
 		width: 10,
+		filter: {
+			type: "input",
+			width: "20rem",
+		},
 	},
 ];
 

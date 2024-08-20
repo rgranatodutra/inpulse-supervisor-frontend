@@ -1,3 +1,4 @@
+import { FaTag } from "react-icons/fa6";
 import { TableColumn } from "../../../../../components/Table/types";
 import { Campaign } from "../../../../../interfaces/Campaign.type";
 
@@ -8,16 +9,29 @@ const campaignColumns: Array<TableColumn<Campaign>> = [
 		width: 7,
 		primarykey: true,
 		alignContent: "start",
+		filter: {
+			type: "input",
+			width: "20rem",
+			icon: <FaTag />,
+		},
 	},
 	{
 		key: "NOME",
 		header: "Nome",
 		width: 24,
+		filter: {
+			type: "input",
+			width: "20rem",
+		},
 	},
 	{
 		key: "DATA_INI",
 		header: "Data inicial",
 		width: 12,
+		filter: {
+			type: "date-range",
+			width: "20rem",
+		},
 	},
 	{
 		key: "PRIORIDADE",
@@ -25,6 +39,10 @@ const campaignColumns: Array<TableColumn<Campaign>> = [
 		width: 6,
 		format: (row) => {
 			return row.PRIORIDADE ? row.PRIORIDADE : "Não registrado";
+		},
+		filter: {
+			type: "input",
+			width: "20rem",
 		},
 	},
 	{
@@ -34,6 +52,16 @@ const campaignColumns: Array<TableColumn<Campaign>> = [
 		format: (row) => {
 			return row.TIPO ? row.TIPO : "Não registrado";
 		},
+		filter: {
+			type: "multi-select",
+			width: "20rem",
+			options: [
+				{ name: "Ativos", value: "ATIVOS" },
+				{ name: "Inat_R", value: "INAT_R" },
+				{ name: "Inat_A", value: "INAT_A" },
+				{ name: "Prospe", value: "PROSPE" },
+			],
+		},
 	},
 	{
 		key: "MAX_RESPOSTA",
@@ -41,6 +69,10 @@ const campaignColumns: Array<TableColumn<Campaign>> = [
 		width: 6,
 		format: (row) => {
 			return row.MAX_RESPOSTA ? row.MAX_RESPOSTA : "Não registrado";
+		},
+		filter: {
+			type: "input",
+			width: "20rem",
 		},
 	},
 	{
@@ -50,6 +82,14 @@ const campaignColumns: Array<TableColumn<Campaign>> = [
 		format: (row) => {
 			return row.PAUSADA ? row.PAUSADA : "Não registrado";
 		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
+		},
 	},
 	{
 		key: "PAUSAR_AG_PUBLICA",
@@ -57,6 +97,14 @@ const campaignColumns: Array<TableColumn<Campaign>> = [
 		width: 6,
 		format: (row) => {
 			return row.PAUSAR_AG_PUBLICA ? row.PAUSAR_AG_PUBLICA : "Não registrado";
+		},
+		filter: {
+			type: "select",
+			width: "20rem",
+			options: [
+				{ name: "Não", value: "NAO" },
+				{ name: "Sim", value: "SIM" },
+			],
 		},
 	},
 ];

@@ -21,7 +21,7 @@ function Table<T>({
 
 	const rowsState = useCustomState<Array<T>>([]);
 	const loadingState = useCustomState<boolean>(false);
-	const displayColumnsState = useCustomState<Array<TableColumn<T>>>([...columns]);
+	const displayColumnsState = useCustomState<Array<TableColumn<T>>>([...columns.filter((c) => !c.defaultDisabled)]);
 	const displayActionsState = useCustomState<boolean>(true);
 	const modalState = useCustomState<ReactNode>("");
 	const totalPages = useCustomState<number>(1);

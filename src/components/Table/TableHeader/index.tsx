@@ -202,7 +202,9 @@ function TableHeader<T>({
 					onChange={onChangeDisplayColumns}
 					options={displayColumnsOptions}
 					placeholder="Colunas"
-					defaultValue={displayColumnsOptions}
+					defaultValue={displayColumnsOptions.filter(
+						(dco) => !columns.find((c) => dco.value === c.key)?.defaultDisabled
+					)}
 				/>
 			</div>
 		</StyledTableHeader>

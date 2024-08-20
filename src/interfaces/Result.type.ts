@@ -1,0 +1,25 @@
+export type Result = {
+	CODIGO: number;
+	NOME: string;
+	TIPO?: string;
+	ESUCESSO?: string;
+	EVENDA?: string;
+	NOME_ACAO?: string;
+	ECONTATO: string;
+	COD_ACAO?: number;
+	PRIORIDADE?: string;
+	PROPOSTA?: string;
+	FIDELIZARCOTACAO?: string;
+	PESQUISA_SATISFACAO: string;
+	EPEDIDO?: string;
+	QTDE_FIDELIZARCOTACAO: number;
+	ALTERA_DURACAO?: string;
+	CANCELAPROPOSTA: string;
+	UTILIZAR_AGENDA?: string;
+	ECOMPRA?: string;
+	ENEGOCIACAO?: string;
+	NAOECOMPRA?: string;
+	WHATS_ACAO?: string;
+	WHATS_URGENCIA_AGENDAMENTO?: string;
+	WHATS_ALTERAR_AGENDAMENTO: number;
+};

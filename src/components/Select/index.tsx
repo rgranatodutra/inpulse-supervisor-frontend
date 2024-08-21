@@ -18,6 +18,7 @@ type SelectOptions<T> = {
 	disableClearButton?: boolean;
 	disableInput?: boolean;
 	leftIcon?: ReactNode;
+	label?: string;
 };
 
 type SelectProps<T> = SelectOptions<T> & Omit<StyledSelectProps, "$icons">;
@@ -40,6 +41,7 @@ function Select<T>({
 	disableClearButton,
 	disableInput,
 	leftIcon,
+	label,
 }: SelectProps<T>) {
 	const optionState = useCustomState<Option<T> | null>(defaultValue || null);
 	const displayMenuState = useCustomState<boolean>(false);
@@ -146,7 +148,8 @@ function Select<T>({
 				$leftIcon: !!leftIcon,
 			}}
 		>
-			<div>
+			{label ? <label>{label}</label> : ""}
+			<div className="input-wrapper">
 				{leftIcon}
 				<input
 					placeholder={placeholder}
@@ -169,7 +172,7 @@ function Select<T>({
 					</div>
 				)}
 			</div>
-			<ul className={!disabled && displayMenuState.value ? "showing" : "hidden"}>
+			<ul className={`${!disabled && displayMenuState.value ? "showing" : "hidden"} ${label ? "down" : ""}`}>
 				{filteredOptions.map((option, index) => (
 					<li
 						className={optionState.value === option.value ? "selected" : ""}

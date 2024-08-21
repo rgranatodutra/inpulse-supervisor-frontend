@@ -16,12 +16,19 @@ export type StyledSelectProps = {
 
 const StyledSelect = styled.div<StyledSelectProps>`
 	${(p) => css`
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
 		box-sizing: border-box;
 		width: ${p.$width};
 		user-select: none;
 		position: relative;
-		border: 1px solid ${p.$borderColor || p.$color};
-		border-radius: 0.25rem;
+
+		> label {
+			font-size: ${p.$fontSize || "0.875"}rem;
+			line-height: 100%;
+		}
+
 		${p.$disableBorder &&
 		css`
 			border-color: transparent;
@@ -42,6 +49,8 @@ const StyledSelect = styled.div<StyledSelectProps>`
 		}
 
 		> div {
+			border: 1px solid ${p.$borderColor || p.$color};
+			border-radius: 0.25rem;
 			> .icons {
 				width: max-content;
 				padding: ${p.$padding[0] * 0.5 + "rem"} ${p.$padding[0] * 0.5 + "rem"};
@@ -68,7 +77,7 @@ const StyledSelect = styled.div<StyledSelectProps>`
 			}
 		}
 
-		> div:nth-child(1) {
+		> div.input-wrapper {
 			display: flex;
 			align-items: center;
 			box-sizing: border-box;
@@ -130,6 +139,12 @@ const StyledSelect = styled.div<StyledSelectProps>`
 			flex-direction: column;
 			position: absolute;
 			top: ${`${p.$padding[0] * 2 + (p.$padding[0] * 2 + (p.$fontSize || 1)) / 4 + (p.$fontSize || 1)}rem`};
+			transform: translateY(0.125rem);
+
+			&.down {
+				transform: translateY(1.5rem);
+			}
+
 			border-radius: 0.25rem;
 			left: 0;
 			background-color: var(--color-grey-8);

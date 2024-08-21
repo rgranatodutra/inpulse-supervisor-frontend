@@ -29,7 +29,7 @@ type TableHeaderProps<T> = {
 	displayColumnsState: CustomState<Array<TableColumn<T>>>;
 	displayActionsState: CustomState<boolean>;
 	isMaximizedState: CustomState<boolean>;
-	totalPages: number;
+	nextPage: boolean;
 	totalRowsCount: number;
 	tableName: string;
 	tableRef: MutableRefObject<null | HTMLTableElement>;
@@ -56,7 +56,7 @@ function TableHeader<T>({
 	isMaximizedState,
 	autoUpdateState,
 	autoUpdateIntervalState,
-	totalPages,
+	nextPage,
 	totalRowsCount,
 	haveActions,
 	tableName,
@@ -125,15 +125,6 @@ function TableHeader<T>({
 				<button title="Maximizar tabela" onClick={onClickMaximizeButton}>
 					{isMaximizedState.value ? <FaMinimize /> : <FaExpand />}
 				</button>
-				{totalRowsCount ? (
-					<span>
-						{" "}
-						{totalRowsCount.toLocaleString("pt-BR")}{" "}
-						{totalRowsCount > 1 ? "registros encontrados" : "registro encontrado"}{" "}
-					</span>
-				) : (
-					<span> Nenhum registro encontardo </span>
-				)}
 			</div>
 			<div>
 				{enableAutoUpdate && (
@@ -162,7 +153,12 @@ function TableHeader<T>({
 						</div>
 					</>
 				)}
-				<PageController searchParams={searchParams} setSearchParams={setSearchParams} totalPages={totalPages} />
+				<PageController
+					searchParams={searchParams}
+					setSearchParams={setSearchParams}
+					nextPage={nextPage}
+					disabled={loadingState.value}
+				/>
 				<ButtonType1 onClick={onShowAll}>
 					<FaEye />
 					<p> Mostrar todos </p>

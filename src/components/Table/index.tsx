@@ -24,7 +24,7 @@ function Table<T>({
 	const displayColumnsState = useCustomState<Array<TableColumn<T>>>([...columns.filter((c) => !c.defaultDisabled)]);
 	const displayActionsState = useCustomState<boolean>(true);
 	const modalState = useCustomState<ReactNode>("");
-	const totalPages = useCustomState<number>(1);
+	const nextPage = useCustomState<boolean>(false);
 	const totalRowsCount = useCustomState<number>(0);
 	const isMaximizedState = useCustomState<boolean>(false);
 	const autoUpdateState = useCustomState<boolean>(false);
@@ -38,8 +38,7 @@ function Table<T>({
 			params: searchParams,
 			onSuccess: (res) => {
 				rowsState.set(res.data);
-				totalPages.set(res.totalPages);
-				totalRowsCount.set(res.count);
+				nextPage.set(res.page.next);
 			},
 			loadingState,
 		});
@@ -60,8 +59,6 @@ function Table<T>({
 					params: searchParams,
 					onSuccess: (res) => {
 						rowsState.set(res.data);
-						totalPages.set(res.totalPages);
-						totalRowsCount.set(res.count);
 					},
 					loadingState,
 				});
@@ -96,7 +93,7 @@ function Table<T>({
 				loadingState={loadingState}
 				modalState={modalState}
 				isMaximizedState={isMaximizedState}
-				totalPages={totalPages.value}
+				nextPage={nextPage.value}
 				totalRowsCount={totalRowsCount.value}
 				rowsState={rowsState}
 				haveActions={!!actions}

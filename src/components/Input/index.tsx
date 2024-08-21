@@ -1,9 +1,4 @@
-import {
-	DetailedHTMLProps,
-	InputHTMLAttributes,
-	ReactNode,
-	TextareaHTMLAttributes,
-} from "react";
+import { DetailedHTMLProps, InputHTMLAttributes, ReactNode, TextareaHTMLAttributes } from "react";
 import StyledInput, { StyledInputProps } from "./styles";
 
 type InputOptions =
@@ -12,19 +7,15 @@ type InputOptions =
 			leftIcon?: ReactNode;
 			error?: string;
 			isTextArea?: false;
-	  } & DetailedHTMLProps<
-			InputHTMLAttributes<HTMLInputElement>,
-			HTMLInputElement
-	  >)
+			label?: string;
+	  } & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>)
 	| ({
 			rightIcon?: ReactNode;
 			leftIcon?: ReactNode;
 			error?: string;
 			isTextArea: true;
-	  } & DetailedHTMLProps<
-			TextareaHTMLAttributes<HTMLTextAreaElement>,
-			HTMLTextAreaElement
-	  >);
+			label?: string;
+	  } & DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>);
 
 type InputProps = InputOptions & Omit<StyledInputProps, "$icons">;
 
@@ -40,6 +31,7 @@ const Input = ({
 	leftIcon,
 	rightIcon,
 	error,
+	label,
 	isTextArea,
 	...inputProps
 }: InputProps) => {
@@ -58,27 +50,21 @@ const Input = ({
 		>
 			{isTextArea ? (
 				<>
-					<div>
+					{label ? <label>{label}</label> : ""}
+					<div className="input-wrapper">
 						{leftIcon || ""}
 						<textarea
-							{...(inputProps as DetailedHTMLProps<
-								TextareaHTMLAttributes<HTMLTextAreaElement>,
-								HTMLTextAreaElement
-							>)}
+							{...(inputProps as DetailedHTMLProps<TextareaHTMLAttributes<HTMLTextAreaElement>, HTMLTextAreaElement>)}
 						/>
 						{rightIcon || ""}
 					</div>
 				</>
 			) : (
 				<>
-					<div>
+					{label ? <label>{label}</label> : ""}
+					<div className="input-wrapper">
 						{leftIcon || ""}
-						<input
-							{...(inputProps as DetailedHTMLProps<
-								InputHTMLAttributes<HTMLInputElement>,
-								HTMLInputElement
-							>)}
-						/>
+						<input {...(inputProps as DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>)} />
 						{rightIcon || ""}
 					</div>
 				</>

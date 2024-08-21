@@ -37,6 +37,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "13rem",
+			placeholder: "Selecione o tipo",
 			options: [
 				{ name: "Ativo", value: "ATIVO" },
 				{ name: "Recep", value: "RECEP" },
@@ -55,6 +56,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "13rem",
+			placeholder: "É sucesso?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -72,6 +74,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "13rem",
+			placeholder: "É venda?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -98,6 +101,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "É contato?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -128,6 +132,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "Tem prioridade?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -145,6 +150,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "É proposta?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -162,6 +168,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "Fidelizar cotação?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -175,6 +182,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "É pesquisa de satisfação?",
 			options: [
 				{ name: "Não", value: "N" },
 				{ name: "Sim", value: "S" },
@@ -192,6 +200,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "É pedido?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -222,6 +231,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "Alterar duração?",
 			options: [
 				{ name: "Não", value: "N" },
 				{ name: "Sim", value: "S" },
@@ -235,6 +245,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "Cancelar proposta?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -252,6 +263,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "Utilizar agenda?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -269,6 +281,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "É compra?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -286,6 +299,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "É negociação?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -303,6 +317,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "Não é compra?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -331,8 +346,9 @@ const resultsColumns: Array<TableColumn<Result>> = [
 			return row.WHATS_URGENCIA_AGENDAMENTO ? row.WHATS_URGENCIA_AGENDAMENTO : "não resgistrado";
 		},
 		filter: {
-			type: "select",
+			type: "multi-select",
 			width: "20rem",
+			placeholder: "Nivel de urgencia",
 			options: [
 				{ name: "Muito alta", value: "MUITO_ALTA" },
 				{ name: "Alta", value: "ALTA" },

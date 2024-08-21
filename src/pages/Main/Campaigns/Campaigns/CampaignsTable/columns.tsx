@@ -85,6 +85,7 @@ const campaignColumns: Array<TableColumn<Campaign>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "Está pausada?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
@@ -101,6 +102,7 @@ const campaignColumns: Array<TableColumn<Campaign>> = [
 		filter: {
 			type: "select",
 			width: "20rem",
+			placeholder: "Pausar ligações?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },

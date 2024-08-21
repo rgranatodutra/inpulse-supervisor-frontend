@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import Services from "./services/users.service";
 import { CustomState } from "./utils/customState.hook";
 
-export type ServiceName = "users" | "customers" | "exceptions" | "monitoring" | "mock";
+export type ServiceName = "users" | "customers" | "exceptions" | "monitoring" | "campaigns";
 
 type CustomRequestOptions<TResponseData, TRequestData> = {
 	method: "get" | "post" | "patch" | "put" | "delete";
@@ -21,9 +21,12 @@ type CustomRequestOptions<TResponseData, TRequestData> = {
 
 export type PaginatedResponse<T> = {
 	data: T;
-	count: number;
-	totalPages: number;
-	currentPage: number;
+	message: string;
+	page: {
+		current: number;
+		next: boolean;
+		previous: boolean;
+	};
 };
 
 async function useCustomRequest<TResponseData, TRequestData>({

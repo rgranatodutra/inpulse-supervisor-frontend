@@ -89,6 +89,7 @@ function EditDealModal({ deal, users }: EditDealModalProps) {
 				<Input
 					{...defaultInput50}
 					type="number"
+					min={0}
 					onChange={(e) => editedDealState.set((prev) => ({ ...prev, VALOR: +e.target.value || undefined }))}
 					defaultValue={deal.VALOR}
 				/>

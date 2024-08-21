@@ -75,6 +75,7 @@ function EditGoalModal({ goal, users }: EditGoalModalProps) {
 					{...defaultInput100}
 					leftIcon={<span> R$ </span>}
 					type="number"
+					min={0}
 					defaultValue={goal.VALOR_META}
 					onChange={(e) => editedGoalState.set((prev) => ({ ...prev, VALOR_META: +e.target.value }))}
 				/>

@@ -115,6 +115,7 @@ const OperatorsDealsPage = () => {
 						{...defaultInput100}
 						leftIcon={<span> R$ </span>}
 						type="number"
+						min={0}
 						onChange={(e) => newDeal.set((prev) => ({ ...prev, VALOR: +e.target.value || undefined }))}
 					/>
 				</div>

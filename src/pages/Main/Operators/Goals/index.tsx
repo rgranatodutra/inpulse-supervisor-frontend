@@ -96,6 +96,7 @@ const OperatorsGoalsPage = () => {
 						leftIcon={<span> R$ </span>}
 						rightIcon={null}
 						type="number"
+						min={0}
 						onChange={(e) => newGoal.set((prev) => ({ ...prev, VALOR_META: +e.target.value }))}
 					/>
 				</div>

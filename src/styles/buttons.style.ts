@@ -5,6 +5,7 @@ const ButtonType1 = styled.button`
 	color: var(--color-grey-4);
 	border: 1px solid;
 	border-color: var(--color-grey-4);
+	user-select: none;
 
 	padding: 0.5rem;
 	padding-right: 0.75rem;
@@ -50,6 +51,7 @@ const ButtonType1 = styled.button`
 `;
 
 const ButtonType2 = styled.button`
+	user-select: none;
 	background-color: var(--color-grey-8);
 	color: var(--color-grey-4);
 	border-color: var(--color-grey-4);
@@ -76,6 +78,7 @@ const ButtonType2 = styled.button`
 `;
 
 const ButtonType3 = styled.div`
+	user-select: none;
 	& > a {
 		color: var(--color-grey-2);
 		display: flex;

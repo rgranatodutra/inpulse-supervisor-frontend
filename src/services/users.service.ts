@@ -11,7 +11,7 @@ class Services {
 	public static readonly monitoring = axios.create({
 		baseURL: import.meta.env.VITE_MONITORING_URL + `/${currentRoute}`,
 	});
-	public static readonly mock = axios.create({ baseURL: import.meta.env.VITE_MOCK_URL });
+	public static readonly campaigns = axios.create({ baseURL: import.meta.env.VITE_CAMPAIGNS_URL + `/${currentRoute}` });
 }
 
 export default Services;

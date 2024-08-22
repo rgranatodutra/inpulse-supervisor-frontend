@@ -1,4 +1,6 @@
 import { FaCheck } from "react-icons/fa6";
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../api";
 import { defaultInput100 } from "../../../../components-variants/defaultInputs";
 import Input from "../../../../components/Input";
 import { Unit } from "../../../../interfaces/Unit.type";
@@ -11,7 +13,15 @@ const UnitsPage = () => {
 	const newUnit = useCustomState<Partial<Unit>>({});
 
 	function addUnit() {
-		console.log(newUnit.value);
+		useCustomRequest<{ message: String; data: Unit }, Partial<Unit>>({
+			endpoint: "/units",
+			method: "post",
+			service: "campaigns",
+			requestData: newUnit.value,
+			onSuccess: () => {
+				toast.success("Unidade adiciona com sucesso!");
+			},
+		});
 	}
 
 	const disabled =
@@ -21,7 +31,8 @@ const UnitsPage = () => {
 		!newUnit.value.INATIVOS_ANTIGOS ||
 		!newUnit.value.INATIVOS_RECENTES ||
 		!(newUnit.value.INATIVOS_ANTIGOS > 0) ||
-		!(newUnit.value.INATIVOS_RECENTES > 0);
+		!(newUnit.value.INATIVOS_RECENTES > 0) ||
+		!(newUnit.value.INATIVOS_ANTIGOS > newUnit.value.INATIVOS_RECENTES);
 
 	return (
 		<StyledCampaignsUnitsPage>
@@ -60,6 +71,7 @@ const UnitsPage = () => {
 						{...defaultInput100}
 						type="number"
 						placeholder="Dias de inatividade"
+						min={1}
 						onChange={(e) => newUnit.set((prev) => ({ ...prev, INATIVOS_RECENTES: +e.target.value || undefined }))}
 					/>
 				</div>
@@ -68,6 +80,7 @@ const UnitsPage = () => {
 					<Input
 						{...defaultInput100}
 						type="number"
+						min={1}
 						placeholder="Dias de inatividade"
 						onChange={(e) => newUnit.set((prev) => ({ ...prev, INATIVOS_ANTIGOS: +e.target.value || undefined }))}
 					/>

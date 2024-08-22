@@ -35,8 +35,8 @@ const ResultsTable = () => {
 					<FaTrash />
 				</ButtonType3>,
 			]}
-			requestEndpoint="/mockResults"
-			service="mock"
+			requestEndpoint="/results"
+			service="campaigns"
 		/>
 	);
 };

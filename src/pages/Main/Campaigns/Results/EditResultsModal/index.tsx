@@ -1,12 +1,8 @@
 import { useContext } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import {
-	defaultInput100,
-	defaultInput50,
-	defaultSelect100,
-	defaultSelect50,
-} from "../../../../../components-variants/defaultInputs";
+import { useCustomRequest } from "../../../../../api";
+import { defaultInput100, defaultSelect100, defaultSelect50 } from "../../../../../components-variants/defaultInputs";
 import Input from "../../../../../components/Input";
 import Modal from "../../../../../components/Modal";
 import Select from "../../../../../components/Select";
@@ -24,23 +20,17 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const alteredResult = useCustomState<Partial<Result>>(result);
 
-	/* async function updateResult() {
-		useCustomRequest<{ message: string; data: Purchase }, Partial<Purchase>>({
-			endpoint: `/purchases/${Result.CODIGO}`,
-			requestData: editedResultState.value,
+	async function editResult() {
+		useCustomRequest<{ message: string; data: Result }, Partial<Result>>({
+			endpoint: `/results/${result.CODIGO}`,
+			requestData: alteredResult.value,
 			method: "patch",
-			service: "customers",
+			service: "campaigns",
 			onSuccess: () => {
-				toast.success("Compra atualizada com sucesso");
+				toast.success("Resultado atualizada com sucesso");
 				modalState.reset();
 			},
 		});
-	} */
-
-	function editResult() {
-		console.log(alteredResult.value);
-		modalState.reset();
-		toast.success("Resultado alterado com sucesso");
 	}
 
 	const disabled =
@@ -51,14 +41,11 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 		!alteredResult.value.PESQUISA_SATISFACAO ||
 		!alteredResult.value.QTDE_FIDELIZARCOTACAO ||
 		!(alteredResult.value.QTDE_FIDELIZARCOTACAO > 0) ||
-		!alteredResult.value.CANCELAPROPOSTA ||
-		!alteredResult.value.WHATS_ALTERAR_AGENDAMENTO ||
-		!(alteredResult.value.WHATS_ALTERAR_AGENDAMENTO > 0) ||
-		!(alteredResult.value.WHATS_ALTERAR_AGENDAMENTO < 10000);
+		!alteredResult.value.CANCELAPROPOSTA;
 
 	const selectOptions = [
-		{ name: "Não", value: "nao" },
-		{ name: "Sim", value: "sim" },
+		{ name: "Não", value: "NAO" },
+		{ name: "Sim", value: "SIM" },
 	];
 
 	return (
@@ -93,7 +80,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					options={selectOptions}
 					defaultValue={{
 						name: alteredResult.value.ESUCESSO ? alteredResult.value.ESUCESSO : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.ESUCESSO,
 					}}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, ESUCESSO: e || undefined }))}
 				/>
@@ -102,7 +89,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					placeholder="Venda?"
 					defaultValue={{
 						name: alteredResult.value.EVENDA ? alteredResult.value.EVENDA : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.EVENDA,
 					}}
 					options={selectOptions}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, EVENDA: e || undefined }))}
@@ -119,7 +106,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					placeholder="Contato?"
 					defaultValue={{
 						name: alteredResult.value.ECONTATO ? alteredResult.value.ECONTATO : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.ECONTATO,
 					}}
 					options={selectOptions}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, ECONTATO: e || undefined }))}
@@ -130,7 +117,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					options={selectOptions}
 					defaultValue={{
 						name: alteredResult.value.PRIORIDADE ? alteredResult.value.PRIORIDADE : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.PRIORIDADE,
 					}}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, PRIORIDADE: e || undefined }))}
 				/>
@@ -140,7 +127,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					options={selectOptions}
 					defaultValue={{
 						name: alteredResult.value.PROPOSTA ? alteredResult.value.PROPOSTA : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.PROPOSTA,
 					}}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, PROPOSTA: e || undefined }))}
 				/>
@@ -150,7 +137,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					options={selectOptions}
 					defaultValue={{
 						name: alteredResult.value.FIDELIZARCOTACAO ? alteredResult.value.FIDELIZARCOTACAO : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.FIDELIZARCOTACAO,
 					}}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, FIDELIZARCOTACAO: e || undefined }))}
 				/>
@@ -159,7 +146,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					placeholder="Pesquisa de satisfação?"
 					defaultValue={{
 						name: alteredResult.value.PESQUISA_SATISFACAO ? alteredResult.value.PESQUISA_SATISFACAO : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.PESQUISA_SATISFACAO,
 					}}
 					options={[
 						{ name: "Sim", value: "s" },
@@ -173,7 +160,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					options={selectOptions}
 					defaultValue={{
 						name: alteredResult.value.EPEDIDO ? alteredResult.value.EPEDIDO : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.EPEDIDO,
 					}}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, EPEDIDO: e || undefined }))}
 				/>
@@ -181,6 +168,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 				<Input
 					{...defaultInput100}
 					type="number"
+					min={0}
 					placeholder="Quantidade de fidelização"
 					defaultValue={alteredResult.value.QTDE_FIDELIZARCOTACAO}
 					onChange={(e) =>
@@ -192,7 +180,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					placeholder="Alterar duração?"
 					defaultValue={{
 						name: alteredResult.value.ALTERA_DURACAO ? alteredResult.value.ALTERA_DURACAO : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.ALTERA_DURACAO,
 					}}
 					options={[
 						{ name: "Sim", value: "S" },
@@ -205,7 +193,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					placeholder="Cancelar proposta?"
 					defaultValue={{
 						name: alteredResult.value.CANCELAPROPOSTA ? alteredResult.value.CANCELAPROPOSTA : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.CANCELAPROPOSTA,
 					}}
 					options={selectOptions}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, CANCELAPROPOSTA: e || undefined }))}
@@ -215,7 +203,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					placeholder="Utilizar agenda?"
 					defaultValue={{
 						name: alteredResult.value.UTILIZAR_AGENDA ? alteredResult.value.UTILIZAR_AGENDA : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.UTILIZAR_AGENDA,
 					}}
 					options={selectOptions}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, UTILIZAR_AGENDA: e || undefined }))}
@@ -225,7 +213,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					placeholder="Compra?"
 					defaultValue={{
 						name: alteredResult.value.ECOMPRA ? alteredResult.value.ECOMPRA : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.ECOMPRA,
 					}}
 					options={selectOptions}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, ECOMPRA: e || undefined }))}
@@ -235,7 +223,7 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					placeholder="Negociação?"
 					defaultValue={{
 						name: alteredResult.value.ENEGOCIACAO ? alteredResult.value.ENEGOCIACAO : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.ENEGOCIACAO,
 					}}
 					options={selectOptions}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, ENEGOCIACAO: e || undefined }))}
@@ -245,43 +233,10 @@ function EditResultsModal({ result }: EditResultsModalProps) {
 					placeholder="Não é compra?"
 					defaultValue={{
 						name: alteredResult.value.NAOECOMPRA ? alteredResult.value.NAOECOMPRA : "Não cadrastrado",
-						value: alteredResult.value.TIPO,
+						value: alteredResult.value.NAOECOMPRA,
 					}}
 					options={selectOptions}
 					onChange={(e) => alteredResult.set((prev) => ({ ...prev, NAOECOMPRA: e || undefined }))}
-				/>
-				<Input
-					{...defaultInput100}
-					placeholder="Ação whatsapp?"
-					defaultValue={alteredResult.value.WHATS_ACAO}
-					maxLength={50}
-					onChange={(e) => alteredResult.set((prev) => ({ ...prev, WHATS_ACAO: e.target.value.trim() || undefined }))}
-				/>
-				<Select
-					{...defaultSelect50}
-					placeholder="Whatsapp urgencia?"
-					defaultValue={{
-						name: alteredResult.value.WHATS_URGENCIA_AGENDAMENTO
-							? alteredResult.value.WHATS_URGENCIA_AGENDAMENTO
-							: "Não cadrastrado",
-						value: alteredResult.value.TIPO,
-					}}
-					options={[
-						{ name: "Muito alta", value: "MUITO_ALTA" },
-						{ name: "Alta", value: "ALTA" },
-						{ name: "Normal", value: "NORMAL" },
-					]}
-					onChange={(e) => alteredResult.set((prev) => ({ ...prev, WHATS_URGENCIA_AGENDAMENTO: e || undefined }))}
-				/>
-				<Input
-					{...defaultInput50}
-					placeholder="Whatsapp alterar agendamento?"
-					type="number"
-					defaultValue={alteredResult.value.WHATS_ALTERAR_AGENDAMENTO}
-					maxLength={4}
-					onChange={(e) =>
-						alteredResult.set((prev) => ({ ...prev, WHATS_ALTERAR_AGENDAMENTO: +e.target.value || undefined }))
-					}
 				/>
 
 				<ButtonType2 disabled={disabled} onClick={() => editResult()} type="button">

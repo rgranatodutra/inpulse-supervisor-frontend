@@ -27,8 +27,8 @@ const CampaignTable = () => {
 					<FaPencil />
 				</ButtonType3>,
 			]}
-			requestEndpoint="/mockCampaigns"
-			service="mock"
+			requestEndpoint="/campaigns"
+			service="campaigns"
 		/>
 	);
 };

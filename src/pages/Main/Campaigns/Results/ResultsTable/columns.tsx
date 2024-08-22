@@ -280,7 +280,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		},
 		filter: {
 			type: "select",
-			width: "20rem",
+			width: "13rem",
 			placeholder: "É compra?",
 			options: [
 				{ name: "Não", value: "NAO" },
@@ -298,7 +298,7 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		},
 		filter: {
 			type: "select",
-			width: "20rem",
+			width: "13rem",
 			placeholder: "É negociação?",
 			options: [
 				{ name: "Não", value: "NAO" },
@@ -316,54 +316,12 @@ const resultsColumns: Array<TableColumn<Result>> = [
 		},
 		filter: {
 			type: "select",
-			width: "20rem",
+			width: "13rem",
 			placeholder: "Não é compra?",
 			options: [
 				{ name: "Não", value: "NAO" },
 				{ name: "Sim", value: "SIM" },
 			],
-		},
-	},
-	{
-		key: "WHATS_ACAO",
-		header: "Ação whatsApp",
-		width: 6,
-		defaultDisabled: true,
-		format: (row) => {
-			return row.WHATS_ACAO ? row.WHATS_ACAO : "não resgistrado";
-		},
-		filter: {
-			type: "input",
-			width: "20rem",
-		},
-	},
-	{
-		key: "WHATS_URGENCIA_AGENDAMENTO",
-		header: "Urgencia whatsApp",
-		width: 10,
-		defaultDisabled: true,
-		format: (row) => {
-			return row.WHATS_URGENCIA_AGENDAMENTO ? row.WHATS_URGENCIA_AGENDAMENTO : "não resgistrado";
-		},
-		filter: {
-			type: "multi-select",
-			width: "20rem",
-			placeholder: "Nivel de urgencia",
-			options: [
-				{ name: "Muito alta", value: "MUITO_ALTA" },
-				{ name: "Alta", value: "ALTA" },
-				{ name: "Média", value: "MEDIA" },
-				{ name: "Normal", value: "NORMAL" },
-			],
-		},
-	},
-	{
-		key: "WHATS_ALTERAR_AGENDAMENTO",
-		header: "Alterar agendamento whatsApp",
-		width: 10,
-		filter: {
-			type: "input",
-			width: "20rem",
 		},
 	},
 ];

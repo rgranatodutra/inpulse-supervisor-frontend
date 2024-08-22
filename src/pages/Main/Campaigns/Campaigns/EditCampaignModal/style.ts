@@ -6,6 +6,10 @@ const StyledGroupModal = styled.div`
 	gap: 1rem;
 	width: 30rem;
 
+	input:disabled {
+		opacity: 0.5;
+	}
+
 	> button {
 		margin-left: auto;
 		margin-right: auto;

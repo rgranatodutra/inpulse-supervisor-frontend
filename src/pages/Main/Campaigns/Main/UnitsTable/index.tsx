@@ -1,10 +1,9 @@
 import { useContext } from "react";
-import { FaPencil, FaTrash } from "react-icons/fa6";
+import { FaPencil } from "react-icons/fa6";
 import Table from "../../../../../components/Table";
 import { GlobalContext } from "../../../../../contexts/global";
 import { Unit } from "../../../../../interfaces/Unit.type";
 import { ButtonType3 } from "../../../../../styles/buttons.style";
-import DeleteUnitModal from "../DeleteUnitsModal";
 import EditUnitModal from "../EditUnitsModal";
 import unitsColumns from "./columns";
 
@@ -27,16 +26,9 @@ const UnitsTable = () => {
 				>
 					<FaPencil />
 				</ButtonType3>,
-				<ButtonType3
-					onClick={() => {
-						modalState.set(<DeleteUnitModal unit={row} />);
-					}}
-				>
-					<FaTrash />
-				</ButtonType3>,
 			]}
-			requestEndpoint="/mockUnits"
-			service="mock"
+			requestEndpoint="/units"
+			service="campaigns"
 		/>
 	);
 };

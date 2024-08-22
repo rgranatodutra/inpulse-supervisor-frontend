@@ -1,12 +1,8 @@
 import { useContext } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import {
-	defaultInput100,
-	defaultInput50,
-	defaultSelect100,
-	defaultSelect50,
-} from "../../../../../components-variants/defaultInputs";
+import { useCustomRequest } from "../../../../../api";
+import { defaultInput100, defaultSelect100, defaultSelect50 } from "../../../../../components-variants/defaultInputs";
 import Input from "../../../../../components/Input";
 import Modal from "../../../../../components/Modal";
 import Select from "../../../../../components/Select";
@@ -20,23 +16,17 @@ function AddResultsModal() {
 	const { modalState } = useContext(GlobalContext);
 	const newResult = useCustomState<Partial<Result>>({});
 
-	/* async function updateResult() {
-		useCustomRequest<{ message: string; data: Purchase }, Partial<Purchase>>({
-			endpoint: `/purchases/${Result.CODIGO}`,
-			requestData: editedResultState.value,
-			method: "patch",
-			service: "customers",
+	async function addResult() {
+		useCustomRequest<{ message: string; data: Result }, Partial<Result>>({
+			endpoint: "/results",
+			requestData: newResult.value,
+			method: "post",
+			service: "campaigns",
 			onSuccess: () => {
-				toast.success("Compra atualizada com sucesso");
+				toast.success("Resultado adicionado com sucesso");
 				modalState.reset();
 			},
 		});
-	} */
-
-	function addResult() {
-		console.log(newResult.value);
-		modalState.reset();
-		toast.success("Resultado adicionado com sucesso");
 	}
 
 	const disabled =
@@ -47,14 +37,11 @@ function AddResultsModal() {
 		!newResult.value.PESQUISA_SATISFACAO ||
 		!newResult.value.QTDE_FIDELIZARCOTACAO ||
 		!(newResult.value.QTDE_FIDELIZARCOTACAO > 0) ||
-		!newResult.value.CANCELAPROPOSTA ||
-		!newResult.value.WHATS_ALTERAR_AGENDAMENTO ||
-		!(newResult.value.WHATS_ALTERAR_AGENDAMENTO > 0) ||
-		!(newResult.value.WHATS_ALTERAR_AGENDAMENTO < 10000);
+		!newResult.value.CANCELAPROPOSTA;
 
 	const selectOptions = [
-		{ name: "Não", value: "nao" },
-		{ name: "Sim", value: "sim" },
+		{ name: "Não", value: "NAO" },
+		{ name: "Sim", value: "SIM" },
 	];
 
 	return (
@@ -124,8 +111,8 @@ function AddResultsModal() {
 					{...defaultSelect50}
 					placeholder="Pesquisa de satisfação?"
 					options={[
-						{ name: "Sim", value: "s" },
-						{ name: "Não", value: "n" },
+						{ name: "Sim", value: "S" },
+						{ name: "Não", value: "N" },
 					]}
 					onChange={(e) => newResult.set((prev) => ({ ...prev, PESQUISA_SATISFACAO: e || undefined }))}
 				/>
@@ -139,6 +126,7 @@ function AddResultsModal() {
 				<Input
 					{...defaultInput100}
 					type="number"
+					min={0}
 					placeholder="Quantidade de fidelização"
 					onChange={(e) => newResult.set((prev) => ({ ...prev, QTDE_FIDELIZARCOTACAO: +e.target.value || undefined }))}
 				/>
@@ -180,31 +168,6 @@ function AddResultsModal() {
 					placeholder="Não é compra?"
 					options={selectOptions}
 					onChange={(e) => newResult.set((prev) => ({ ...prev, NAOECOMPRA: e || undefined }))}
-				/>
-				<Input
-					{...defaultInput100}
-					placeholder="Ação whatsapp?"
-					maxLength={50}
-					onChange={(e) => newResult.set((prev) => ({ ...prev, WHATS_ACAO: e.target.value.trim() || undefined }))}
-				/>
-				<Select
-					{...defaultSelect50}
-					placeholder="Whatsapp urgencia?"
-					options={[
-						{ name: "Muito alta", value: "MUITO_ALTA" },
-						{ name: "Alta", value: "ALTA" },
-						{ name: "Normal", value: "NORMAL" },
-					]}
-					onChange={(e) => newResult.set((prev) => ({ ...prev, WHATS_URGENCIA_AGENDAMENTO: e || undefined }))}
-				/>
-				<Input
-					{...defaultInput50}
-					placeholder="Whatsapp alterar agendamento?"
-					type="number"
-					maxLength={4}
-					onChange={(e) =>
-						newResult.set((prev) => ({ ...prev, WHATS_ALTERAR_AGENDAMENTO: +e.target.value || undefined }))
-					}
 				/>
 
 				<ButtonType2 disabled={disabled} onClick={() => addResult()} type="button">

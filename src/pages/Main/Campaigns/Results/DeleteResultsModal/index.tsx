@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
 import Input from "../../../../../components/Input";
 import Modal from "../../../../../components/Modal";
@@ -16,22 +17,16 @@ function DeleteResultModal({ result }: DeleteResultModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const ResultNameState = useCustomState("");
 
-	/* async function deleteResult() {
+	async function deleteResult() {
 		useCustomRequest<{ message: string; data: Result }, undefined>({
-			endpoint: `/purchases/${Result.CODIGO}`,
+			endpoint: `/results/${result.CODIGO}`,
 			method: "delete",
-			service: "customers",
+			service: "campaigns",
 			onSuccess: () => {
-				toast.success("Compra deletada com sucesso");
+				toast.success("Resultado deletado com sucesso");
 				modalState.reset();
 			},
 		});
-	} */
-
-	function deleteResult() {
-		console.log(ResultNameState.value);
-		toast.success("resultado deletado com sucesso");
-		modalState.reset();
 	}
 
 	const disabled = !ResultNameState.value.trim() || !(ResultNameState.value === result.NOME);

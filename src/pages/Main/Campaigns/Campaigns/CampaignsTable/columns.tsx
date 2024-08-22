@@ -28,6 +28,13 @@ const campaignColumns: Array<TableColumn<Campaign>> = [
 		key: "DATA_INI",
 		header: "Data inicial",
 		width: 12,
+		format: (row) => {
+			if (row.DATA_INI) {
+				return new Date(row.DATA_INI).toLocaleString();
+			} else {
+				return "Não cadastrado";
+			}
+		},
 		filter: {
 			type: "date-range",
 			width: "20rem",

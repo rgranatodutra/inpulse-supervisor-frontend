@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { FaCheck } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput100 } from "../../../../../components-variants/defaultInputs";
 import Input from "../../../../../components/Input";
 import Modal from "../../../../../components/Modal";
@@ -18,23 +19,17 @@ function EditUnitModal({ unit }: EditUnitModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const editedUnitState = useCustomState<Partial<Unit>>(unit);
 
-	/* async function updateUnit() {
-		useCustomRequest<{ message: string; data: Purchase }, Partial<Purchase>>({
-			endpoint: `/purchases/${unit.CODIGO}`,
+	async function updateUnit() {
+		useCustomRequest<{ message: string; data: Unit }, Partial<Unit>>({
+			endpoint: `/units/${unit.CODIGO}`,
 			requestData: editedUnitState.value,
 			method: "patch",
-			service: "customers",
+			service: "campaigns",
 			onSuccess: () => {
-				toast.success("Compra atualizada com sucesso");
+				toast.success("Unidade atualizada com sucesso");
 				modalState.reset();
 			},
 		});
-	} */
-
-	function updateUnit() {
-		console.log(editedUnitState);
-		modalState.reset();
-		toast.success("Unidade atualizada com sucesso");
 	}
 
 	const disabled =
@@ -78,6 +73,7 @@ function EditUnitModal({ unit }: EditUnitModalProps) {
 				<Input
 					{...defaultInput100}
 					type="number"
+					min={1}
 					placeholder="Digite os inativos recentes"
 					defaultValue={editedUnitState.value.INATIVOS_RECENTES}
 					onChange={(e) =>
@@ -88,6 +84,7 @@ function EditUnitModal({ unit }: EditUnitModalProps) {
 				<Input
 					{...defaultInput100}
 					type="number"
+					min={1}
 					placeholder="Digite os inativos antigos"
 					defaultValue={editedUnitState.value.INATIVOS_ANTIGOS}
 					onChange={(e) => editedUnitState.set((prev) => ({ ...prev, INATIVOS_ANTIGOS: +e.target.value || undefined }))}

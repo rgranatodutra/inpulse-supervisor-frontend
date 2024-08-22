@@ -14,6 +14,7 @@ function Table<T>({
 	requestEndpoint,
 	enableAutoUpdate,
 	service,
+	className,
 	...styleProps
 }: TableProps<T>) {
 	const tableRef = useRef<null | HTMLTableElement>(null);
@@ -80,6 +81,7 @@ function Table<T>({
 			$columns={displayColumnsState.value}
 			$isMaximized={isMaximizedState.value}
 			$haveActions={!!actions}
+			{...{ className }}
 			{...styleProps}
 		>
 			<TableHeader

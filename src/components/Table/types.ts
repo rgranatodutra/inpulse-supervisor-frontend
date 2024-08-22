@@ -25,6 +25,7 @@ export type TableColumn<T> = {
 };
 
 export type TableProps<T> = {
+	className?: string;
 	tableName: string;
 	columns: Array<TableColumn<T>>;
 	$fontSize: number;

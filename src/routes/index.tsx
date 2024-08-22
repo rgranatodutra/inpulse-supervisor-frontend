@@ -22,6 +22,7 @@ import OperatorsGroupsPage from "../pages/Main/Operators/Groups";
 import OperatorsPage from "../pages/Main/Operators/Main";
 import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
+import ExceptionsPage from "../pages/Main/Other/Exceptions";
 
 const setTitle = (title: string) => (document.title = title);
 
@@ -90,6 +91,10 @@ export const RenderingPage = () => {
 				<Route path="/campanhas/unidades" element={<UnitsPage />} />
 				<Route path="/campanhas/resultados" element={<ResultsPage />} />
 				<Route path="/campanhas" element={<CampaignsPage />} />
+			</>
+			<>
+				{/* Rotas de Outros Cadastros */}
+				<Route path="/outros/excecoes" element={<ExceptionsPage />} />
 			</>
 			<>
 				{/* Rotas de Monitoria */}

@@ -12,15 +12,20 @@ const StyledCustomForm = styled.div`
 		align-items: end;
 
 		> button {
+			font-weight: 500;
 			user-select: none;
 			font-size: 1rem;
 			height: 2rem;
 			box-sizing: "content-box";
 			width: max-content;
-		}
 
-		> button:disabled {
-			opacity: 0.35;
+			&:disabled {
+				filter: opacity(0.35);
+			}
+
+			&:hover {
+				filter: opacity(0.75);
+			}
 		}
 	}
 `;

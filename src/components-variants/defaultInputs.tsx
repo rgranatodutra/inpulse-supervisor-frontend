@@ -12,6 +12,17 @@ const defaultInput100 = {
 	rightIcon: null,
 };
 
+const defaultInput = {
+	$color: cssVars.colorGrey[3],
+	$borderColor: cssVars.colorGrey[5],
+	$padding: [0.375, 0.75] as [number, number],
+	$focusColor: cssVars.colorGrey[0],
+	$fontSize: 0.875,
+	$width: "auto",
+	leftIcon: null,
+	rightIcon: null,
+};
+
 const defaultInput50 = {
 	...defaultInput100,
 	$width: "calc(50% - 0.5rem)",
@@ -29,4 +40,4 @@ const defaultSelect50 = {
 	$width: "calc(50% - 0.5rem)",
 };
 
-export { defaultInput100, defaultInput50, defaultSelect100, defaultSelect50 };
+export { defaultInput, defaultInput100, defaultInput50, defaultSelect100, defaultSelect50 };

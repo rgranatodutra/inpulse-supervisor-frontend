@@ -1,12 +1,19 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import useCustomState from "../../../../utils/customState.hook";
 import AddException from "./AddException/AddException";
 import StyledExceptionsPage from "./style";
 
 const ExceptionsPage = () => {
-	const subMenuSelectedState = useCustomState(["selected", undefined, undefined, undefined]);
 	const formTypeState = useCustomState("customer-exceptions");
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	useEffect(() => {
+		if (location.pathname === "/campanhas/excecoes") {
+			navigate("clientes");
+		}
+	}, []);
 
 	return (
 		<StyledExceptionsPage>
@@ -15,9 +22,8 @@ const ExceptionsPage = () => {
 					onClick={() => {
 						navigate("clientes");
 						formTypeState.set("customer-exceptions");
-						subMenuSelectedState.set(["selected", undefined, undefined, undefined]);
 					}}
-					className={subMenuSelectedState.value[0]}
+					className={location.pathname.includes("clientes") ? "selected" : undefined}
 				>
 					Clientes
 				</h1>
@@ -25,9 +31,8 @@ const ExceptionsPage = () => {
 					onClick={() => {
 						navigate("cidades");
 						formTypeState.set("city-exceptions");
-						subMenuSelectedState.set([undefined, "selected", undefined, undefined]);
 					}}
-					className={subMenuSelectedState.value[1]}
+					className={location.pathname.includes("cidades") ? "selected" : undefined}
 				>
 					Cidades
 				</h1>
@@ -35,9 +40,8 @@ const ExceptionsPage = () => {
 					onClick={() => {
 						navigate("estados");
 						formTypeState.set("state-exceptions");
-						subMenuSelectedState.set([undefined, undefined, "selected", undefined]);
 					}}
-					className={subMenuSelectedState.value[2]}
+					className={location.pathname.includes("estados") ? "selected" : undefined}
 				>
 					Estados
 				</h1>
@@ -46,9 +50,8 @@ const ExceptionsPage = () => {
 					onClick={() => {
 						navigate("segmentos");
 						formTypeState.set("segment-exceptions");
-						subMenuSelectedState.set([undefined, undefined, undefined, "selected"]);
 					}}
-					className={subMenuSelectedState.value[3]}
+					className={location.pathname.includes("segmentos") ? "selected" : undefined}
 				>
 					Segmentos
 				</h1>

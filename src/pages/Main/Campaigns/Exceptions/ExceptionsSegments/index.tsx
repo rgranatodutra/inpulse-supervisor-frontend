@@ -24,12 +24,21 @@ const ExceptionsSegmentsTable = () => {
 		},
 		{
 			key: "SEGMENTO",
-			header: "Segmento",
-			width: 24,
+			header: "Código do segmento",
+			width: 12,
 			filter: {
 				type: "input",
 				width: "20rem",
 				icon: <FaTag />,
+			},
+		},
+		{
+			key: "NOME",
+			header: "Nome do segmento",
+			width: 24,
+			filter: {
+				type: "input",
+				width: "20rem",
 			},
 		},
 	];

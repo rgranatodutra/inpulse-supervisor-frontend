@@ -19,6 +19,7 @@ const ResultsTable = () => {
 			columns={ResultsColumns}
 			tableName="Unidades"
 			$modalFiltersWidth={41}
+			className="display-table"
 			actions={(row) => [
 				<ButtonType3
 					onClick={() => {

@@ -1,4 +1,4 @@
-import { FaBullhorn, FaChartArea, FaDesktop, FaGear, FaHeadset, FaToolbox, FaUsers } from "react-icons/fa6";
+import { FaBullhorn, FaChartArea, FaDesktop, FaHeadset, FaToolbox, FaUsers } from "react-icons/fa6";
 import { NagivationMenuButton } from "./types";
 
 const menuOptions: Array<NagivationMenuButton> = [
@@ -42,27 +42,17 @@ const menuOptions: Array<NagivationMenuButton> = [
 		subMenu: {
 			options: [
 				{ text: "Unidades", path: "/campanhas/unidades" },
-				{ text: "Campanhas", path: "/campanhas" },
+				{ text: "Campanhas", path: "/campanhas/cadastro" },
 				{ text: "Resultados", path: "/campanhas/resultados" },
+				{ text: "Cidades", path: "/campanhas/cidades" },
 				{ text: "Ordem", path: "/campanhas/ordem" },
+				{ text: "Exceções", path: "/campanhas/excecoes" },
 			],
 		},
 	},
+
 	{
 		id: 4,
-		icon: <FaGear />,
-		text: "Outros Cadastros",
-		path: "/outros",
-		subMenu: {
-			options: [
-				{ text: "Exceções", path: "/outros/excecoes/clientes" },
-				{ text: "Cidades", path: "/outros/cidades" },
-				{ text: "Estados", path: "/outros/estados" },
-			],
-		},
-	},
-	{
-		id: 5,
 		icon: <FaDesktop />,
 		text: "Monitor",
 		path: "/monitor",
@@ -78,7 +68,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 		},
 	},
 	{
-		id: 6,
+		id: 5,
 		icon: <FaToolbox />,
 		text: "Ferramentas",
 		path: "/ferramentas",
@@ -94,7 +84,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 		},
 	},
 	{
-		id: 7,
+		id: 6,
 		icon: <FaChartArea />,
 		text: "Relatórios",
 		path: "/relatorios",

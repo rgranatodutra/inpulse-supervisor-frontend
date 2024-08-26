@@ -5,6 +5,12 @@ import { CustomerProvider } from "../forms/CustomerForm/context";
 import OperatorForm from "../forms/OperatorForm";
 import { OperatorProvider } from "../forms/OperatorForm/context";
 import CampaignsPage from "../pages/Main/Campaigns/Campaigns";
+import OtherCitiesPage from "../pages/Main/Campaigns/Cities";
+import ExceptionsPage from "../pages/Main/Campaigns/Exceptions";
+import ExceptionsCitiesTable from "../pages/Main/Campaigns/Exceptions/ExceptionsCities";
+import ExceptionsClientsTable from "../pages/Main/Campaigns/Exceptions/ExceptionsClientsTable";
+import ExceptionsSegmentsTable from "../pages/Main/Campaigns/Exceptions/ExceptionsSegments";
+import ExceptionsStatesTable from "../pages/Main/Campaigns/Exceptions/ExceptionsStates";
 import UnitsPage from "../pages/Main/Campaigns/Main";
 import ResultsPage from "../pages/Main/Campaigns/Results";
 import CustomersBrandsPage from "../pages/Main/Customers/Brands";
@@ -22,11 +28,6 @@ import OperatorsGroupsPage from "../pages/Main/Operators/Groups";
 import OperatorsPage from "../pages/Main/Operators/Main";
 import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
-import ExceptionsPage from "../pages/Main/Other/Exceptions";
-import ExceptionsCitiesTable from "../pages/Main/Other/Exceptions/ExceptionsCities";
-import ExceptionsClientsTable from "../pages/Main/Other/Exceptions/ExceptionsClientsTable";
-import ExceptionsSegmentsTable from "../pages/Main/Other/Exceptions/ExceptionsSegments";
-import ExceptionsStatesTable from "../pages/Main/Other/Exceptions/ExceptionsStates";
 
 const setTitle = (title: string) => (document.title = title);
 
@@ -94,17 +95,16 @@ export const RenderingPage = () => {
 				{/* Rotas de Campanhas */}
 				<Route path="/campanhas/unidades" element={<UnitsPage />} />
 				<Route path="/campanhas/resultados" element={<ResultsPage />} />
-				<Route path="/campanhas" element={<CampaignsPage />} />
-			</>
-			<>
-				{/* Rotas de Outros Cadastros */}
-				<Route path="/outros/excecoes/*" element={<ExceptionsPage />}>
+				<Route path="/campanhas/cadastro" element={<CampaignsPage />} />
+				<Route path="/campanhas/excecoes/*" element={<ExceptionsPage />}>
 					<Route path="clientes" element={<ExceptionsClientsTable />} />
 					<Route path="cidades" element={<ExceptionsCitiesTable />} />
 					<Route path="estados" element={<ExceptionsStatesTable />} />
 					<Route path="segmentos" element={<ExceptionsSegmentsTable />} />
 				</Route>
+				<Route path="/campanhas/cidades" element={<OtherCitiesPage />} />
 			</>
+
 			<>
 				{/* Rotas de Monitoria */}
 				<Route path="/monitor/agenda" element={<MonitorSchedules />} />

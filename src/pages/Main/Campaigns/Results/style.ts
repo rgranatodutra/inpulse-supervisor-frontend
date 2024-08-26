@@ -23,6 +23,7 @@ const StyledCampaignsUnitsPage = styled.div`
 
 		height: calc(100vh - 18rem);
 	}
+
 	.display-table {
 		width: calc(100% - 1.5rem);
 		display: flex;

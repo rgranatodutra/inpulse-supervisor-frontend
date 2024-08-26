@@ -109,9 +109,8 @@ const OperatorsGoalsPage = () => {
 					Adicionar Meta
 				</ButtonType2>
 			</form>
-			<ul>
-				<GoalsTable users={usersState.value} />
-			</ul>
+
+			<GoalsTable users={usersState.value} />
 		</StyledOperatorsGoalsPage>
 	);
 };

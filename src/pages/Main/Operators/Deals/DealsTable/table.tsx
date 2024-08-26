@@ -115,6 +115,7 @@ function DealsTable({ users }: DealsTableProps) {
 	if (users.length > 0) {
 		return (
 			<Table
+				className="display-table"
 				$modalFiltersWidth={41}
 				$tableHeight="100%"
 				$tableWidth="100%"

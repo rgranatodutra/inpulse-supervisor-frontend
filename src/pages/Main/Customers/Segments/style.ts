@@ -3,8 +3,6 @@ import styled from "styled-components";
 const StyledCustomersSegmentPage = styled.div`
 	box-sizing: border-box;
 	padding: 1rem;
-	max-height: calc(100% - 4rem);
-	overflow: auto;
 
 	> form {
 		display: flex;
@@ -40,8 +38,6 @@ const StyledCustomersSegmentPage = styled.div`
 
 		border: 2px solid var(--color-grey-6-h);
 		background-color: var(--color-grey-7);
-
-		height: calc(100vh - 16rem);
 	}
 `;
 

@@ -3,11 +3,10 @@ import styled from "styled-components";
 const StyledCustomersRolesPage = styled.div`
 	box-sizing: border-box;
 	padding: 1rem;
-	max-height: calc(100% - 4rem);
-	overflow: auto;
 
 	> form {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: flex-end;
 		gap: 1rem;
 		padding: 1rem 0;
@@ -34,6 +33,7 @@ const StyledCustomersRolesPage = styled.div`
 		width: 100%;
 		display: flex;
 		flex-direction: column;
+		overflow: auto;
 
 		border: 2px solid var(--color-grey-6-h);
 		background-color: var(--color-grey-7);

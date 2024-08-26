@@ -69,6 +69,7 @@ function GoalsTable({ users }: GoalsTableProps) {
 
 	return (
 		<Table
+			className="display-table"
 			$modalFiltersWidth={41}
 			$tableHeight="100%"
 			$tableWidth="100%"

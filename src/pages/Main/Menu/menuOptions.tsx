@@ -58,7 +58,6 @@ const menuOptions: Array<NagivationMenuButton> = [
 				{ text: "Exceções", path: "/outros/excecoes/clientes" },
 				{ text: "Cidades", path: "/outros/cidades" },
 				{ text: "Estados", path: "/outros/estados" },
-				{ text: "Pesquisas", path: "/outros/pesquisas_satisfacao" },
 			],
 		},
 	},

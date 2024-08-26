@@ -1,22 +1,19 @@
+import { Outlet, useNavigate } from "react-router-dom";
 import useCustomState from "../../../../utils/customState.hook";
 import AddException from "./AddException/AddException";
-import ExceptionsCitiesTable from "./ExceptionsCities";
-import ExceptionsClientsTable from "./ExceptionsClientsTable";
-import ExceptionsSegmentsTable from "./ExceptionsSegments";
-import ExceptionsStatesTable from "./ExceptionsStates";
 import StyledExceptionsPage from "./style";
 
 const ExceptionsPage = () => {
-	const subMenuState = useCustomState(<ExceptionsClientsTable />);
 	const subMenuSelectedState = useCustomState(["selected", undefined, undefined, undefined]);
 	const formTypeState = useCustomState("customer-exceptions");
+	const navigate = useNavigate();
 
 	return (
 		<StyledExceptionsPage>
 			<div>
 				<h1
 					onClick={() => {
-						subMenuState.set(<ExceptionsClientsTable />);
+						navigate("clientes");
 						formTypeState.set("customer-exceptions");
 						subMenuSelectedState.set(["selected", undefined, undefined, undefined]);
 					}}
@@ -26,7 +23,7 @@ const ExceptionsPage = () => {
 				</h1>
 				<h1
 					onClick={() => {
-						subMenuState.set(<ExceptionsCitiesTable />);
+						navigate("cidades");
 						formTypeState.set("city-exceptions");
 						subMenuSelectedState.set([undefined, "selected", undefined, undefined]);
 					}}
@@ -36,7 +33,7 @@ const ExceptionsPage = () => {
 				</h1>
 				<h1
 					onClick={() => {
-						subMenuState.set(<ExceptionsStatesTable />);
+						navigate("estados");
 						formTypeState.set("state-exceptions");
 						subMenuSelectedState.set([undefined, undefined, "selected", undefined]);
 					}}
@@ -47,7 +44,7 @@ const ExceptionsPage = () => {
 
 				<h1
 					onClick={() => {
-						subMenuState.set(<ExceptionsSegmentsTable />);
+						navigate("segmentos");
 						formTypeState.set("segment-exceptions");
 						subMenuSelectedState.set([undefined, undefined, undefined, "selected"]);
 					}}
@@ -59,7 +56,7 @@ const ExceptionsPage = () => {
 
 			<AddException type={formTypeState.value} />
 
-			{subMenuState.value}
+			<Outlet />
 		</StyledExceptionsPage>
 	);
 };

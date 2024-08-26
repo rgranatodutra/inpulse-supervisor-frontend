@@ -23,6 +23,10 @@ import OperatorsPage from "../pages/Main/Operators/Main";
 import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
 import ExceptionsPage from "../pages/Main/Other/Exceptions";
+import ExceptionsCitiesTable from "../pages/Main/Other/Exceptions/ExceptionsCities";
+import ExceptionsClientsTable from "../pages/Main/Other/Exceptions/ExceptionsClientsTable";
+import ExceptionsSegmentsTable from "../pages/Main/Other/Exceptions/ExceptionsSegments";
+import ExceptionsStatesTable from "../pages/Main/Other/Exceptions/ExceptionsStates";
 
 const setTitle = (title: string) => (document.title = title);
 
@@ -94,7 +98,12 @@ export const RenderingPage = () => {
 			</>
 			<>
 				{/* Rotas de Outros Cadastros */}
-				<Route path="/outros/excecoes" element={<ExceptionsPage />} />
+				<Route path="/outros/excecoes/*" element={<ExceptionsPage />}>
+					<Route path="clientes" element={<ExceptionsClientsTable />} />
+					<Route path="cidades" element={<ExceptionsCitiesTable />} />
+					<Route path="estados" element={<ExceptionsStatesTable />} />
+					<Route path="segmentos" element={<ExceptionsSegmentsTable />} />
+				</Route>
 			</>
 			<>
 				{/* Rotas de Monitoria */}

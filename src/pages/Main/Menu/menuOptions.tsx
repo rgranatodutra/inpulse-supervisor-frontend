@@ -9,7 +9,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 		path: "/clientes",
 		subMenu: {
 			options: [
-				{ text: "Clientes", path: "/clientes" },
+				{ text: "Clientes", path: "/clientes/main" },
 				{ text: "Grupos", path: "/clientes/grupos" },
 				{ text: "Segmentos", path: "/clientes/segmentos" },
 				{ text: "Cargos", path: "/clientes/cargos" },
@@ -25,7 +25,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 		path: "/operadores",
 		subMenu: {
 			options: [
-				{ text: "Operadores", path: "/operadores" },
+				{ text: "Operadores", path: "/operadores/main" },
 				{ text: "Grupos", path: "/operadores/grupos" },
 				{ text: "Turnos", path: "/operadores/turnos" },
 				{ text: "Pausas", path: "/operadores/pausas" },

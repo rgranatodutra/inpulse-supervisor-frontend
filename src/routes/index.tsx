@@ -43,7 +43,7 @@ export const RenderingPage = () => {
 			<Route path="/" element={<Home />} />
 			<>
 				{/* Rotas de Clientes */}
-				<Route path="/clientes" element={<CustomersPage />} />
+				<Route path="/clientes/main" element={<CustomersPage />} />
 				<Route
 					path="/clientes/cadastrar"
 					element={
@@ -68,7 +68,7 @@ export const RenderingPage = () => {
 			</>
 			<>
 				{/* Rotas de Operadores */}
-				<Route path="/operadores" element={<OperatorsPage />} />
+				<Route path="/operadores/main" element={<OperatorsPage />} />
 				<Route
 					path="/operadores/cadastrar"
 					element={

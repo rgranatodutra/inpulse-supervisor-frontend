@@ -29,6 +29,10 @@ const StyledRoleCard = styled.li`
 			align-items: center;
 			gap: 0.5rem;
 		}
+
+		> h2 {
+			width: 12rem;
+		}
 	}
 
 	> div:nth-child(2) {

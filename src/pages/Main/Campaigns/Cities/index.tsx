@@ -1,91 +1,129 @@
 import { useEffect } from "react";
-import { FaUsersLine } from "react-icons/fa6";
+import { toast } from "react-toastify";
 import { useCustomRequest } from "../../../../api";
-import { defaultInput100 } from "../../../../components-variants/defaultInputs";
+import { defaultInput } from "../../../../components-variants/defaultInputs";
+import FormTemplate from "../../../../components/FormTemplate/FormTemplate";
 import Input from "../../../../components/Input";
-import { Position } from "../../../../interfaces/Position.type";
-import { ButtonType2 } from "../../../../styles/buttons.style";
+import Select from "../../../../components/Select";
+import { City } from "../../../../interfaces/City.type";
 import useCustomState from "../../../../utils/customState.hook";
 import CityCard from "./CityCard";
 import StyledCustomersCitysPage from "./style";
 
+const selectOptions = [
+	{ name: "AC", value: "AC" },
+	{ name: "AL", value: "AL" },
+	{ name: "AM", value: "AM" },
+	{ name: "AP", value: "AP" },
+	{ name: "BA", value: "BA" },
+	{ name: "CE", value: "CE" },
+	{ name: "DF", value: "DF" },
+	{ name: "ES", value: "ES" },
+	{ name: "GO", value: "GO" },
+	{ name: "MA", value: "MA" },
+	{ name: "MG", value: "MG" },
+	{ name: "MS", value: "MS" },
+	{ name: "MT", value: "MT" },
+	{ name: "PA", value: "PA" },
+	{ name: "PB", value: "PB" },
+	{ name: "PE", value: "PE" },
+	{ name: "PI", value: "PI" },
+	{ name: "PR", value: "PR" },
+	{ name: "RJ", value: "RJ" },
+	{ name: "RN", value: "RN" },
+	{ name: "RO", value: "RO" },
+	{ name: "RR", value: "RR" },
+	{ name: "RS", value: "RS" },
+	{ name: "SC", value: "SC" },
+	{ name: "SE", value: "SE" },
+	{ name: "SP", value: "SP" },
+	{ name: "TO", value: "TO" },
+];
+
 const OtherCitiesPage = () => {
-	const roleName = useCustomState<string>("");
-	const roles = useCustomState<Array<Position>>([]);
-	const updateOnEdit = (data: Position) => {
-		roles.set((prev) =>
+	const newCity = useCustomState<Partial<City>>({});
+	const cities = useCustomState<Array<City>>([]);
+
+	useEffect(() => {
+		useCustomRequest<{ message: String; data: City[] }, undefined>({
+			endpoint: "/cities",
+			method: "get",
+			service: "campaigns",
+			onSuccess: (responseData) => {
+				cities.set(responseData.data);
+			},
+		});
+	}, []);
+
+	const updateOnDelete = (data: City) => {
+		cities.set((prev) => prev.filter((v) => v.CODIGO != data.CODIGO));
+	};
+
+	const updateOnEdit = (data: City) => {
+		cities.set((prev) =>
 			prev.map((v) => {
 				if (v.CODIGO === data.CODIGO) {
 					return data;
 				}
-
 				return v;
 			})
 		);
 	};
 
-	const updateOnDelete = (data: Position) => {
-		roles.set((prev) => prev.filter((v) => v.CODIGO != data.CODIGO));
-	};
-
-	const addCity = (newCityName: string) => {
-		useCustomRequest<{ message: String; data: Position }, { DESCRICAO: string }>({
-			endpoint: "/positions",
+	function addCity() {
+		useCustomRequest<{ message: String; data: City }, Partial<City>>({
+			endpoint: "/cities",
 			method: "post",
-			service: "customers",
-			requestData: { DESCRICAO: newCityName },
+			service: "campaigns",
+			requestData: newCity.value,
 			onSuccess: (responseData) => {
-				const newCitys = [...roles.value, responseData.data];
-				roles.set(newCitys);
+				const newCitys = [...cities.value, responseData.data];
+				cities.set(newCitys);
+				toast.success("Cidade adicionada com sucesso");
 			},
 		});
-	};
+	}
 
-	useEffect(() => {
-		useCustomRequest<{ message: String; data: Position[] }, undefined>({
-			endpoint: "/positions?perPage=9999",
-			method: "get",
-			service: "customers",
-			onSuccess: (responseData) => {
-				roles.set(responseData.data);
-			},
-		});
-	}, []);
-
-	const disabled = !roleName.value.trim() || !(roleName.value.trim().length > 0);
+	const disabled =
+		!newCity.value.NOME?.trim() ||
+		!(newCity.value.NOME?.trim().length > 0) ||
+		!newCity.value.UF ||
+		!(newCity.value.UF.length === 2);
 
 	return (
 		<StyledCustomersCitysPage>
-			<h2> Clientes {"->"} Cargos </h2>
-			<form>
-				<div style={{ width: "20rem" }}>
-					<h3> Nome do Cargo </h3>
-					<Input
-						{...defaultInput100}
-						onChange={(e) => roleName.set(e.target.value)}
-						value={roleName.value}
-						maxLength={35}
-						placeholder="Digite o nome do cargo aqui..."
-					/>
-				</div>
-
-				<ButtonType2 type="button" onClick={() => addCity(roleName.value.trim())} disabled={disabled}>
-					<FaUsersLine />
-					Adicionar Cargo
-				</ButtonType2>
-			</form>
-			<ul>
-				{roles.value.map((role) => {
-					return (
-						<CityCard
-							key={`role_${role.CODIGO}`}
-							roleData={role}
-							updateOnEdit={updateOnEdit}
-							updateOnDelete={updateOnDelete}
-						/>
-					);
-				})}
-			</ul>
+			<h2> Campanhas {"->"} Cidades </h2>
+			<FormTemplate buttonText="Adicionar Cidade" disabled={disabled} submitForm={addCity}>
+				<Input
+					{...defaultInput}
+					type="input"
+					placeholder="Digite o nome da cidade"
+					label="Nome da cidade"
+					onChange={(e) => newCity.set((prev) => ({ ...prev, NOME: e.target.value.trim() }))}
+				/>
+				<Select
+					{...defaultInput}
+					options={selectOptions}
+					label="Seleciona a UF"
+					placeholder="UF"
+					$width="7.5rem"
+					onChange={(e) => newCity.set((prev) => ({ ...prev, UF: e ?? undefined }))}
+				/>
+			</FormTemplate>
+			<div className="padded">
+				<ul>
+					{cities.value.map((city) => {
+						return (
+							<CityCard
+								key={`city_${city.CODIGO}`}
+								cityData={city}
+								updateOnEdit={updateOnEdit}
+								updateOnDelete={updateOnDelete}
+							/>
+						);
+					})}
+				</ul>
+			</div>
 		</StyledCustomersCitysPage>
 	);
 };

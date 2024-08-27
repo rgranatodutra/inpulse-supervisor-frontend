@@ -1,19 +1,19 @@
 import { useContext } from "react";
 import { FaTag } from "react-icons/fa6";
 import { GlobalContext } from "../../../../../contexts/global";
-import { Position } from "../../../../../interfaces/Position.type";
+import { City } from "../../../../../interfaces/City.type";
 import { ButtonType3 } from "../../../../../styles/buttons.style";
-import DeleteRoleModal from "../DeleteRoleModal";
-import EditRoleModal from "../EditRoleModal";
+import DeleteCityModal from "../DeleteCityModal";
+import EditCityModal from "../EditCityModal";
 import StyledRoleCard from "./style";
 
 interface CityCardProps {
-	roleData: Position;
-	updateOnEdit: (roleData: Position) => void;
-	updateOnDelete: (roleData: Position) => void;
+	cityData: City;
+	updateOnEdit: (cityData: City) => void;
+	updateOnDelete: (cityData: City) => void;
 }
 
-const CityCard = ({ roleData, updateOnEdit, updateOnDelete }: CityCardProps) => {
+const CityCard = ({ cityData, updateOnEdit, updateOnDelete }: CityCardProps) => {
 	const { modalState } = useContext(GlobalContext);
 
 	return (
@@ -21,21 +21,24 @@ const CityCard = ({ roleData, updateOnEdit, updateOnDelete }: CityCardProps) => 
 			<div>
 				<span>
 					<FaTag />
-					{roleData.CODIGO}
+					{cityData.CODIGO}
 				</span>
-				<h2> {roleData.DESCRICAO} </h2>
+
+				<h2> {cityData.NOME} </h2>
+
+				<h2> {cityData.UF} </h2>
 			</div>
 			<div>
 				<ButtonType3
 					onClick={() => {
-						modalState.set(<EditRoleModal role={roleData} update={updateOnEdit} />);
+						modalState.set(<EditCityModal city={cityData} update={updateOnEdit} />);
 					}}
 				>
 					<a> Editar </a>
 				</ButtonType3>
 				<ButtonType3
 					onClick={() => {
-						modalState.set(<DeleteRoleModal role={roleData} updateOnDelete={updateOnDelete} />);
+						modalState.set(<DeleteCityModal city={cityData} updateOnDelete={updateOnDelete} />);
 					}}
 				>
 					<a> Remover </a>

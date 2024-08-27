@@ -34,7 +34,7 @@ const NavigationSubMenu = ({ option, selectedOptionIdState, $displaySubMenu }: N
 					key={`menu_option_${option.id}/${i}`}
 					onClick={onClickOption(o.path)}
 					className={
-						o.path.split("/").slice(0, 3).join("/").includes(currentPage.split("/").slice(0, 3).join("/"))
+						currentPage.split("/").slice(0, 3).join("/").includes(o.path.split("/").slice(0, 3).join("/"))
 							? "selected"
 							: ""
 					}

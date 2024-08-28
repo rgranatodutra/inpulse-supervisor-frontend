@@ -12,6 +12,7 @@ import ExceptionsClientsTable from "../pages/Main/Campaigns/Exceptions/Exception
 import ExceptionsSegmentsTable from "../pages/Main/Campaigns/Exceptions/ExceptionsSegments";
 import ExceptionsStatesTable from "../pages/Main/Campaigns/Exceptions/ExceptionsStates";
 import UnitsPage from "../pages/Main/Campaigns/Main";
+import OrderPage from "../pages/Main/Campaigns/Order";
 import ResultsPage from "../pages/Main/Campaigns/Results";
 import CustomersBrandsPage from "../pages/Main/Customers/Brands";
 import CustomerGroupsPage from "../pages/Main/Customers/Groups";
@@ -96,13 +97,14 @@ export const RenderingPage = () => {
 				<Route path="/campanhas/unidades" element={<UnitsPage />} />
 				<Route path="/campanhas/resultados" element={<ResultsPage />} />
 				<Route path="/campanhas/cadastro" element={<CampaignsPage />} />
+				<Route path="/campanhas/ordem" element={<OrderPage />} />
+				<Route path="/campanhas/cidades" element={<OtherCitiesPage />} />
 				<Route path="/campanhas/excecoes/*" element={<ExceptionsPage />}>
 					<Route path="clientes" element={<ExceptionsClientsTable />} />
 					<Route path="cidades" element={<ExceptionsCitiesTable />} />
 					<Route path="estados" element={<ExceptionsStatesTable />} />
 					<Route path="segmentos" element={<ExceptionsSegmentsTable />} />
 				</Route>
-				<Route path="/campanhas/cidades" element={<OtherCitiesPage />} />
 			</>
 
 			<>

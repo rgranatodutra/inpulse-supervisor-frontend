@@ -2,14 +2,17 @@ import styled from "styled-components";
 
 const StyledCard = styled.li`
 	box-sizing: border-box;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	color: var(--color-grey-2);
 	padding: 1rem;
-	background-color: var(--color-grey-8);
-	max-width: 100%;
+	width: 100%;
 
+	display: grid;
+	grid-template-areas: "order title subtitle";
+	grid-template-columns: 7.5rem 1fr max-content;
+	align-items: center;
+	gap: 1rem;
+
+	color: var(--color-grey-2);
+	background-color: var(--color-grey-8);
 	transition: 0.3s ease-in-out;
 
 	&:nth-child(odd) {
@@ -20,20 +23,21 @@ const StyledCard = styled.li`
 		background-color: var(--color-grey-6);
 	}
 
-	.li-items {
+	> span:nth-child(1) {
+		grid-area: order;
 		display: flex;
 		align-items: center;
-		gap: 1rem;
+		gap: 0.5rem;
+	}
 
-		> span:nth-child(1) {
-			display: flex;
-			align-items: center;
-			gap: 0.5rem;
-		}
+	> h2:nth-child(2) {
+		grid-area: title;
+	}
 
-		> h2 {
-			width: 12rem;
-		}
+	&:nth-last-child(1) {
+		grid-area: subtitle;
+		justify-self: flex-end;
+		margin-left: auto;
 	}
 `;
 

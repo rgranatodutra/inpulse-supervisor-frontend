@@ -6,28 +6,59 @@ const StyledCustomersRolesPage = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+	row-gap: 2rem;
 	padding: 2rem;
 	overflow: auto;
 
-	.bottom {
-		gap: 1rem;
-		display: flex;
+	display: grid;
+	grid-template-areas:
+		"campaigns cities states"
+		"segments final buttons";
 
-		.li-items {
-			width: 20vw;
-		}
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 30rem 30rem;
+
+	.campaings {
+		grid-area: campaigns;
 	}
 
-	.top {
-		display: flex;
+	.cities {
+		grid-area: cities;
+	}
+
+	.states {
+		grid-area: states;
+	}
+
+	.segments {
+		grid-area: segments;
+	}
+
+	.final {
+		grid-area: final;
+	}
+
+	.buttons {
+		grid-area: buttons;
 		gap: 1rem;
-		.li-items {
-			width: 20vw; //24 rem for 1920px w screens
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+
+		> button {
+			font-size: 1.5rem;
 		}
 	}
 
 	.ul-div {
 		box-sizing: border-box;
+		display: grid;
+		grid-template-areas: "title" "ul";
+		grid-template-rows: 2rem 1fr;
+		grid-template-columns: 1fr;
+
 		> h2 {
 			padding: 0.5rem 0;
 			text-align: center;
@@ -35,28 +66,25 @@ const StyledCustomersRolesPage = styled.div`
 		}
 	}
 
-	.Buttons {
-		gap: 1rem;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 100%;
-		height: 100%;
-		> button {
-			font-size: 1.5rem;
-		}
-	}
-
 	ul {
 		overflow: auto;
-		height: 28rem;
 		box-sizing: border-box;
-		width: 100%;
 		display: flex;
 		flex-direction: column;
-
 		border: 2px solid var(--color-grey-6-h);
 		background-color: var(--color-grey-7);
+		width: 100%;
+		height: 100%;
+	}
+
+	@media (max-width: 1024px) {
+		grid-template-areas:
+			"campaigns cities states"
+			"segments search fields"
+			"final buttons buttons";
+
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 30rem 30rem 30rem;
 	}
 `;
 

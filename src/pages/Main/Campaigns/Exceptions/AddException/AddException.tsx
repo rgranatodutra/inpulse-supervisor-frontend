@@ -13,6 +13,7 @@ export type AddExceptionProps = {
 function AddException({ type }: AddExceptionProps) {
 	const newException = useCustomState({});
 	const disabledState = useCustomState(true);
+	const inputFields = useCustomState<number | string>("");
 
 	function addException() {
 		useCustomRequest({
@@ -28,6 +29,7 @@ function AddException({ type }: AddExceptionProps) {
 	}
 
 	function resetInputs() {
+		inputFields.reset();
 		newException.reset();
 		disabledState.reset();
 	}
@@ -51,7 +53,9 @@ function AddException({ type }: AddExceptionProps) {
 					placeholder="Digite o código ERP"
 					type="number"
 					min={0}
+					value={inputFields.value}
 					onChange={(e) => {
+						inputFields.set(+e.target.value);
 						newException.set({ COD_ERP: +e.target.value });
 						disabledState.set(!(+e.target.value > 0));
 					}}
@@ -71,9 +75,11 @@ function AddException({ type }: AddExceptionProps) {
 					{...defaultInput}
 					label="Cidade"
 					placeholder="Digite a cidade"
+					value={inputFields.value}
 					type="input"
 					min={0}
 					onChange={(e) => {
+						inputFields.set(e.target.value);
 						newException.set({ CIDADE: e.target.value.trim() });
 						disabledState.set(!(e.target.value.trim().length > 0));
 					}}
@@ -95,7 +101,9 @@ function AddException({ type }: AddExceptionProps) {
 					placeholder="Digite o estado"
 					type="input"
 					min={0}
+					value={inputFields.value}
 					onChange={(e) => {
+						inputFields.set(e.target.value);
 						newException.set({ ESTADO: e.target.value.trim() });
 						disabledState.set(!(e.target.value.trim().length > 0));
 					}}
@@ -116,8 +124,10 @@ function AddException({ type }: AddExceptionProps) {
 					label="Segmento"
 					placeholder="Digite o segmento"
 					type="number"
+					value={inputFields.value}
 					min={0}
 					onChange={(e) => {
+						inputFields.set(+e.target.value);
 						newException.set({ SEGMENTO: +e.target.value });
 						disabledState.set(!(+e.target.value > 0));
 					}}

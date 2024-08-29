@@ -13,6 +13,18 @@ const ExceptionsPage = () => {
 		if (location.pathname === "/campanhas/excecoes") {
 			navigate("clientes");
 		}
+
+		if (location.pathname === "/campanhas/excecoes/estados") {
+			formTypeState.set("state-exceptions");
+		}
+
+		if (location.pathname === "/campanhas/excecoes/cidades") {
+			formTypeState.set("city-exceptions");
+		}
+
+		if (location.pathname === "/campanhas/excecoes/segmentos") {
+			formTypeState.set("segment-exceptions");
+		}
 	}, []);
 
 	return (

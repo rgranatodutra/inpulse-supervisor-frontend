@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { FaCheck, FaX } from "react-icons/fa6";
+import { FaAngleLeft, FaAngleRight, FaCheck, FaX } from "react-icons/fa6";
 import { useCustomRequest } from "../../../../api";
 import { Campaign } from "../../../../interfaces/Campaign.type";
 import { City } from "../../../../interfaces/City.type";
@@ -16,6 +16,8 @@ import StateCard from "./Cards/StateCard";
 import StyledCustomersCitysPage from "./style";
 
 const OrderPage = () => {
+	const currentPage = useCustomState<number>(1);
+
 	const citiesState = useCustomState<Array<City>>([]);
 	const ogCitiesState = useCustomState<Array<City>>([]);
 
@@ -217,8 +219,23 @@ const OrderPage = () => {
 			</div>
 			<div className="ul-div cities">
 				<h2>Cidades</h2>
+				<div className="pagination">
+					<h2>
+						{currentPage.value > 1 && (
+							<button onClick={() => currentPage.set((prev) => prev - 1)}>
+								<FaAngleLeft />
+							</button>
+						)}
+						{currentPage.value} / {Math.ceil(citiesState.value.length / 50)}
+						{currentPage.value < Math.ceil(citiesState.value.length / 50) && (
+							<button onClick={() => currentPage.set((prev) => prev + 1)}>
+								<FaAngleRight />
+							</button>
+						)}
+					</h2>
+				</div>
 				<ul>
-					{citiesState.value.map((city, index) => {
+					{citiesState.value.slice((currentPage.value - 1) * 50, currentPage.value * 50).map((city, index) => {
 						return <CityCard key={`city_${city.CODIGO}`} cityData={city} citiesState={citiesState} index={index} />;
 					})}
 				</ul>

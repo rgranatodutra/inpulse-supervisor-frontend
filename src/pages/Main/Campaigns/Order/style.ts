@@ -66,6 +66,27 @@ const StyledCustomersRolesPage = styled.div`
 		}
 	}
 
+	.pagination {
+		display: flex;
+		border: 2px solid var(--color-grey-6-h);
+		background-color: var(--color-grey-7);
+		justify-content: center;
+		> h2 {
+			align-self: center;
+
+			padding: 0.5rem;
+			font-size: 1.5rem;
+		}
+
+		button {
+			vertical-align: middle;
+			font-size: 1.5rem;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+
 	ul {
 		overflow: auto;
 		box-sizing: border-box;

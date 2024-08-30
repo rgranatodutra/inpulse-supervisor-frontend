@@ -95,7 +95,8 @@ const CityCard = ({ cityData, citiesState, index }: CityCardProps) => {
 				<Input
 					{...defaultInput}
 					$width="6rem"
-					type="number"
+					type="text"
+					inputMode="numeric"
 					defaultValue={cityData.ORDEM ?? 0}
 					value={cityData.ORDEM ?? undefined}
 					onChange={(e) => onInputChangeFn(+e.target.value)}

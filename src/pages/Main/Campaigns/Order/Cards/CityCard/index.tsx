@@ -1,4 +1,4 @@
-import { FaHashtag } from "react-icons/fa6";
+import { FaAngleDown, FaAngleUp, FaHashtag } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { defaultInput } from "../../../../../../components-variants/defaultInputs";
 import Input from "../../../../../../components/Input";
@@ -9,9 +9,10 @@ import StyledCard from "../style";
 interface CityCardProps {
 	cityData: City;
 	citiesState: CustomState<City[]>;
+	index: number;
 }
 
-const CityCard = ({ cityData, citiesState }: CityCardProps) => {
+const CityCard = ({ cityData, citiesState, index }: CityCardProps) => {
 	function onInputChangeFn(event: number) {
 		if (event >= 0) {
 			citiesState.set((prev) => {
@@ -37,6 +38,56 @@ const CityCard = ({ cityData, citiesState }: CityCardProps) => {
 		}
 	}
 
+	function onButtonPress(type: string) {
+		if (type === "up") {
+			citiesState.set((prev) => {
+				const newState = prev.map((v) => {
+					if (v.NOME === cityData.NOME && v.ORDEM === cityData.ORDEM && v.ORDEM) {
+						return { ...v, ORDEM: v.ORDEM - 1 };
+					}
+					return v;
+				});
+				return newState.sort((a, b) => {
+					if (a.ORDEM && b.ORDEM) {
+						if (a.ORDEM === b.ORDEM) {
+							return -1;
+						} else {
+							return a.ORDEM - b.ORDEM;
+						}
+					} else if (a.ORDEM) {
+						return 1;
+					} else if (b.ORDEM) {
+						return -1;
+					}
+					return 0;
+				});
+			});
+		} else {
+			citiesState.set((prev) => {
+				const newState = prev.map((v) => {
+					if (v.NOME === cityData.NOME && v.ORDEM === cityData.ORDEM && v.ORDEM) {
+						return { ...v, ORDEM: v.ORDEM + 1 };
+					}
+					return v;
+				});
+				return newState.sort((a, b) => {
+					if (a.ORDEM && b.ORDEM) {
+						if (a.ORDEM === b.ORDEM) {
+							return -1;
+						} else {
+							return a.ORDEM - b.ORDEM;
+						}
+					} else if (a.ORDEM) {
+						return 1;
+					} else if (b.ORDEM) {
+						return -1;
+					}
+					return 0;
+				});
+			});
+		}
+	}
+
 	return (
 		<StyledCard>
 			<span>
@@ -49,6 +100,18 @@ const CityCard = ({ cityData, citiesState }: CityCardProps) => {
 					value={cityData.ORDEM ?? undefined}
 					onChange={(e) => onInputChangeFn(+e.target.value)}
 				/>
+				<div style={{ display: "flex", flexDirection: "column" }}>
+					{index > 0 && (
+						<button onClick={() => onButtonPress("up")}>
+							<FaAngleUp />
+						</button>
+					)}
+					{index < citiesState.value.length - 1 && (
+						<button onClick={() => onButtonPress("down")}>
+							<FaAngleDown />
+						</button>
+					)}
+				</div>
 			</span>
 
 			<h2> {cityData.NOME} </h2>

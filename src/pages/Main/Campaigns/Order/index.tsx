@@ -10,6 +10,7 @@ import { ButtonType2 } from "../../../../styles/buttons.style";
 import useCustomState from "../../../../utils/customState.hook";
 import CampaignCard from "./Cards/CampaignCard";
 import CityCard from "./Cards/CityCard";
+import FinalOrderCard from "./Cards/FinalOrderCard";
 import SegmentCard from "./Cards/SegmentCard";
 import StateCard from "./Cards/StateCard";
 import StyledCustomersCitysPage from "./style";
@@ -28,6 +29,8 @@ const OrderPage = () => {
 	const ogCampaignsState = useCustomState<Array<Campaign>>([]);
 
 	const parametersState = useCustomState<Array<parameters>>([]);
+	const ogParametersState = useCustomState<Array<parameters>>([]);
+	const parametersOrderState = useCustomState<string[]>([]);
 
 	useEffect(() => {
 		useCustomRequest<{ message: String; data: City[] }, undefined>({
@@ -116,6 +119,8 @@ const OrderPage = () => {
 			service: "campaigns",
 			onSuccess: (responseData) => {
 				parametersState.set(responseData.data);
+				ogParametersState.set(responseData.data);
+				parametersOrderState.set(responseData.data[0].SEQUENCIADEORDENACAO.split(","));
 			},
 		});
 	}, []);
@@ -189,6 +194,8 @@ const OrderPage = () => {
 				return 0;
 			})
 		);
+		parametersState.set(ogParametersState.value);
+		parametersOrderState.set(ogParametersState.value[0].SEQUENCIADEORDENACAO.split(","));
 	}
 
 	return (
@@ -196,9 +203,10 @@ const OrderPage = () => {
 			<div className="ul-div campaigns">
 				<h2>Campanhas</h2>
 				<ul>
-					{campaignsState.value.map((campaign) => {
+					{campaignsState.value.map((campaign, index) => {
 						return (
 							<CampaignCard
+								index={index}
 								key={`campaign${campaign.CODIGO}`}
 								campaignData={campaign}
 								campaignsState={campaignsState}
@@ -210,24 +218,31 @@ const OrderPage = () => {
 			<div className="ul-div cities">
 				<h2>Cidades</h2>
 				<ul>
-					{citiesState.value.map((city) => {
-						return <CityCard key={`city_${city.CODIGO}`} cityData={city} citiesState={citiesState} />;
+					{citiesState.value.map((city, index) => {
+						return <CityCard key={`city_${city.CODIGO}`} cityData={city} citiesState={citiesState} index={index} />;
 					})}
 				</ul>
 			</div>
 			<div className="ul-div states">
 				<h2>Estados</h2>
 				<ul>
-					{ufState.value.map((state) => {
-						return <StateCard key={`state${state.NOME}`} stateData={state} ufState={ufState} />;
+					{ufState.value.map((state, index) => {
+						return <StateCard key={`state${state.NOME}`} stateData={state} ufState={ufState} index={index} />;
 					})}
 				</ul>
 			</div>
 			<div className="ul-div segments">
 				<h2>Segmentos</h2>
 				<ul>
-					{segmentState.value.map((segment) => {
-						return <SegmentCard key={`segment${segment.CODIGO}`} segmentData={segment} segmentState={segmentState} />;
+					{segmentState.value.map((segment, index) => {
+						return (
+							<SegmentCard
+								key={`segment${segment.CODIGO}`}
+								segmentData={segment}
+								segmentState={segmentState}
+								index={index}
+							/>
+						);
 					})}
 				</ul>
 			</div>
@@ -235,9 +250,16 @@ const OrderPage = () => {
 			<div className="ul-div final">
 				<h2>Ordem final</h2>
 				<ul>
-					{/* 	{ufState.value.map((state) => {
-						return <StateCard key={`state${state.NOME}`} stateData={state} ufState={ufState} />;
-					})} */}
+					{parametersOrderState.value.map((param) => {
+						return (
+							<FinalOrderCard
+								key={`param${param}`}
+								paramData={param}
+								paramState={parametersState}
+								paramOrderState={parametersOrderState}
+							/>
+						);
+					})}
 				</ul>
 			</div>
 			<div className="buttons">

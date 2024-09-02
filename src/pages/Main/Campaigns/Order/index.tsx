@@ -196,8 +196,11 @@ const OrderPage = () => {
 				return 0;
 			})
 		);
+
 		parametersState.set(ogParametersState.value);
 		parametersOrderState.set(ogParametersState.value[0].SEQUENCIADEORDENACAO.split(","));
+
+		currentPage.reset();
 	}
 
 	return (
@@ -226,7 +229,7 @@ const OrderPage = () => {
 								<FaAngleLeft />
 							</button>
 						)}
-						{currentPage.value} / {Math.ceil(citiesState.value.length / 50)}
+						{currentPage.value}/{Math.ceil(citiesState.value.length / 50)}
 						{currentPage.value < Math.ceil(citiesState.value.length / 50) && (
 							<button onClick={() => currentPage.set((prev) => prev + 1)}>
 								<FaAngleRight />

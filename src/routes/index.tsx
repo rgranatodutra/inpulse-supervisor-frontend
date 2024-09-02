@@ -22,6 +22,7 @@ import CustomersRolesPage from "../pages/Main/Customers/Roles";
 import CustomerSegmentPage from "../pages/Main/Customers/Segments";
 import Home from "../pages/Main/Home";
 import BreaksTaken from "../pages/Main/Monitor/BreaksTaken";
+import ReceptiveCalls from "../pages/Main/Monitor/ReceptiveCalls";
 import MonitorSchedules from "../pages/Main/Monitor/Schedules";
 import OperatorsDealsPage from "../pages/Main/Operators/Deals";
 import OperatorsGoalsPage from "../pages/Main/Operators/Goals";
@@ -111,6 +112,7 @@ export const RenderingPage = () => {
 				{/* Rotas de Monitoria */}
 				<Route path="/monitor/agenda" element={<MonitorSchedules />} />
 				<Route path="/monitor/pausas_realizadas" element={<BreaksTaken />} />
+				<Route path="/monitor/chamadas_recebidas" element={<ReceptiveCalls />} />
 			</>
 			<>
 				{/* Rotas de Relatórios */}

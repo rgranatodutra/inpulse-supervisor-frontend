@@ -71,11 +71,18 @@ const StyledCustomersRolesPage = styled.div`
 		border: 2px solid var(--color-grey-6-h);
 		background-color: var(--color-grey-7);
 		justify-content: center;
-		> h2 {
-			align-self: center;
 
+		> h2 {
 			padding: 0.5rem;
 			font-size: 1.5rem;
+
+			input {
+				border: 2px solid var(--color-grey-6-h);
+				font-family: inherit;
+				font-size: inherit;
+				padding: none;
+				width: 2rem;
+			}
 		}
 
 		button {

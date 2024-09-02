@@ -11,12 +11,12 @@ function PreferencesModal() {
 
 	function onDarkModeSwap(e: boolean | null) {
 		if (e) {
-			darkModeState.set((prev) => {
+			darkModeState.set(() => {
 				localStorage.setItem("@inpulse/dark-mode", "1");
 				return e;
 			});
 		} else if (e === false) {
-			darkModeState.set((prev) => {
+			darkModeState.set(() => {
 				localStorage.setItem("@inpulse/dark-mode", "0");
 				return e;
 			});

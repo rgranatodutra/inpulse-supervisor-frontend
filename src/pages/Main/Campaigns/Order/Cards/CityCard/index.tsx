@@ -9,10 +9,9 @@ import StyledCard from "../style";
 interface CityCardProps {
 	cityData: City;
 	citiesState: CustomState<City[]>;
-	index: number;
 }
 
-const CityCard = ({ cityData, citiesState, index }: CityCardProps) => {
+const CityCard = ({ cityData, citiesState }: CityCardProps) => {
 	function onInputChangeFn(event: number) {
 		if (event >= 0) {
 			citiesState.set((prev) => {
@@ -65,8 +64,8 @@ const CityCard = ({ cityData, citiesState, index }: CityCardProps) => {
 		} else {
 			citiesState.set((prev) => {
 				const newState = prev.map((v) => {
-					if (v.NOME === cityData.NOME && v.ORDEM === cityData.ORDEM && v.ORDEM) {
-						return { ...v, ORDEM: v.ORDEM + 1 };
+					if (v.NOME === cityData.NOME && v.ORDEM === cityData.ORDEM) {
+						return { ...v, ORDEM: (v.ORDEM ?? 0) + 1 };
 					}
 					return v;
 				});
@@ -97,17 +96,16 @@ const CityCard = ({ cityData, citiesState, index }: CityCardProps) => {
 					$width="6rem"
 					type="text"
 					inputMode="numeric"
-					defaultValue={cityData.ORDEM ?? 0}
 					value={cityData.ORDEM ?? undefined}
 					onChange={(e) => onInputChangeFn(+e.target.value)}
 				/>
 				<div style={{ display: "flex", flexDirection: "column" }}>
-					{index > 0 && (
+					{(cityData.ORDEM ?? 0) > 0 && (
 						<button onClick={() => onButtonPress("up")}>
 							<FaAngleUp />
 						</button>
 					)}
-					{index < citiesState.value.length - 1 && (
+					{(cityData.ORDEM ?? 0) < 99999999 && (
 						<button onClick={() => onButtonPress("down")}>
 							<FaAngleDown />
 						</button>

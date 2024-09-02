@@ -65,8 +65,8 @@ const CampaignCard = ({ campaignData, campaignsState, index }: SegmentCardProps)
 		} else {
 			campaignsState.set((prev) => {
 				const newState = prev.map((v) => {
-					if (v.NOME === campaignData.NOME && v.PRIORIDADE === campaignData.PRIORIDADE && v.PRIORIDADE) {
-						return { ...v, PRIORIDADE: v.PRIORIDADE + 1 };
+					if (v.NOME === campaignData.NOME && v.PRIORIDADE === campaignData.PRIORIDADE) {
+						return { ...v, PRIORIDADE: (v.PRIORIDADE ?? 0) + 1 };
 					}
 					return v;
 				});
@@ -98,12 +98,11 @@ const CampaignCard = ({ campaignData, campaignsState, index }: SegmentCardProps)
 					type="text"
 					inputMode="numeric"
 					min={0}
-					defaultValue={campaignData.PRIORIDADE ?? 0}
 					value={campaignData.PRIORIDADE}
 					onChange={(e) => onInputChangeFn(+e.target.value)}
 				/>
 				<div style={{ display: "flex", flexDirection: "column" }}>
-					{index > 0 && (
+					{(campaignData.PRIORIDADE ?? 0) > 0 && (
 						<button onClick={() => onButtonPress("up")}>
 							<FaAngleUp />
 						</button>

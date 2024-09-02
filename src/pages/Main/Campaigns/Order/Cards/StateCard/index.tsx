@@ -97,7 +97,6 @@ const StateCard = ({ stateData, ufState, index }: StateCardProps) => {
 					$width="6rem"
 					type="text"
 					inputMode="numeric"
-					defaultValue={stateData.ORDEM}
 					value={stateData.ORDEM}
 					onChange={(e) => onInputChangeFn(+e.target.value)}
 				/>

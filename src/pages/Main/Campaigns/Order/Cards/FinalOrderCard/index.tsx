@@ -51,7 +51,7 @@ const FinalOrderCard = ({ paramData, paramState, paramOrderState }: FinalOrderCa
 		<StyledCard>
 			<span>
 				<FaHashtag />
-				<Input {...defaultInput} $width="6rem" type="number" defaultValue={index} value={index} disabled />
+				<Input {...defaultInput} $width="6rem" type="number" value={index} disabled />
 				<div style={{ display: "flex", flexDirection: "column" }}>
 					{index > 0 && (
 						<button onClick={() => onInputChangeFn(index - 1)}>

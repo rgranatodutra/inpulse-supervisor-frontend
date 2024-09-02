@@ -203,6 +203,16 @@ const OrderPage = () => {
 		currentPage.reset();
 	}
 
+	function onPageChange(newPage: number) {
+		if (newPage < 1) {
+			currentPage.set(1);
+		} else if (newPage > Math.ceil(citiesState.value.length / 50)) {
+			currentPage.set(Math.ceil(citiesState.value.length / 50));
+		} else if (newPage > 0 && newPage < Math.ceil(citiesState.value.length / 50) + 1) {
+			currentPage.set(newPage);
+		}
+	}
+
 	return (
 		<StyledCustomersCitysPage>
 			<div className="ul-div campaigns">
@@ -229,7 +239,8 @@ const OrderPage = () => {
 								<FaAngleLeft />
 							</button>
 						)}
-						{currentPage.value}/{Math.ceil(citiesState.value.length / 50)}
+						{<input value={currentPage.value} type="text" onChange={(e) => onPageChange(+e.target.value)} />}/
+						{Math.ceil(citiesState.value.length / 50)}
 						{currentPage.value < Math.ceil(citiesState.value.length / 50) && (
 							<button onClick={() => currentPage.set((prev) => prev + 1)}>
 								<FaAngleRight />
@@ -238,8 +249,8 @@ const OrderPage = () => {
 					</h2>
 				</div>
 				<ul>
-					{citiesState.value.slice((currentPage.value - 1) * 50, currentPage.value * 50).map((city, index) => {
-						return <CityCard key={`city_${city.CODIGO}`} cityData={city} citiesState={citiesState} index={index} />;
+					{citiesState.value.slice((currentPage.value - 1) * 50, currentPage.value * 50).map((city) => {
+						return <CityCard key={`city_${city.CODIGO}`} cityData={city} citiesState={citiesState} />;
 					})}
 				</ul>
 			</div>

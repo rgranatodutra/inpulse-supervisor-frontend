@@ -97,12 +97,11 @@ const SegmentCard = ({ segmentData, segmentState, index }: SegmentCardProps) => 
 					$width="6rem"
 					type="text"
 					inputMode="numeric"
-					defaultValue={segmentData.ordem ?? 0}
 					value={segmentData.ordem ?? undefined}
 					onChange={(e) => onInputChangeFn(+e.target.value)}
 				/>
 				<div style={{ display: "flex", flexDirection: "column" }}>
-					{index > 0 && (
+					{(segmentData.ordem ?? 0) > 0 && (
 						<button onClick={() => onButtonPress("up")}>
 							<FaAngleUp />
 						</button>

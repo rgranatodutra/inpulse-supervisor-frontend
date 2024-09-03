@@ -15,6 +15,7 @@ import UnitsPage from "../pages/Main/Campaigns/Main";
 import OrderPage from "../pages/Main/Campaigns/Order";
 import ResultsPage from "../pages/Main/Campaigns/Results";
 import CustomersBrandsPage from "../pages/Main/Customers/Brands";
+import CustomersChangesPage from "../pages/Main/Customers/CustomersChanges";
 import CustomerGroupsPage from "../pages/Main/Customers/Groups";
 import CustomersPage from "../pages/Main/Customers/Main";
 import CustomersOriginsPage from "../pages/Main/Customers/Origins";
@@ -67,6 +68,7 @@ export const RenderingPage = () => {
 				<Route path="/clientes/cargos" element={<CustomersRolesPage />} />
 				<Route path="/clientes/origens" element={<CustomersOriginsPage />} />
 				<Route path="/clientes/marcas" element={<CustomersBrandsPage />} />
+				<Route path="/clientes/alteracoes" element={<CustomersChangesPage />} />
 			</>
 			<>
 				{/* Rotas de Operadores */}

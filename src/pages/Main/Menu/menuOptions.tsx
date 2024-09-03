@@ -1,4 +1,4 @@
-import { FaBullhorn, FaChartArea, FaDesktop, FaHeadset, FaToolbox, FaUsers } from "react-icons/fa6";
+import { FaBullhorn, FaChartArea, FaDesktop, FaGear, FaHeadset, FaToolbox, FaUsers } from "react-icons/fa6";
 import { NagivationMenuButton } from "./types";
 
 const menuOptions: Array<NagivationMenuButton> = [
@@ -15,6 +15,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 				{ text: "Cargos", path: "/clientes/cargos" },
 				{ text: "Origens", path: "/clientes/origens" },
 				{ text: "Marcas", path: "/clientes/marcas" },
+				{ text: "Alterações", path: "/clientes/alteracoes" },
 			],
 		},
 	},
@@ -75,10 +76,8 @@ const menuOptions: Array<NagivationMenuButton> = [
 		subMenu: {
 			options: [
 				{ text: "Importador", path: "/ferramentas/importador" },
-				{ text: "Configurações", path: "/ferramentas/configuracoes" },
 				{ text: "Rotinas", path: "/ferramentas/rotinas" },
 				{ text: "Funcionalidades Telefonicas", path: "/ferramentas/funcionalidades_telefonicas" },
-				{ text: "Exportar alterações nos clientes", path: "/ferramentas/exportar_alteracoes_nos_clientes" },
 				{ text: "Transferências de clientes", path: "/ferramentas/funcionalidades_telefonicas" },
 			],
 		},
@@ -102,6 +101,15 @@ const menuOptions: Array<NagivationMenuButton> = [
 				{ text: "Pausas realizadas", path: "/relatorios/pausas_realizadas" },
 				{ text: "Análise de campanhas", path: "/relatorios/analise_de_campanhas" },
 			],
+		},
+	},
+	{
+		id: 7,
+		icon: <FaGear />,
+		text: "Configurações",
+		path: "/configuracoes",
+		subMenu: {
+			options: [{ text: "Preferências", path: "/configuracoes/preferencias" }],
 		},
 	},
 ];

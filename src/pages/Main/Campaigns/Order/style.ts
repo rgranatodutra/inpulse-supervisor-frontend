@@ -56,10 +56,11 @@ const StyledCustomersRolesPage = styled.div`
 		box-sizing: border-box;
 		display: grid;
 		grid-template-areas: "title" "ul";
-		grid-template-rows: 2rem 1fr;
+		grid-template-rows: 3rem 1fr;
 		grid-template-columns: 1fr;
 
 		> h2 {
+			font-size: 1.5rem;
 			padding: 0.5rem 0;
 			text-align: center;
 			background-color: var(--color-grey-7);
@@ -77,6 +78,7 @@ const StyledCustomersRolesPage = styled.div`
 			font-size: 1.5rem;
 
 			input {
+				text-align: center;
 				border: 2px solid var(--color-grey-6-h);
 				font-family: inherit;
 				font-size: inherit;

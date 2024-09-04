@@ -3,7 +3,6 @@ import styled from "styled-components";
 const StyledCampaignsUnitsPage = styled.div`
 	box-sizing: border-box;
 	padding: 1rem;
-	overflow: auto;
 	height: calc(100% - 4rem);
 
 	> button {

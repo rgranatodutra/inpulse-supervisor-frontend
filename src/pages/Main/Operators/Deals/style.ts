@@ -3,7 +3,7 @@ import styled from "styled-components";
 const StyledOperatorsGoalsPage = styled.div`
 	box-sizing: border-box;
 	padding: 1rem;
-	height: calc(100% - 4rem);
+	max-height: calc(100% - 4rem);
 
 	> form {
 		display: flex;
@@ -45,8 +45,12 @@ const StyledOperatorsGoalsPage = styled.div`
 		width: calc(100% - 1.5rem);
 		display: flex;
 		flex-direction: column;
-		max-height: calc(100% - 5rem);
+		max-height: calc(100% - 1.5rem);
 		overflow: auto;
+	}
+
+	@media only screen and (max-height: 1500px) {
+		max-height: calc(100% - 10rem);
 	}
 `;
 

@@ -2,7 +2,7 @@ import Table from "../../../../../components/Table";
 import { ReceptiveCall } from "../../../../../interfaces/ReceptiveCall.type";
 import receptiveCallColumns from "./columns";
 
-const ReceptiveCalls = () => {
+const ReceptiveCallsTable = () => {
 	return (
 		<Table<ReceptiveCall>
 			$tableHeight="100%"
@@ -19,4 +19,4 @@ const ReceptiveCalls = () => {
 	);
 };
 
-export default ReceptiveCalls;
+export default ReceptiveCallsTable;

@@ -78,7 +78,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 				{ text: "Importador", path: "/ferramentas/importador" },
 				{ text: "Rotinas", path: "/ferramentas/rotinas" },
 				{ text: "Funcionalidades Telefonicas", path: "/ferramentas/funcionalidades_telefonicas" },
-				{ text: "Transferências de clientes", path: "/ferramentas/funcionalidades_telefonicas" },
+				{ text: "Transferências de clientes", path: "/ferramentas/transferencia_clientes" },
 			],
 		},
 	},

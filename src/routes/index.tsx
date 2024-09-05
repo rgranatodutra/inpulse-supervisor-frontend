@@ -31,6 +31,7 @@ import OperatorsGroupsPage from "../pages/Main/Operators/Groups";
 import OperatorsPage from "../pages/Main/Operators/Main";
 import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
+import TransferCostumers from "../pages/Main/Tools/transferCustomers";
 
 const setTitle = (title: string) => (document.title = title);
 
@@ -115,6 +116,10 @@ export const RenderingPage = () => {
 				<Route path="/monitor/agenda" element={<MonitorSchedules />} />
 				<Route path="/monitor/pausas_realizadas" element={<BreaksTaken />} />
 				<Route path="/monitor/chamadas_recebidas" element={<ReceptiveCalls />} />
+			</>
+			<>
+				{/* Rotas de Ferramentas */}
+				<Route path="/ferramentas/transferencia_clientes" element={<TransferCostumers />} />
 			</>
 			<>
 				{/* Rotas de Relatórios */}

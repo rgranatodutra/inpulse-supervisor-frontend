@@ -55,6 +55,9 @@ const receptiveCallColumns: Array<TableColumn<ReceptiveCall>> = [
 		key: "LIGACAO_RECEBIDA",
 		header: "Data da ligação",
 		width: 12,
+		format: (l) => {
+			return `${l.LIGACAO_RECEBIDA.slice(0, 10)} às ${l.LIGACAO_RECEBIDA.slice(11, 16)}`;
+		},
 		filter: {
 			type: "date-range",
 			width: "38rem",
@@ -64,6 +67,9 @@ const receptiveCallColumns: Array<TableColumn<ReceptiveCall>> = [
 		key: "LIGACAO_FINALIZADA",
 		header: "Fim da ligação",
 		width: 12,
+		format: (l) => {
+			return `${l.LIGACAO_FINALIZADA.slice(0, 10)} às ${l.LIGACAO_FINALIZADA.slice(11, 16)}`;
+		},
 		filter: {
 			type: "date-range",
 			width: "38rem",

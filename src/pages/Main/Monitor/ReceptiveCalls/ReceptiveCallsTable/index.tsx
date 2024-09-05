@@ -1,20 +1,22 @@
 import Table from "../../../../../components/Table";
 import { ReceptiveCall } from "../../../../../interfaces/ReceptiveCall.type";
+import receptiveCallColumns from "./columns";
 
-const ReceptiveCallsTable = () => {
+const ReceptiveCalls = () => {
 	return (
 		<Table<ReceptiveCall>
 			$tableHeight="100%"
 			$tableWidth="100%"
 			$fontSize={0.75}
-			columns={[]}
-			tableName="Chamadas recebidas"
+			className="display-table"
+			columns={receptiveCallColumns}
+			tableName="Pausas realizadas"
 			$modalFiltersWidth={40}
 			requestEndpoint="/receptive-calls"
-			enableAutoUpdate
 			service="monitoring"
+			enableAutoUpdate
 		/>
 	);
 };
 
-export default ReceptiveCallsTable;
+export default ReceptiveCalls;

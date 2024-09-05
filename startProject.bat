@@ -7,4 +7,6 @@ cd ../inpulse-instances-service
 start cmd.exe /k "npm run watch"
 cd ../inpulse-users-service
 start cmd.exe /k "npm run watch"
+cd ../inpulse-monitoring-service
+start cmd.exe /k "npm run watch"
 

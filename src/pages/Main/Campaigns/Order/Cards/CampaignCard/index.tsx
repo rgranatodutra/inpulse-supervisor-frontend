@@ -66,7 +66,7 @@ const CampaignCard = ({ campaignData, campaignsState, index }: SegmentCardProps)
 			campaignsState.set((prev) => {
 				const newState = prev.map((v) => {
 					if (v.NOME === campaignData.NOME && v.PRIORIDADE === campaignData.PRIORIDADE) {
-						return { ...v, PRIORIDADE: (v.PRIORIDADE ?? 0) + 1 };
+						return { ...v, PRIORIDADE: (v.PRIORIDADE ? v.PRIORIDADE : 0) + 1 };
 					}
 					return v;
 				});

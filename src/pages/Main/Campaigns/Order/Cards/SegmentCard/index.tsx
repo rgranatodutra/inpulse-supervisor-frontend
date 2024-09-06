@@ -65,7 +65,7 @@ const SegmentCard = ({ segmentData, segmentState, index }: SegmentCardProps) => 
 		} else {
 			segmentState.set((prev) => {
 				const newState = prev.map((v) => {
-					if (v.NOME === segmentData.NOME && v.ordem === segmentData.ordem && v.ordem) {
+					if (v.NOME === segmentData.NOME && v.ordem === segmentData.ordem && v.ordem != null) {
 						return { ...v, ordem: v.ordem + 1 };
 					}
 					return v;

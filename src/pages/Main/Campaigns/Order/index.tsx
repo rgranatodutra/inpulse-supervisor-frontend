@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { FaAngleLeft, FaAngleRight, FaCheck, FaX } from "react-icons/fa6";
+import { toast } from "react-toastify";
 import { useCustomRequest } from "../../../../api";
 import { Campaign } from "../../../../interfaces/Campaign.type";
 import { City } from "../../../../interfaces/City.type";
@@ -14,6 +15,19 @@ import FinalOrderCard from "./Cards/FinalOrderCard";
 import SegmentCard from "./Cards/SegmentCard";
 import StateCard from "./Cards/StateCard";
 import StyledCustomersCitysPage from "./style";
+
+const parameteresOrderBy = {
+	TIPODEAGENDAMENTO: "cc.Agenda",
+	PRIORIDADECAMPANHA: "c.prioridade",
+	DATAAGENDAMENTO: "if(cc.dt_agendamento = ''2011-11-08 13:55:31'', DATE_ADD(now(),INTERVAL 1 year),cc.dt_agendamento)",
+	CIDADES: "IFNULL((select MAX(ORDEM) ORDEM from cidades where nome = c_.cidade),999999999)",
+	ESTADOS:
+		"if ((select MAX(ORDEM) ORDEM from uf u where c_.estado = u.uf)> 0, (select MAX(ORDEM) ORDEM from uf u where c_.estado = u.uf), 9999999)",
+	SEGMENTOS:
+		"if ((select MAX(ORDEM) ORDEM from segmentos ss where c_.segmento = ss.codigo)> 0, (select MAX(ORDEM) ORDEM from segmentos ss where c_.segmento = ss.codigo), 999999999)",
+	POTENCIAL: "c_.potencial desc",
+	CADASTRO: "cc.ordem",
+};
 
 const OrderPage = () => {
 	const currentPage = useCustomState<number>(1);
@@ -127,24 +141,95 @@ const OrderPage = () => {
 		});
 	}, []);
 
+	async function updateOrders(
+		updatedParams,
+		alteredCities: City[],
+		alteredSegments: Segment[],
+		alteredUf: UFState[],
+		alteredCampaigns: Campaign[]
+	) {
+		/* if (alteredCities[0]) {
+			alteredCities.map((city) => {
+				useCustomRequest({
+					endpoint: `/cities/${city.CODIGO}`,
+					requestData: {or},
+					method: "patch",
+					service: "campaigns",
+					onSuccess: () => {},
+				});
+			});
+		} */
+		if (alteredSegments[0]) {
+			alteredSegments.map((segment) => {
+				useCustomRequest({
+					endpoint: `/segments/${segment.CODIGO}`,
+					requestData: { ordem: segment.ordem },
+					method: "patch",
+					service: "customers",
+					onSuccess: () => {},
+				});
+			});
+		}
+		if (alteredCampaigns[0]) {
+			alteredCampaigns.map((campaign) => {
+				useCustomRequest({
+					endpoint: `/campaigns/${campaign.CODIGO}`,
+					requestData: { PRIORIDADE: campaign.PRIORIDADE },
+					method: "patch",
+					service: "campaigns",
+					onSuccess: () => {},
+				});
+			});
+		}
+		if (alteredUf[0]) {
+			alteredUf.map((uf) => {
+				const ufOrder = ogUfState.value.find((og) => og.UF === uf.UF);
+				useCustomRequest({
+					endpoint: `/ufStates/${ufOrder?.ORDEM}`,
+					requestData: { ORDEM: uf.ORDEM },
+					method: "patch",
+					service: "campaigns",
+					onSuccess: () => {},
+				});
+			});
+		}
+		useCustomRequest({
+			endpoint: "/parameterss/1",
+			requestData: updatedParams,
+			method: "patch",
+			service: "campaigns",
+			onSuccess: () => {
+				toast.success("Parametros atualizado com sucesso");
+			},
+		});
+	}
+
 	function addOrder() {
 		const alteredCampaigns = campaignsState.value.filter(
 			(OCS) => !ogCampaignsState.value.some((CS) => OCS.CODIGO === CS.CODIGO && OCS.PRIORIDADE === CS.PRIORIDADE)
 		);
 
-		const alteredUfs = ogUfState.value.filter(
-			(OCS) => !ufState.value.some((CS) => OCS.NOME === CS.NOME && OCS.ORDEM === CS.ORDEM)
+		const alteredUfs = ufState.value.filter(
+			(OCS) => !ogUfState.value.some((CS) => OCS.NOME === CS.NOME && OCS.ORDEM === CS.ORDEM)
 		);
 
-		const alteredSegments = ogSegmentState.value.filter(
-			(OCS) => !segmentState.value.some((CS) => OCS.CODIGO === CS.CODIGO && OCS.ordem === CS.ordem)
+		const alteredSegments = segmentState.value.filter(
+			(OCS) => !ogSegmentState.value.some((CS) => OCS.CODIGO === CS.CODIGO && OCS.ordem === CS.ordem)
 		);
 
-		const alteredCities = ogCitiesState.value.filter(
-			(OCS) => !citiesState.value.some((CS) => OCS.CODIGO === CS.CODIGO && OCS.ORDEM === CS.ORDEM)
+		const alteredCities = citiesState.value.filter(
+			(OCS) => !ogCitiesState.value.some((CS) => OCS.CODIGO === CS.CODIGO && OCS.ORDEM === CS.ORDEM)
 		);
 
-		console.log(alteredCampaigns);
+		const parsedInput = parametersOrderState.value.map((s) => parameteresOrderBy[s]).join(",");
+
+		updateOrders(
+			{ ORDERBY: parsedInput, SEQUENCIADEORDENACAO: parametersOrderState.value.join(",") },
+			alteredCities,
+			alteredSegments,
+			alteredUfs,
+			alteredCampaigns
+		);
 	}
 
 	function resetOrder() {

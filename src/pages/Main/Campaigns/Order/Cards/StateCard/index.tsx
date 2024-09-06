@@ -42,7 +42,7 @@ const StateCard = ({ stateData, ufState, index }: StateCardProps) => {
 		if (type === "up") {
 			ufState.set((prev) => {
 				const newState = prev.map((v) => {
-					if (v.NOME === stateData.NOME && v.ORDEM === stateData.ORDEM && v.ORDEM) {
+					if (v.NOME === stateData.NOME && v.ORDEM === stateData.ORDEM && v.ORDEM != null) {
 						return { ...v, ORDEM: v.ORDEM - 1 };
 					}
 					return v;
@@ -65,7 +65,7 @@ const StateCard = ({ stateData, ufState, index }: StateCardProps) => {
 		} else {
 			ufState.set((prev) => {
 				const newState = prev.map((v) => {
-					if (v.NOME === stateData.NOME && v.ORDEM === stateData.ORDEM && v.ORDEM) {
+					if (v.NOME === stateData.NOME && v.ORDEM === stateData.ORDEM && v.ORDEM != null) {
 						return { ...v, ORDEM: v.ORDEM + 1 };
 					}
 					return v;
@@ -101,7 +101,7 @@ const StateCard = ({ stateData, ufState, index }: StateCardProps) => {
 					onChange={(e) => onInputChangeFn(+e.target.value)}
 				/>
 				<div style={{ display: "flex", flexDirection: "column" }}>
-					{index > 0 && (
+					{(stateData.ORDEM ?? 0) > 0 && (
 						<button onClick={() => onButtonPress("up")}>
 							<FaAngleUp />
 						</button>

@@ -8,12 +8,13 @@ type ModalProps = {
 	title: string;
 	modalState: CustomState<any>;
 	onClose?: () => void;
+	marginTop?: string;
 };
 
-const Modal = ({ children, title, modalState, onClose }: ModalProps) => {
+const Modal = ({ children, title, modalState, marginTop, onClose }: ModalProps) => {
 	return (
 		<StyledModal>
-			<div>
+			<div style={{ marginTop: marginTop }}>
 				<header>
 					<h1> {title} </h1>
 					<button

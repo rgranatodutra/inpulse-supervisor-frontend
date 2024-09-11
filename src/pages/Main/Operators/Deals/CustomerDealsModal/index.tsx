@@ -13,7 +13,7 @@ function CustomerDealsModal({ addCustomer }: CustomerDealsModal) {
 	const { modalState } = useContext(GlobalContext);
 
 	return (
-		<Modal modalState={modalState} title="Clientes">
+		<Modal modalState={modalState} title="Clientes" marginTop="5vmax">
 			<StyledDealModal>
 				<CustomersTable addCustomer={addCustomer} />
 			</StyledDealModal>

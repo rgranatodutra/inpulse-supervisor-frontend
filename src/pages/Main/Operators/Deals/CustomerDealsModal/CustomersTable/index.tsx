@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { FaUserGear } from "react-icons/fa6";
-import Table from "../../../../../../components/Table";
+import StateTable from "../../../../../../components/stateTable";
 import { GlobalContext } from "../../../../../../contexts/global";
 import { Customer } from "../../../../../../interfaces/Customer.type";
 import { ButtonType3 } from "../../../../../../styles/buttons.style";
@@ -14,12 +14,13 @@ const CustomersTable = ({ addCustomer }: CustomerTableProps) => {
 	const { modalState } = useContext(GlobalContext);
 
 	return (
-		<Table<Customer>
+		<StateTable<Customer>
 			$tableHeight="40rem"
 			$tableWidth="100%"
 			$fontSize={0.75}
 			columns={customerColumns}
 			tableName="Clientes"
+			className="modal-table"
 			$modalFiltersWidth={41}
 			actions={(row) => [
 				<ButtonType3

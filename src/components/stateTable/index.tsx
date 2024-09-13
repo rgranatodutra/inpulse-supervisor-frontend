@@ -14,6 +14,9 @@ function StateTable<T>({
 	enableAutoUpdate,
 	service,
 	className,
+	searchEnabled,
+	searchInfo,
+	enableExport,
 	...styleProps
 }: TableProps<T>) {
 	const tableRef = useRef<null | HTMLTableElement>(null);
@@ -29,20 +32,33 @@ function StateTable<T>({
 	const autoUpdateState = useCustomState<boolean>(false);
 	const autoUpdateIntervalState = useCustomState<number | null>(5);
 	const orderBy = useCustomState<string | undefined>(undefined);
+	const searchInput = useCustomState<string | undefined>(undefined);
 
-	useEffect(() => {
+	function sendGetRequest(searchParameter?: string) {
+		if (searchParameter) {
+			searchInput.set(searchParameter);
+		}
+
 		useCustomRequest<PaginatedResponse<Array<T>>, undefined>({
 			method: "get",
 			service,
-			endpoint: `${requestEndpoint}?page=${currentPage.value}${orderBy.value ? "&ORDENAR_POR=" + orderBy.value : ""}`,
+			endpoint: `${requestEndpoint}?page=${currentPage.value}${orderBy.value ? "&ORDENAR_POR=" + orderBy.value : ""}${
+				searchParameter
+					? "&" + searchInfo?.parameter.toLocaleString() + "=" + searchParameter
+					: searchInput.value
+					? "&" + searchInfo?.parameter.toLocaleString() + "=" + searchInput.value
+					: ""
+			}`,
 			onSuccess: (res) => {
 				rowsState.set(res.data);
 				nextPage.set(res.page.next);
 			},
 			loadingState,
 		});
+	}
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(() => {
+		sendGetRequest();
 	}, [currentPage.value, orderBy.value]);
 
 	useEffect(() => {
@@ -60,7 +76,7 @@ function StateTable<T>({
 					},
 					loadingState,
 				});
-			}, (autoUpdateIntervalState.value || 60 * 5) * 1000); // Converte segundos para milissegundos
+			}, (autoUpdateIntervalState.value || 60 * 5) * 1000);
 		}
 
 		return () => {
@@ -68,7 +84,6 @@ function StateTable<T>({
 				clearInterval(intervalId);
 			}
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [autoUpdateState.value, autoUpdateIntervalState.value]);
 
 	const getRowKey = (row: T, key: keyof T) => String(row[key]);
@@ -82,6 +97,11 @@ function StateTable<T>({
 			{...styleProps}
 		>
 			<TableHeader
+				searchInput={searchInput.reset}
+				sendGetRequest={sendGetRequest}
+				enableExport={enableExport}
+				searchEnabled={searchEnabled}
+				searchInfo={searchInfo}
 				orderBy={orderBy}
 				currentPage={currentPage}
 				$fontSize={styleProps.$fontSize}

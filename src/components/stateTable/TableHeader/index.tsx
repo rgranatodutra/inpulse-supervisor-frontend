@@ -1,9 +1,19 @@
 import { MutableRefObject, ReactNode } from "react";
-import { FaAngleDown, FaExpand, FaFileExport, FaMinimize, FaSort, FaTableColumns } from "react-icons/fa6";
-import { defaultSelect50 } from "../../../components-variants/defaultInputs";
-import { ButtonType1 } from "../../../styles/buttons.style";
+import {
+	FaAngleDown,
+	FaExpand,
+	FaFileExport,
+	FaMagnifyingGlass,
+	FaMinimize,
+	FaSort,
+	FaTableColumns,
+	FaX,
+} from "react-icons/fa6";
+import { defaultInput, defaultSelect50 } from "../../../components-variants/defaultInputs";
+import { ButtonType1, ButtonType2 } from "../../../styles/buttons.style";
 import cssVars from "../../../utils/cssVariables.vars";
-import { CustomState } from "../../../utils/customState.hook";
+import useCustomState, { CustomState } from "../../../utils/customState.hook";
+import Input from "../../Input";
 import MultiSelect from "../../MultiSelect";
 import PageController from "../../PageController";
 import Select from "../../Select";
@@ -30,7 +40,14 @@ type TableHeaderProps<T> = {
 	autoUpdateIntervalState: CustomState<number | null>;
 	currentPage: CustomState<number>;
 	orderBy: CustomState<string | undefined>;
-	exportEnabled?: boolean;
+	enableExport?: boolean;
+	searchEnabled?: boolean;
+	searchInfo?: {
+		placeholder: string;
+		parameter: keyof T;
+	};
+	sendGetRequest: (searchParameter?: string) => void;
+	searchInput: () => void;
 };
 
 function TableHeader<T>({
@@ -50,8 +67,13 @@ function TableHeader<T>({
 	$fontSize,
 	currentPage,
 	orderBy,
-	exportEnabled,
+	enableExport,
+	searchEnabled,
+	searchInfo,
+	sendGetRequest,
+	searchInput,
 }: TableHeaderProps<T>) {
+	const searchFieldInput = useCustomState<string | undefined>(undefined);
 	const openExportTableModal = () =>
 		modalState.set(<ExportTableDialog modalState={modalState} tableName={tableName} tableRef={tableRef} />);
 
@@ -87,6 +109,8 @@ function TableHeader<T>({
 		}
 	}
 
+	const disabled = searchFieldInput.value === undefined || !(searchFieldInput.value.trim().length > 0);
+
 	return (
 		<StyledTableHeader>
 			<div>
@@ -121,6 +145,37 @@ function TableHeader<T>({
 						</div>
 					</>
 				)}
+
+				{searchEnabled && (
+					<Input
+						{...defaultInput}
+						rightIcon={
+							<FaX
+								onClick={() => {
+									searchInput();
+									sendGetRequest();
+									searchFieldInput.set("");
+								}}
+							/>
+						}
+						placeholder={searchInfo?.placeholder}
+						value={searchFieldInput.value}
+						onChange={(e) => {
+							searchFieldInput.set(e.target.value);
+						}}
+					/>
+				)}
+				{searchEnabled && (
+					<ButtonType2
+						disabled={disabled}
+						onClick={() => {
+							sendGetRequest(searchFieldInput.value?.trim());
+						}}
+					>
+						<FaMagnifyingGlass />
+					</ButtonType2>
+				)}
+
 				<PageController
 					onClickNextPageFn={changeNextPage}
 					onClickPreviousPageFn={changePreviousPage}
@@ -129,7 +184,7 @@ function TableHeader<T>({
 					pageProp={currentPage.value.toLocaleString()}
 				/>
 
-				{exportEnabled && (
+				{enableExport && (
 					<ButtonType1 onClick={openExportTableModal}>
 						<FaFileExport />
 						<p> Exportar </p>

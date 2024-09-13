@@ -8,7 +8,7 @@ const StyledGroupModal = styled.div`
 	vertical-align: top;
 
 	.modal-table {
-		max-height: 25vmax;
+		max-height: 50vh;
 		overflow: auto;
 	}
 `;

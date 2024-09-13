@@ -6,7 +6,6 @@ const StyledTableHeader = styled.header`
 	background-color: var(--color-grey-7);
 	border-top-left-radius: 0.5rem;
 	border-top-right-radius: 0.5rem;
-
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -54,6 +53,12 @@ const StyledTableHeader = styled.header`
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
+		}
+		> button {
+			background-color: var(--color-grey-7);
+			&:hover {
+				background-color: var(--color-grey-2);
+			}
 		}
 
 		@media (max-width: 50rem) {

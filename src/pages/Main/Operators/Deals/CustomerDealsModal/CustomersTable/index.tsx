@@ -19,6 +19,8 @@ const CustomersTable = ({ addCustomer }: CustomerTableProps) => {
 			$tableWidth="100%"
 			$fontSize={0.75}
 			columns={customerColumns}
+			searchEnabled
+			searchInfo={{ placeholder: "Digite a razão do cliente", parameter: "RAZAO" }}
 			tableName="Clientes"
 			className="modal-table"
 			$modalFiltersWidth={41}

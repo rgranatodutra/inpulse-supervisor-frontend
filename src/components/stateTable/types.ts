@@ -36,6 +36,12 @@ export type TableProps<T> = {
 	requestEndpoint: `/${string}`;
 	enableAutoUpdate?: boolean;
 	service: ServiceName;
+	enableExport?: boolean;
+	searchEnabled?: boolean;
+	searchInfo?: {
+		placeholder: string;
+		parameter: keyof T;
+	};
 };
 
 export type StyledTableProps = {

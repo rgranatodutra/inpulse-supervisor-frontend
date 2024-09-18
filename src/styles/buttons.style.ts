@@ -79,6 +79,8 @@ const ButtonType2 = styled.button`
 
 const ButtonType3 = styled.div`
 	user-select: none;
+	cursor: pointer;
+
 	& > a {
 		color: var(--color-grey-2);
 		display: flex;
@@ -86,7 +88,6 @@ const ButtonType3 = styled.div`
 		text-decoration: underline;
 		width: max-content;
 		gap: 0.5rem;
-		cursor: pointer;
 
 		font-size: 0.875rem;
 		font-weight: 500;
@@ -100,9 +101,13 @@ const ButtonType3 = styled.div`
 		}
 	}
 	& > svg:hover {
-		cursor: pointer;
 		transition: 200ms;
 		transform: scale(1.25);
+	}
+	&:hover > svg {
+		transition: 200ms;
+		transform: scale(1.5);
+		color: var(--color-primary);
 	}
 `;
 

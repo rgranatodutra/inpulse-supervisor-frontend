@@ -86,6 +86,8 @@ const StyledTable = styled.div<StyledTableProps>`
 					th:nth-child(1) {
 						width: 4rem;
 						min-width: 4rem;
+						display: flex;
+						justify-content: center;
 					}
 				`}
 
@@ -153,6 +155,8 @@ const StyledTable = styled.div<StyledTableProps>`
 						td:nth-child(1) {
 							width: 4rem;
 							min-width: 4rem;
+							display: flex;
+							justify-content: center;
 						}
 					`}
 

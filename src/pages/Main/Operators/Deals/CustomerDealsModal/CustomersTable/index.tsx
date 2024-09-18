@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FaUserGear } from "react-icons/fa6";
+import { FaUserCheck } from "react-icons/fa6";
 import StateTable from "../../../../../../components/stateTable";
 import { GlobalContext } from "../../../../../../contexts/global";
 import { Customer } from "../../../../../../interfaces/Customer.type";
@@ -20,7 +20,7 @@ const CustomersTable = ({ addCustomer }: CustomerTableProps) => {
 			$fontSize={0.75}
 			columns={customerColumns}
 			searchEnabled
-			searchInfo={{ placeholder: "Digite a razão do cliente", parameter: "RAZAO" }}
+			searchInfo={{ placeholder: "Código ERP", parameter: "COD_ERP" }}
 			tableName="Clientes"
 			className="modal-table"
 			$modalFiltersWidth={41}
@@ -31,7 +31,7 @@ const CustomersTable = ({ addCustomer }: CustomerTableProps) => {
 						modalState.reset();
 					}}
 				>
-					<FaUserGear />
+					<FaUserCheck style={{ fontSize: "1.5rem", pointerEvents: "none" }} />
 				</ButtonType3>,
 			]}
 			requestEndpoint="/customers"

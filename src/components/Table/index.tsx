@@ -45,7 +45,7 @@ function Table<T>({
 		});
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [searchParams]);
+	}, [searchParams, requestEndpoint]);
 
 	useEffect(() => {
 		let intervalId: NodeJS.Timeout | null = null;

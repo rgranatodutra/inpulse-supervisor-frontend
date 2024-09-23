@@ -20,6 +20,16 @@ const StyledCustomersFilter = styled.section`
 			display: flex;
 			flex-direction: column;
 			gap: 0.25rem;
+
+			ul {
+				position: static;
+				max-height: 15rem;
+				padding-bottom: 1rem;
+
+				&.hidden {
+					display: none;
+				}
+			}
 		}
 	}
 

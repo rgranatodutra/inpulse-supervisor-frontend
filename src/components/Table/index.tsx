@@ -32,6 +32,10 @@ function Table<T>({
 	const autoUpdateIntervalState = useCustomState<number | null>(5);
 
 	useEffect(() => {
+		setSearchParams("");
+	}, [requestEndpoint]);
+
+	useEffect(() => {
 		useCustomRequest<PaginatedResponse<Array<T>>, undefined>({
 			method: "get",
 			service,

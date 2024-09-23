@@ -16,6 +16,15 @@ const MonitorSchedules = () => {
 			lastContract: { min: string | undefined; max: string | undefined };
 			lastPurchase: { min: string | undefined; max: string | undefined };
 		};
+		multiSelect?: {
+			campaigns?: (string | null)[];
+			groups?: (string | null)[];
+			segments?: (string | null)[];
+			origins?: (string | null)[];
+			medias?: (string | null)[];
+			ufStates?: (string | null)[];
+			purchasedProduct?: (string | null)[];
+		};
 	}>({});
 
 	return (

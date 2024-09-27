@@ -372,12 +372,26 @@ const CustomersFilter = ({ customerFilterState }: CustomersFilterProps) => {
 								title={entry[0]}
 								{...defaultInput50}
 								onChange={(e) => {
+									const min = e.min?.toLocaleDateString().split("/");
+									const minDate: string[] = [];
+									if (min) {
+										minDate.push(min[2]);
+										minDate.push(min[0].length === 1 ? "0" + min[0] : min[0]);
+										minDate.push(min[1].length === 1 ? "0" + min[1] : min[1]);
+									}
+									const max = e.max?.toLocaleDateString().split("/");
+									const maxDate: string[] = [];
+									if (max) {
+										maxDate.push(max[2]);
+										maxDate.push(max[0].length === 1 ? "0" + max[0] : max[0]);
+										maxDate.push(max[1].length === 1 ? "0" + max[1] : max[1]);
+									}
 									if (entry[0] === "Ultimo contato") {
 										tempCustomerInputDateFieldValues.set((prev) => ({
 											...prev,
 											lastContract: {
-												min: e.min?.toLocaleDateString().split("/").reverse().join("-"),
-												max: e.max?.toLocaleDateString().split("/").reverse().join("-"),
+												min: minDate.join("-"),
+												max: maxDate.join("-"),
 											},
 										}));
 									}
@@ -385,8 +399,8 @@ const CustomersFilter = ({ customerFilterState }: CustomersFilterProps) => {
 										tempCustomerInputDateFieldValues.set((prev) => ({
 											...prev,
 											lastPurchase: {
-												min: e.min?.toLocaleDateString().split("/").reverse().join("-"),
-												max: e.max?.toLocaleDateString().split("/").reverse().join("-"),
+												min: minDate.join("-"),
+												max: maxDate.join("-"),
 											},
 										}));
 									}

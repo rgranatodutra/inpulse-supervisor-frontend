@@ -5,7 +5,7 @@ import SchedulesTable from "./SchedulesTable";
 import StyledMonitorSchedules from "./style";
 
 const MonitorSchedules = () => {
-	const customerInputFieldValues = useCustomState<{
+	const customerInputFilterValues = useCustomState<{
 		CPF_CNPJ?: number;
 		CODIGO?: number;
 		COD_ERP?: number;
@@ -27,15 +27,29 @@ const MonitorSchedules = () => {
 		};
 	}>({});
 
+	const variantInputFilterValues = useCustomState<{
+		currentType?: "Agendamentos" | "Ligações" | "Sem agendamento";
+		scheduling?: { min: string | undefined; max: string | undefined };
+		rePurchased?: { min: string | undefined; max: string | undefined };
+		call?: { min: string | undefined; max: string | undefined };
+		clientOperator?: string | null | undefined;
+		callOperator?: string | null | undefined;
+		clientsNotWorked?: boolean;
+	}>({});
+
 	return (
 		<StyledMonitorSchedules>
 			<main>
 				<form>
-					<VariantFilter />
-					<CustomersFilter customerFilterState={customerInputFieldValues} />
+					<VariantFilter variantFiltersState={variantInputFilterValues} />
+					<CustomersFilter customerFilterState={customerInputFilterValues} />
 				</form>
 				<div>
-					<SchedulesTable title="Agendamentos" queryFilters={customerInputFieldValues.value} />
+					<SchedulesTable
+						title="Agendamentos"
+						queryCustomerFilters={customerInputFilterValues.value}
+						queryVariantFilters={variantInputFilterValues.value}
+					/>
 				</div>
 			</main>
 		</StyledMonitorSchedules>

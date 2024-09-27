@@ -13,11 +13,21 @@ const schedulesColumns: Array<TableColumn<Schedule>> = [
 		key: "COD_ERP",
 		header: "Código ERP",
 		width: 6,
+		format: (row) => {
+			return row.COD_ERP ?? "Não cadastrado";
+		},
 	},
 	{
 		key: "ULTIMO_CONTATO",
 		header: "Último contato",
 		width: 12,
+		format: (row) => {
+			if (row.ULTIMO_CONTATO) {
+				return new Date(row.ULTIMO_CONTATO).toLocaleString();
+			} else {
+				return "Não contatado";
+			}
+		},
 	},
 	{
 		key: "DT_AGENDAMENTO",
@@ -27,12 +37,12 @@ const schedulesColumns: Array<TableColumn<Schedule>> = [
 			if (row.DT_AGENDAMENTO) {
 				return new Date(row.DT_AGENDAMENTO).toLocaleString();
 			} else {
-				return "Não cadastrado";
+				return "Não agendado";
 			}
 		},
 	},
 	{
-		key: "RAZAO",
+		key: "CLIENTE_NOME",
 		header: "Razão do cliente",
 		width: 24,
 	},
@@ -40,6 +50,13 @@ const schedulesColumns: Array<TableColumn<Schedule>> = [
 		key: "CPF_CNPJ",
 		header: "CPF/CNPJ",
 		width: 12,
+		format: (row) => {
+			if (row.CPF_CNPJ.trim()) {
+				return row.CPF_CNPJ;
+			} else {
+				return "Não cadastrado";
+			}
+		},
 	},
 	{
 		key: "CIDADE",
@@ -52,7 +69,7 @@ const schedulesColumns: Array<TableColumn<Schedule>> = [
 		width: 3,
 	},
 	{
-		key: "CAMPANHA",
+		key: "CAMPANHA_NOME",
 		header: "Campanha",
 		width: 12,
 		defaultDisabled: true,
@@ -76,13 +93,13 @@ const schedulesColumns: Array<TableColumn<Schedule>> = [
 		},
 	},
 	{
-		key: "RESULTADO",
+		key: "RESULTADO_NOME",
 		header: "Resultado",
 		width: 12,
 		defaultDisabled: true,
 		format: (row) => {
-			if (row.RESULTADO != null && row.RESULTADO != undefined) {
-				return row.RESULTADO;
+			if (row.RESULTADO_NOME != null && row.RESULTADO_NOME != undefined && row.RESULTADO_NOME.trim()) {
+				return row.RESULTADO_NOME;
 			} else {
 				return "Não cadastrado";
 			}
@@ -127,26 +144,26 @@ const schedulesColumns: Array<TableColumn<Schedule>> = [
 		},
 	},
 	{
-		key: "OPERADOR",
+		key: "OPERADOR_NOME",
 		header: "Operador",
 		width: 12,
 		defaultDisabled: true,
 		format: (row) => {
-			if (row.OPERADOR != null && row.OPERADOR != undefined) {
-				return row.OPERADOR;
+			if (row.OPERADOR_NOME != null && row.OPERADOR_NOME != undefined && row.OPERADOR_NOME.trim()) {
+				return row.OPERADOR_NOME;
 			} else {
 				return "Não cadastrado";
 			}
 		},
 	},
 	{
-		key: "OPERADOR_LIGACAO",
+		key: "OPERADOR_LIG_NOME",
 		header: "Operador ligação",
 		width: 12,
 		defaultDisabled: true,
 		format: (row) => {
-			if (row.OPERADOR_LIGACAO != null && row.OPERADOR_LIGACAO != undefined) {
-				return row.OPERADOR_LIGACAO;
+			if (row.OPERADOR_LIG_NOME != null && row.OPERADOR_LIG_NOME != undefined) {
+				return row.OPERADOR_LIG_NOME;
 			} else {
 				return "Não cadastrado";
 			}
@@ -195,18 +212,6 @@ const schedulesColumns: Array<TableColumn<Schedule>> = [
 		format: (row) => {
 			if (row.DATA_ULT_COMPRA) {
 				return new Date(row.DATA_ULT_COMPRA).toLocaleString();
-			} else {
-				return "Não cadastrado";
-			}
-		},
-	},
-	{
-		key: "DATA_RECOMPRA",
-		header: "Data recompra",
-		width: 12,
-		format: (row) => {
-			if (row.DATA_RECOMPRA) {
-				return new Date(row.DATA_RECOMPRA).toLocaleString();
 			} else {
 				return "Não cadastrado";
 			}

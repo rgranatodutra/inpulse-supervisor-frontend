@@ -9,6 +9,7 @@ class Services {
 		baseURL: import.meta.env.VITE_MONITORING_URL + `/${currentRoute}`,
 	});
 	public static readonly campaigns = axios.create({ baseURL: import.meta.env.VITE_CAMPAIGNS_URL + `/${currentRoute}` });
+	public static readonly tools = axios.create({ baseURL: import.meta.env.VITE_TOOLS_URL + `/${currentRoute}` });
 }
 
 export default Services;

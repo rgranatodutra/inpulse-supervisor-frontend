@@ -33,6 +33,7 @@ import OperatorsGroupsPage from "../pages/Main/Operators/Groups";
 import OperatorsPage from "../pages/Main/Operators/Main";
 import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
+import DeactivatedCustomers from "../pages/Main/Tools/deactivateCustomers";
 import TransferCostumers from "../pages/Main/Tools/transferCustomers";
 
 const setTitle = (title: string) => (document.title = title);
@@ -124,6 +125,7 @@ export const RenderingPage = () => {
 			<>
 				{/* Rotas de Ferramentas */}
 				<Route path="/ferramentas/transferencia_clientes" element={<TransferCostumers />} />
+				<Route path="/ferramentas/rotinas" element={<DeactivatedCustomers />} />
 			</>
 			<>
 				{/* Rotas de Relatórios */}

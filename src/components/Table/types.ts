@@ -33,7 +33,7 @@ export type TableProps<T> = {
 	$tableHeight: string;
 	$modalFiltersWidth: number;
 	actions?: (row: T) => Array<ReactNode>;
-	requestEndpoint: `/${string}`;
+	requestEndpoint: `/${string}` | `/${string}/${string}`;
 	enableAutoUpdate?: boolean;
 	service: ServiceName;
 };

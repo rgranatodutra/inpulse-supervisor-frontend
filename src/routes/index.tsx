@@ -5,6 +5,7 @@ import { CustomerProvider } from "../forms/CustomerForm/context";
 import OperatorForm from "../forms/OperatorForm";
 import { OperatorProvider } from "../forms/OperatorForm/context";
 import CampaignsPage from "../pages/Main/Campaigns/Campaigns";
+import CampaignsChangesPage from "../pages/Main/Campaigns/CampaignsChanges";
 import OtherCitiesPage from "../pages/Main/Campaigns/Cities";
 import ExceptionsPage from "../pages/Main/Campaigns/Exceptions";
 import ExceptionsCitiesTable from "../pages/Main/Campaigns/Exceptions/ExceptionsCities";
@@ -33,6 +34,7 @@ import OperatorsGroupsPage from "../pages/Main/Operators/Groups";
 import OperatorsPage from "../pages/Main/Operators/Main";
 import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
+import ConfigParameters from "../pages/Main/Tools/ConfigParameters";
 import DeactivatedCustomers from "../pages/Main/Tools/deactivateCustomers";
 import TransferCostumers from "../pages/Main/Tools/transferCustomers";
 
@@ -112,6 +114,7 @@ export const RenderingPage = () => {
 					<Route path="estados" element={<ExceptionsStatesTable />} />
 					<Route path="segmentos" element={<ExceptionsSegmentsTable />} />
 				</Route>
+				<Route path="/campanhas/alteracoes" element={<CampaignsChangesPage />} />
 			</>
 
 			<>
@@ -126,6 +129,7 @@ export const RenderingPage = () => {
 				{/* Rotas de Ferramentas */}
 				<Route path="/ferramentas/transferencia_clientes" element={<TransferCostumers />} />
 				<Route path="/ferramentas/rotinas" element={<DeactivatedCustomers />} />
+				<Route path="/ferramentas/parametros" element={<ConfigParameters />} />
 			</>
 			<>
 				{/* Rotas de Relatórios */}

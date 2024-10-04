@@ -48,6 +48,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 				{ text: "Cidades", path: "/campanhas/cidades" },
 				{ text: "Ordem", path: "/campanhas/ordem" },
 				{ text: "Exceções", path: "/campanhas/excecoes" },
+				{ text: "Alterações", path: "/campanhas/alteracoes" },
 			],
 		},
 	},

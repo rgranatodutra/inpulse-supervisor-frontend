@@ -9,9 +9,10 @@ type FormTemplate = PropsWithChildren<{
 	submitForm: () => void;
 	widthRem?: string;
 	title?: string;
+	noButton?: boolean;
 }>;
 
-const FormTemplate = ({ disabled, children, submitForm, buttonText, title, widthRem }: FormTemplate) => {
+const FormTemplate = ({ disabled, children, submitForm, buttonText, title, widthRem, noButton }: FormTemplate) => {
 	return (
 		<StyledCustomForm style={{ width: widthRem ?? "100%" }}>
 			{title && <h2> {title} </h2>}
@@ -22,10 +23,14 @@ const FormTemplate = ({ disabled, children, submitForm, buttonText, title, width
 				}}
 			>
 				{children}
-				<ButtonType2 disabled={disabled}>
-					<FaCheck />
-					{buttonText}
-				</ButtonType2>
+				{noButton ? (
+					""
+				) : (
+					<ButtonType2 disabled={disabled}>
+						<FaCheck />
+						{buttonText}
+					</ButtonType2>
+				)}
 			</form>
 		</StyledCustomForm>
 	);

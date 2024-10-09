@@ -34,7 +34,8 @@ import OperatorsGroupsPage from "../pages/Main/Operators/Groups";
 import OperatorsPage from "../pages/Main/Operators/Main";
 import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
-import ConfigParameters from "../pages/Main/Tools/ConfigParameters";
+import ConfigParametersPage from "../pages/Main/Tools/ConfigParameters";
+import MainParameterConfigs from "../pages/Main/Tools/ConfigParameters/MainConfigs";
 import DeactivatedCustomers from "../pages/Main/Tools/deactivateCustomers";
 import TransferCostumers from "../pages/Main/Tools/transferCustomers";
 
@@ -129,7 +130,16 @@ export const RenderingPage = () => {
 				{/* Rotas de Ferramentas */}
 				<Route path="/ferramentas/transferencia_clientes" element={<TransferCostumers />} />
 				<Route path="/ferramentas/rotinas" element={<DeactivatedCustomers />} />
-				<Route path="/ferramentas/parametros" element={<ConfigParameters />} />
+				<Route path="/ferramentas/parametros" element={<ConfigParametersPage />}>
+					<Route path="main" element={<MainParameterConfigs />} />
+					<Route path="DDDS" element={<ExceptionsCitiesTable />} />
+					<Route path="SIP" element={<ExceptionsStatesTable />} />
+					<Route path="agenda" element={<ExceptionsSegmentsTable />} />
+					<Route path="importacao" element={<ExceptionsSegmentsTable />} />
+					<Route path="email" element={<ExceptionsSegmentsTable />} />
+					<Route path="inativacao" element={<ExceptionsSegmentsTable />} />
+					<Route path="outros" element={<ExceptionsSegmentsTable />} />
+				</Route>
 			</>
 			<>
 				{/* Rotas de Relatórios */}

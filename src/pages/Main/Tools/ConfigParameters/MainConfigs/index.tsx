@@ -1,6 +1,10 @@
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
 import { defaultInput } from "../../../../../components-variants/defaultInputs";
 import FormTemplate from "../../../../../components/FormTemplate/FormTemplate";
 import Input from "../../../../../components/Input";
+import { ButtonType2 } from "../../../../../styles/buttons.style";
+import useCustomState from "../../../../../utils/customState.hook";
 import StyledParamsForm from "./style";
 
 const agendamentosFields = [
@@ -26,12 +30,12 @@ const importacaoClientesComprasFields = [
 	{ type: "checkbox", text: "Desligar computador após atualização", field: "DESLIGA_COMPUTADOR" },
 	{ type: "checkbox", text: "Importa operador compra", field: "IMP_OPERADOR" },
 	{ type: "checkbox", text: "Exibe alerta atualização", field: "EXIBE_ALERTA_ATUALIZACAO_CLIENTES" },
-	{ type: "checkbox", text: "Expirar transferência", field: "EXPIRAR_TRANSFERENCIA_CLIENTES" },
 	{ type: "checkbox", text: "Utiliza régua", field: "UTILIZA_REGUA" },
 	{ type: "checkbox", text: "Criar agendamento por orçamento", field: "AG_CLIENTES_ORCAMENTO" },
 	{ type: "checkbox", text: "Criar agendamento por venda", field: "AG_CLIENTES_VENDA" },
 	{ type: "number", text: "Dias expiração transferência", field: "DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES" },
 	{ type: "number", text: "Hora atualização", field: "ATUALIZACAO_HORA" },
+	{ type: "checkbox-number", text: "Expirar transferência", field: "EXPIRAR_TRANSFERENCIA_CLIENTES" },
 ];
 
 const atualizarCamposFields = [
@@ -100,15 +104,114 @@ const gravacoesFields = [
 ];
 
 const MainParameterConfigs = () => {
+	const configInputsState = useCustomState<{
+		AGENDA_PRIORIDADE_SUPERVISOR?: boolean | null;
+		AGENDA_SABADO?: boolean | null;
+		ALTERAR_RAZAO_SOCIAL?: boolean | null;
+		AVISO_RECOMPRA_OPERADOR?: boolean | null;
+		AVISO_RECOMPRA_SUPERVISOR?: boolean | null;
+		BAIRRO?: boolean | null;
+		BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA?: boolean | null;
+		BLOQUEAR_GRUPO?: boolean | null;
+		BLOQUEAR_MIDIA?: boolean | null;
+		BLOQUEAR_ORIGEM?: boolean | null;
+		CARGO_CONTATO?: boolean | null;
+		CEP?: boolean | null;
+		CIDADE?: boolean | null;
+		CNPJ?: boolean | null;
+		CONTATO?: boolean | null;
+		DESLIGA_COMPUTADOR?: boolean | null;
+		EMAIL?: boolean | null;
+		EMAIL_CONTATO?: boolean | null;
+		ENDERECO?: boolean | null;
+		ESTADO?: boolean | null;
+		EXIBE_ALERTA_ATUALIZACAO_CLIENTES?: boolean | null;
+		EXIBIR_ALERTA_API_CEP?: boolean | null;
+		EXIBIR_FASE_CONTATO?: boolean | null;
+		EXIBIR_PEDIDOS_FECHADOS?: boolean | null;
+		EXIBIR_PRODUTIVIDADE?: boolean | null;
+		EXPIRAR_TRANSFERENCIA_CLIENTES?: boolean | null;
+		EXIGIR_FASE_CONTATO?: boolean | null;
+		FANTASIA?: boolean | null;
+		GRAVAR_LIGACAO?: boolean | null;
+		GRAVARLOG?: boolean | null;
+		HABILITAR_CADASTRO_MARCAS?: boolean | null;
+		HABILITAR_SUSPENDER_SISTEMA?: boolean | null;
+		IMP_OPERADOR?: boolean | null;
+		INCLUI_CLIENTE_CAMP_PRINC_IMP?: boolean | null;
+		MOSTRAR_REPRESENTANTE_LIG?: boolean | null;
+		OCULTAR_ALTA_PRIORIDADE?: boolean | null;
+		OCULTAR_OPERADORES_CHAT?: boolean | null;
+		OPERADOR_QUALIFICADOR?: boolean | null;
+		PESQUISAR_CLIENTES_NO_ATIVO?: boolean | null;
+		PERMITIR_USO_API_CEP?: boolean | null;
+		RAZAO?: boolean | null;
+		SOBREPOR_CHAT?: boolean | null;
+		UTILIZA_REGUA?: boolean | null;
+		UTILIZAR_QTDCLIENTEBASE?: boolean | null;
+		VALIDA_CPF_CNPJ?: boolean | null;
+		PAUSARRAMAL?: boolean | null;
+		ATUALIZACAO_HORA?: number | null;
+		DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES?: number | null;
+		DIAS_LIMITE_AGENDAMENTO?: number | null;
+		FINALIZAR_AUTO_SEGUNDOS?: number | null;
+		INTERVALO_CHAMADAS?: number | null;
+		LIBERAR_FINALIZAR_SEGUNDOS?: number | null;
+		LOCAL_GRAVACAO?: number | null;
+		METODO_GRAVACAO?: number | null;
+		QTD_HISTORICO_CLI?: number | null;
+		QTDE_ULTIMAS_LIGACOES?: number | null;
+		RAMALDESPAUSA?: number | null;
+		RAMALPAUSA?: number | null;
+		SALDO?: number | null;
+		SEGMENTO?: number | null;
+		TEMPO_MINIMO_CONVERSA_SEGUNDOS?: number | null;
+		TEMPO_PREVISTO_ATENDIMENTO_RECEPTIVO?: number | null;
+		TELEFONE?: number | null;
+		TEL_CONTATO?: number | null;
+		POTENCIAL?: number | null;
+		FILA?: string | null;
+		UNIDADE?: string | null;
+		VERSAO_SISTEMA?: string | null;
+	}>({});
+
+	console.log(configInputsState.value);
+	function updateParams() {
+		useCustomRequest({
+			endpoint: "/parameterss/1",
+			requestData: configInputsState.value,
+			method: "patch",
+			service: "campaigns",
+			onSuccess: () => {
+				toast.success("Parametros atualizados com sucesso");
+			},
+		});
+	}
+
+	const gravacoesDisabled = !configInputsState.value.GRAVAR_LIGACAO;
+	const expirarTransfDisabled = !configInputsState.value.EXPIRAR_TRANSFERENCIA_CLIENTES;
+	const baseCliDisabled = !configInputsState.value.UTILIZAR_QTDCLIENTEBASE;
+	const ramalDisabled = !configInputsState.value.PAUSARRAMAL;
+
 	return (
 		<StyledParamsForm>
+			<div className="save-button">
+				<ButtonType2 onClick={updateParams}> Salvar </ButtonType2>
+			</div>
 			<FormTemplate buttonText="Salvar" disabled={true} submitForm={() => {}} noButton title="Agendamentos">
 				<div className="inputs">
 					{agendamentosFields.map((field) => {
 						if (field.type === "checkbox") {
 							return (
 								<div className="checkbox-input">
-									<Input {...defaultInput} type="checkbox" /> {field.text}
+									<Input
+										{...defaultInput}
+										type="checkbox"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										}}
+									/>
+									{field.text}
 								</div>
 							);
 						}
@@ -119,7 +222,19 @@ const MainParameterConfigs = () => {
 						if (field.type === "number") {
 							return (
 								<div className="number-input">
-									<Input {...defaultInput} min={1} type="number" label={field.text} placeholder={field.text} />
+									<Input
+										{...defaultInput}
+										min={1}
+										type="number"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: e.target.value != "" ? e.target.value : null,
+											}));
+										}}
+										label={field.text}
+										placeholder={field.text}
+									/>
 								</div>
 							);
 						}
@@ -131,13 +246,32 @@ const MainParameterConfigs = () => {
 								if (field.type === "checkbox") {
 									return (
 										<div className="checkbox-input">
-											<Input {...defaultInput} type="checkbox" /> {field.text}
+											<Input
+												{...defaultInput}
+												type="checkbox"
+												onChange={(e) => {
+													configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+												}}
+											/>
+											{field.text}
 										</div>
 									);
 								} else if (field.type === "number") {
 									return (
 										<div className="number-input">
-											<Input {...defaultInput} min={1} type="number" label={field.text} placeholder={field.text} />
+											<Input
+												{...defaultInput}
+												min={1}
+												type="number"
+												onChange={(e) => {
+													configInputsState.set((prev) => ({
+														...prev,
+														[field.field]: e.target.value != "" ? e.target.value : null,
+													}));
+												}}
+												label={field.text}
+												placeholder={field.text}
+											/>
 										</div>
 									);
 								}
@@ -159,7 +293,14 @@ const MainParameterConfigs = () => {
 						if (field.type === "checkbox") {
 							return (
 								<div className="checkbox-input">
-									<Input {...defaultInput} type="checkbox" /> {field.text}
+									<Input
+										{...defaultInput}
+										type="checkbox"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										}}
+									/>
+									{field.text}
 								</div>
 							);
 						}
@@ -170,12 +311,54 @@ const MainParameterConfigs = () => {
 						if (field.type === "number") {
 							return (
 								<div className="number-input">
-									<Input {...defaultInput} min={1} type="number" label={field.text} placeholder={field.text} />
+									<Input
+										{...defaultInput}
+										min={1}
+										type="number"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: e.target.value != "" ? e.target.value : null,
+											}));
+										}}
+										label={field.text}
+										placeholder={field.text}
+									/>
+								</div>
+							);
+						}
+					})}
+					{importacaoClientesComprasFields.map((field) => {
+						if (field.type === "checkbox-number") {
+							return (
+								<div className="checkbox-number">
+									<Input
+										{...defaultInput}
+										type="checkbox"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										}}
+									/>
+									<Input
+										{...defaultInput}
+										min={1}
+										type="number"
+										disabled={expirarTransfDisabled}
+										label={field.text}
+										placeholder="Quantidade de dias"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({
+												...prev,
+												DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES: e.target.value != "" ? +e.target.value : null,
+											}));
+										}}
+									/>
 								</div>
 							);
 						}
 					})}
 				</div>
+
 				<div className="sub-form">
 					<div className="sub-title"> Atualizar campos</div>
 					<div className="sub-inputs">
@@ -183,13 +366,32 @@ const MainParameterConfigs = () => {
 							if (field.type === "checkbox") {
 								return (
 									<div className="checkbox-input">
-										<Input {...defaultInput} type="checkbox" /> {field.text}
+										<Input
+											{...defaultInput}
+											type="checkbox"
+											onChange={(e) => {
+												configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+											}}
+										/>
+										{field.text}
 									</div>
 								);
 							} else if (field.type === "number") {
 								return (
 									<div className="number-input">
-										<Input {...defaultInput} min={1} type="number" label={field.text} placeholder={field.text} />
+										<Input
+											{...defaultInput}
+											min={1}
+											type="number"
+											onChange={(e) => {
+												configInputsState.set((prev) => ({
+													...prev,
+													[field.field]: e.target.value != "" ? e.target.value : null,
+												}));
+											}}
+											label={field.text}
+											placeholder={field.text}
+										/>
 									</div>
 								);
 							}
@@ -204,7 +406,14 @@ const MainParameterConfigs = () => {
 						if (field.type === "checkbox") {
 							return (
 								<div className="checkbox-input">
-									<Input {...defaultInput} type="checkbox" /> {field.text}
+									<Input
+										{...defaultInput}
+										type="checkbox"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										}}
+									/>
+									{field.text}
 								</div>
 							);
 						}
@@ -215,7 +424,19 @@ const MainParameterConfigs = () => {
 						if (field.type === "number") {
 							return (
 								<div className="number-input">
-									<Input {...defaultInput} min={1} type="number" label={field.text} placeholder={field.text} />
+									<Input
+										{...defaultInput}
+										min={1}
+										type="number"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: e.target.value != "" ? e.target.value : null,
+											}));
+										}}
+										label={field.text}
+										placeholder={field.text}
+									/>
 								</div>
 							);
 						}
@@ -229,7 +450,14 @@ const MainParameterConfigs = () => {
 						if (field.type === "checkbox") {
 							return (
 								<div className="checkbox-input">
-									<Input {...defaultInput} type="checkbox" /> {field.text}
+									<Input
+										{...defaultInput}
+										type="checkbox"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										}}
+									/>
+									{field.text}
 								</div>
 							);
 						}
@@ -240,7 +468,19 @@ const MainParameterConfigs = () => {
 						if (field.type === "number") {
 							return (
 								<div className="number-input">
-									<Input {...defaultInput} min={1} type="number" label={field.text} placeholder={field.text} />
+									<Input
+										{...defaultInput}
+										min={1}
+										type="number"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: e.target.value != "" ? e.target.value : null,
+											}));
+										}}
+										label={field.text}
+										placeholder={field.text}
+									/>
 								</div>
 							);
 						}
@@ -250,26 +490,41 @@ const MainParameterConfigs = () => {
 
 			<FormTemplate buttonText="Salvar" disabled={true} submitForm={() => {}} noButton title="Gravações">
 				<div className="inputs">
-					{gravacoesFields.map((field) => {
-						if (field.type === "checkbox") {
-							return (
-								<div className="checkbox-input">
-									<Input {...defaultInput} type="checkbox" /> {field.text}
-								</div>
-							);
-						}
-					})}
-				</div>
-				<div className="number-inputs">
-					{gravacoesFields.map((field) => {
-						if (field.type === "number") {
-							return (
-								<div className="number-input">
-									<Input {...defaultInput} min={1} type="number" label={field.text} placeholder={field.text} />
-								</div>
-							);
-						}
-					})}
+					<div className="checkbox-number">
+						{gravacoesFields.map((field) => {
+							if (field.type === "checkbox") {
+								return (
+									<>
+										<Input
+											{...defaultInput}
+											type="checkbox"
+											onChange={(e) => {
+												configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+											}}
+										/>
+										{field.text}
+									</>
+								);
+							} else if ((field.type = "number")) {
+								return (
+									<Input
+										{...defaultInput}
+										min={1}
+										type="number"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: e.target.value != "" ? e.target.value : null,
+											}));
+										}}
+										label={field.text}
+										disabled={gravacoesDisabled}
+										placeholder={field.text}
+									/>
+								);
+							}
+						})}
+					</div>
 				</div>
 			</FormTemplate>
 
@@ -279,12 +534,18 @@ const MainParameterConfigs = () => {
 						<div className="sub-title"> Quantidade de clientes</div>
 						<div className="sub-inputs">
 							<div className="checkbox-number">
-								<Input {...defaultInput} type="checkbox" />
+								<Input
+									{...defaultInput}
+									type="checkbox"
+									onChange={(e) => {
+										configInputsState.set((prev) => ({ ...prev, UTILIZAR_QTDCLIENTEBASE: e.target.checked }));
+									}}
+								/>
 								<Input
 									{...defaultInput}
 									min={1}
 									type="number"
-									disabled
+									disabled={baseCliDisabled}
 									label="Quantidade de clientes base"
 									placeholder="Quantidade base"
 								/>
@@ -296,7 +557,18 @@ const MainParameterConfigs = () => {
 						<div className="sub-inputs">
 							<div className="number-inputs">
 								<div className="number-input">
-									<Input {...defaultInput} min={1} type="number" label="Fila" placeholder="Fila" />
+									<Input
+										{...defaultInput}
+										type="text"
+										label="Fila"
+										placeholder="Fila"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({
+												...prev,
+												FILA: e.target.value.trim() != "" ? e.target.value.trim() : null,
+											}));
+										}}
+									/>
 								</div>
 							</div>
 						</div>
@@ -307,7 +579,14 @@ const MainParameterConfigs = () => {
 						<div className="sub-title"> Log</div>
 						<div className="sub-inputs">
 							<div className="checkbox-input">
-								<Input {...defaultInput} type="checkbox" /> Gravar log de clientes e agendamentos
+								<Input
+									{...defaultInput}
+									type="checkbox"
+									onChange={(e) => {
+										configInputsState.set((prev) => ({ ...prev, GRAVARLOG: e.target.checked }));
+									}}
+								/>
+								Gravar log de clientes e agendamentos
 							</div>
 						</div>
 					</div>
@@ -315,7 +594,18 @@ const MainParameterConfigs = () => {
 						<div className="sub-title"> Sistema</div>
 						<div className="sub-inputs">
 							<div className="number-input">
-								<Input {...defaultInput} type="text" label="Versão" placeholder="Versão" />
+								<Input
+									{...defaultInput}
+									type="text"
+									label="Versão"
+									placeholder="Versão"
+									onChange={(e) => {
+										configInputsState.set((prev) => ({
+											...prev,
+											VERSAO_SISTEMA: e.target.value.trim() != "" ? e.target.value.trim() : null,
+										}));
+									}}
+								/>
 							</div>
 						</div>
 					</div>
@@ -325,15 +615,40 @@ const MainParameterConfigs = () => {
 						<div className="sub-title"> Pausar ramal</div>
 						<div className="sub-inputs">
 							<div className="checkbox-number">
-								<Input {...defaultInput} type="checkbox" />
-								<Input {...defaultInput} min={1} type="number" disabled label="Ramal pausa" placeholder="Ramal pausa" />
+								<Input
+									{...defaultInput}
+									type="checkbox"
+									onChange={(e) => {
+										configInputsState.set((prev) => ({ ...prev, PAUSARRAMAL: e.target.checked }));
+									}}
+								/>
 								<Input
 									{...defaultInput}
 									min={1}
 									type="number"
-									disabled
+									label="Ramal pausa"
+									placeholder="Minutos para pausa"
+									disabled={ramalDisabled}
+									onChange={(e) => {
+										configInputsState.set((prev) => ({
+											...prev,
+											RAMALPAUSA: e.target.value != "" ? +e.target.value : null,
+										}));
+									}}
+								/>
+								<Input
+									{...defaultInput}
+									min={1}
+									type="number"
 									label="Ramal despausa"
-									placeholder="Ramal despausa"
+									placeholder="Minutos para despausa"
+									disabled={ramalDisabled}
+									onChange={(e) => {
+										configInputsState.set((prev) => ({
+											...prev,
+											RAMALDESPAUSA: e.target.value != "" ? +e.target.value : null,
+										}));
+									}}
 								/>
 							</div>
 						</div>
@@ -342,10 +657,24 @@ const MainParameterConfigs = () => {
 						<div className="sub-title"> Chat</div>
 						<div className="sub-inputs">
 							<div className="checkbox-input">
-								<Input {...defaultInput} type="checkbox" /> Ocultar operadores chat
+								<Input
+									{...defaultInput}
+									type="checkbox"
+									onChange={(e) => {
+										configInputsState.set((prev) => ({ ...prev, OCULTAR_OPERADORES_CHAT: e.target.checked }));
+									}}
+								/>
+								Ocultar operadores chat
 							</div>
 							<div className="checkbox-input">
-								<Input {...defaultInput} type="checkbox" /> Sobrepor chat
+								<Input
+									{...defaultInput}
+									type="checkbox"
+									onChange={(e) => {
+										configInputsState.set((prev) => ({ ...prev, SOBREPOR_CHAT: e.target.checked }));
+									}}
+								/>
+								Sobrepor chat
 							</div>
 						</div>
 					</div>
@@ -354,13 +683,37 @@ const MainParameterConfigs = () => {
 					<div className="sub-title"> Periodo de recompra</div>
 					<div className="sub-inputs">
 						<div className="checkbox-input">
-							<Input {...defaultInput} type="checkbox" /> Avisar supervisor
+							<Input
+								{...defaultInput}
+								type="checkbox"
+								onChange={(e) => {
+									configInputsState.set((prev) => ({ ...prev, AVISO_RECOMPRA_SUPERVISOR: e.target.checked }));
+								}}
+							/>
+							Avisar supervisor
 						</div>
 						<div className="checkbox-input">
-							<Input {...defaultInput} type="checkbox" /> Avisar operador
+							<Input
+								{...defaultInput}
+								type="checkbox"
+								onChange={(e) => {
+									configInputsState.set((prev) => ({ ...prev, AVISO_RECOMPRA_OPERADOR: e.target.checked }));
+								}}
+							/>
+							Avisar operador
 						</div>
 						<div className="checkbox-input">
-							<Input {...defaultInput} type="checkbox" /> Bloquear agendamento
+							<Input
+								{...defaultInput}
+								type="checkbox"
+								onChange={(e) => {
+									configInputsState.set((prev) => ({
+										...prev,
+										BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA: e.target.checked,
+									}));
+								}}
+							/>
+							Bloquear agendamento
 						</div>
 					</div>
 				</div>

@@ -6,6 +6,15 @@ const StyledParamsForm = styled.div`
 	height: calc(100% - 4rem);
 	overflow: auto;
 
+	.save-button {
+		position: absolute;
+		padding-left: calc(100% - 20rem);
+		top: 90%;
+		button {
+			font-size: 2rem;
+		}
+	}
+
 	.checkbox-input {
 		display: inline-flex;
 		gap: 0.5rem;

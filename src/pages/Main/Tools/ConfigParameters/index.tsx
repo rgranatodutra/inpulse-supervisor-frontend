@@ -63,7 +63,7 @@ const ConfigParametersPage = () => {
 					}}
 					className={location.pathname.includes("email") ? "selected" : undefined}
 				>
-					E-mails
+					E-Mails
 				</h1>
 				<h1
 					onClick={() => {

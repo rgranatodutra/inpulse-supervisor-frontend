@@ -199,7 +199,7 @@ const OrderPage = () => {
 			method: "patch",
 			service: "campaigns",
 			onSuccess: () => {
-				toast.success("Parametros atualizado com sucesso");
+				toast.success("Parametros atualizados com sucesso");
 			},
 		});
 	}

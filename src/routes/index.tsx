@@ -36,6 +36,7 @@ import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
 import ConfigParametersPage from "../pages/Main/Tools/ConfigParameters";
 import MainParameterConfigs from "../pages/Main/Tools/ConfigParameters/MainConfigs";
+import SipConfigs from "../pages/Main/Tools/ConfigParameters/SipConfigs";
 import DeactivatedCustomers from "../pages/Main/Tools/deactivateCustomers";
 import TransferCostumers from "../pages/Main/Tools/transferCustomers";
 
@@ -133,7 +134,7 @@ export const RenderingPage = () => {
 				<Route path="/ferramentas/parametros" element={<ConfigParametersPage />}>
 					<Route path="main" element={<MainParameterConfigs />} />
 					<Route path="DDDS" element={<ExceptionsCitiesTable />} />
-					<Route path="SIP" element={<ExceptionsStatesTable />} />
+					<Route path="SIP" element={<SipConfigs />} />
 					<Route path="agenda" element={<ExceptionsSegmentsTable />} />
 					<Route path="importacao" element={<ExceptionsSegmentsTable />} />
 					<Route path="email" element={<ExceptionsSegmentsTable />} />

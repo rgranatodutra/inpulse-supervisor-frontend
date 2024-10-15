@@ -8,10 +8,10 @@ const StyledParamsForm = styled.div`
 
 	.save-button {
 		position: absolute;
-		padding-left: calc(100% - 20rem);
+		padding-left: calc(100% - 18rem);
 		top: 90%;
 		button {
-			font-size: 2rem;
+			font-size: 1.5rem;
 		}
 	}
 

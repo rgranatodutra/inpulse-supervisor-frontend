@@ -5,7 +5,7 @@ import FormTemplate from "../../../../../components/FormTemplate/FormTemplate";
 import Input from "../../../../../components/Input";
 import { ButtonType2 } from "../../../../../styles/buttons.style";
 import useCustomState from "../../../../../utils/customState.hook";
-import StyledParamsForm from "./style";
+import StyledParamsForm from "../../../configsStyle";
 
 const agendamentosFields = [
 	{ type: "checkbox", text: "Agenda no sábado", field: "AGENDA_SABADO" },

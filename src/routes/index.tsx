@@ -35,6 +35,8 @@ import OperatorsPage from "../pages/Main/Operators/Main";
 import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
 import ConfigParametersPage from "../pages/Main/Tools/ConfigParameters";
+import MailConfigs from "../pages/Main/Tools/ConfigParameters/EmailConfigs";
+import ImportConfigs from "../pages/Main/Tools/ConfigParameters/ImportConfigs";
 import MainParameterConfigs from "../pages/Main/Tools/ConfigParameters/MainConfigs";
 import SipConfigs from "../pages/Main/Tools/ConfigParameters/SipConfigs";
 import DeactivatedCustomers from "../pages/Main/Tools/deactivateCustomers";
@@ -136,8 +138,8 @@ export const RenderingPage = () => {
 					<Route path="DDDS" element={<ExceptionsCitiesTable />} />
 					<Route path="SIP" element={<SipConfigs />} />
 					<Route path="agenda" element={<ExceptionsSegmentsTable />} />
-					<Route path="importacao" element={<ExceptionsSegmentsTable />} />
-					<Route path="email" element={<ExceptionsSegmentsTable />} />
+					<Route path="importacao" element={<ImportConfigs />} />
+					<Route path="email" element={<MailConfigs />} />
 					<Route path="inativacao" element={<ExceptionsSegmentsTable />} />
 					<Route path="outros" element={<ExceptionsSegmentsTable />} />
 				</Route>

@@ -1,50 +1,132 @@
-import { useContext } from "react";
-import { FaTag, FaTrash } from "react-icons/fa6";
-import Table from "../../../../../components/Table";
-import { TableColumn } from "../../../../../components/Table/types";
-import { GlobalContext } from "../../../../../contexts/global";
-import { CityException } from "../../../../../interfaces/CityException.type";
-import { ButtonType3 } from "../../../../../styles/buttons.style";
-import DeleteCityExceptionModal from "./DeleteCityExceptionsModal";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useCustomRequest } from "../../../../../api";
+import { defaultInput, defaultSelect100 } from "../../../../../components-variants/defaultInputs";
+import FormTemplate from "../../../../../components/FormTemplate/FormTemplate";
+import Input from "../../../../../components/Input";
+import Select from "../../../../../components/Select";
+import { User } from "../../../../../contexts/global/interfaces";
+import { ButtonType2 } from "../../../../../styles/buttons.style";
+import useCustomState from "../../../../../utils/customState.hook";
+import StyledParamsForm from "../../../configsStyle";
 
-const ExceptionsCitiesTable = () => {
-	const { modalState } = useContext(GlobalContext);
+const importFields = [
+	{ type: "string", text: "Campos importação clientes", field: "CAMPOS_IMPORTACAO_CLIENTES" },
+	{ type: "string", text: "Campos importação compras", field: "CAMPOS_IMPORTACAO_COMPRAS" },
+	{ type: "string", text: "Campos importação régua", field: "CAMPOS_IMPORTACAO_REGUA" },
+	{ type: "select", text: "Operador qualificador", field: "OPERADOR_QUALIFICADOR" },
+];
 
-	const exceptionClientsColumns: Array<TableColumn<CityException>> = [
-		{
-			key: "CIDADE",
-			header: "Cidade",
-			width: 24,
-			filter: {
-				type: "input",
-				width: "20rem",
-				icon: <FaTag />,
+type importParamsType = {
+	CAMPOS_IMPORTACAO_CLIENTES?: string | null;
+	CAMPOS_IMPORTACAO_COMPRAS?: string | null;
+	CAMPOS_IMPORTACAO_REGUA?: string | null;
+	OPERADOR_QUALIFICADOR?: number | null;
+};
+
+const ImportConfigs = () => {
+	const configInputsState = useCustomState<importParamsType>({});
+	const paramsState = useCustomState<importParamsType>({});
+	const usersState = useCustomState<User[]>([]);
+
+	useEffect(() => {
+		useCustomRequest<{ message: String; data: User[] }, undefined>({
+			endpoint: "/users?perPage=9999",
+			method: "get",
+			service: "users",
+			onSuccess: (responseData) => {
+				usersState.set(responseData.data);
 			},
-		},
-	];
+		});
+		useCustomRequest<
+			{
+				message: String;
+				data: importParamsType[];
+			},
+			undefined
+		>({
+			endpoint: "/parameterss",
+			method: "get",
+			service: "campaigns",
+			onSuccess: (responseData) => {
+				paramsState.set(responseData.data[0]);
+			},
+		});
+	}, []);
+
+	function updateParams() {
+		useCustomRequest({
+			endpoint: "/parameterss/1",
+			requestData: configInputsState.value,
+			method: "patch",
+			service: "campaigns",
+			onSuccess: () => {
+				toast.success("Parametros atualizados com sucesso");
+			},
+		});
+	}
+
+	const options = usersState.value.map((u) => ({ name: u.NOME, value: u.CODIGO }));
+	const selectedUser = paramsState.value.OPERADOR_QUALIFICADOR
+		? usersState.value.find((u) => u.CODIGO === paramsState.value.OPERADOR_QUALIFICADOR)
+		: undefined;
+
+	console.log(configInputsState.value);
 
 	return (
-		<Table<CityException>
-			className="display-table"
-			$tableHeight="100%"
-			$tableWidth="100%"
-			$fontSize={0.75}
-			columns={exceptionClientsColumns}
-			tableName="Excessões de cidade"
-			$modalFiltersWidth={41}
-			actions={(row) => [
-				<ButtonType3
-					onClick={() => {
-						modalState.set(<DeleteCityExceptionModal city={row} />);
-					}}
-				>
-					<FaTrash />
-				</ButtonType3>,
-			]}
-			requestEndpoint="/city-exceptions"
-			service="campaigns"
-		/>
+		<StyledParamsForm>
+			<div className="save-button">
+				<ButtonType2 onClick={updateParams}> Salvar </ButtonType2>
+			</div>
+			<FormTemplate buttonText="Salvar" disabled={true} submitForm={() => {}} noButton title="Configurações de SIP">
+				<div className="number-inputs">
+					{importFields.map((field) => {
+						if (field.type === "string") {
+							return (
+								<div className="number-input">
+									<Input
+										{...defaultInput}
+										type="text"
+										onChange={(e) => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: e.target.value != "" ? e.target.value : null,
+											}));
+										}}
+										label={field.text}
+										placeholder={paramsState.value[field.field] ?? field.text}
+									/>
+								</div>
+							);
+						}
+					})}
+				</div>
+				<div className="inputs">
+					{importFields.map((field) => {
+						if (field.type === "select") {
+							return (
+								<div className="checkbox-input">
+									<Select
+										{...defaultSelect100}
+										options={options}
+										label={field.text}
+										defaultValue={
+											selectedUser?.NOME ? { name: selectedUser.NOME, value: selectedUser.CODIGO } : undefined
+										}
+										placeholder={selectedUser?.NOME ? selectedUser.NOME : undefined}
+										onChange={(e) => {
+											configInputsState.set((prev) => ({ ...prev, OPERADOR_QUALIFICADOR: e }));
+										}}
+										disableInitOncChange
+									/>
+								</div>
+							);
+						}
+					})}
+				</div>
+			</FormTemplate>
+		</StyledParamsForm>
 	);
 };
 
-export default ExceptionsCitiesTable;
+export default ImportConfigs;

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useCustomRequest } from "../../../../../api";
 import { defaultInput } from "../../../../../components-variants/defaultInputs";
@@ -103,79 +104,144 @@ const gravacoesFields = [
 	{ type: "number", text: "Local de gravação", field: "LOCAL_GRAVACAO" },
 ];
 
-const MainParameterConfigs = () => {
-	const configInputsState = useCustomState<{
-		AGENDA_PRIORIDADE_SUPERVISOR?: boolean | null;
-		AGENDA_SABADO?: boolean | null;
-		ALTERAR_RAZAO_SOCIAL?: boolean | null;
-		AVISO_RECOMPRA_OPERADOR?: boolean | null;
-		AVISO_RECOMPRA_SUPERVISOR?: boolean | null;
-		BAIRRO?: boolean | null;
-		BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA?: boolean | null;
-		BLOQUEAR_GRUPO?: boolean | null;
-		BLOQUEAR_MIDIA?: boolean | null;
-		BLOQUEAR_ORIGEM?: boolean | null;
-		CARGO_CONTATO?: boolean | null;
-		CEP?: boolean | null;
-		CIDADE?: boolean | null;
-		CNPJ?: boolean | null;
-		CONTATO?: boolean | null;
-		DESLIGA_COMPUTADOR?: boolean | null;
-		EMAIL?: boolean | null;
-		EMAIL_CONTATO?: boolean | null;
-		ENDERECO?: boolean | null;
-		ESTADO?: boolean | null;
-		EXIBE_ALERTA_ATUALIZACAO_CLIENTES?: boolean | null;
-		EXIBIR_ALERTA_API_CEP?: boolean | null;
-		EXIBIR_FASE_CONTATO?: boolean | null;
-		EXIBIR_PEDIDOS_FECHADOS?: boolean | null;
-		EXIBIR_PRODUTIVIDADE?: boolean | null;
-		EXPIRAR_TRANSFERENCIA_CLIENTES?: boolean | null;
-		EXIGIR_FASE_CONTATO?: boolean | null;
-		FANTASIA?: boolean | null;
-		GRAVAR_LIGACAO?: boolean | null;
-		GRAVARLOG?: boolean | null;
-		HABILITAR_CADASTRO_MARCAS?: boolean | null;
-		HABILITAR_SUSPENDER_SISTEMA?: boolean | null;
-		IMP_OPERADOR?: boolean | null;
-		INCLUI_CLIENTE_CAMP_PRINC_IMP?: boolean | null;
-		MOSTRAR_REPRESENTANTE_LIG?: boolean | null;
-		OCULTAR_ALTA_PRIORIDADE?: boolean | null;
-		OCULTAR_OPERADORES_CHAT?: boolean | null;
-		OPERADOR_QUALIFICADOR?: boolean | null;
-		PESQUISAR_CLIENTES_NO_ATIVO?: boolean | null;
-		PERMITIR_USO_API_CEP?: boolean | null;
-		RAZAO?: boolean | null;
-		SOBREPOR_CHAT?: boolean | null;
-		UTILIZA_REGUA?: boolean | null;
-		UTILIZAR_QTDCLIENTEBASE?: boolean | null;
-		VALIDA_CPF_CNPJ?: boolean | null;
-		PAUSARRAMAL?: boolean | null;
-		ATUALIZACAO_HORA?: number | null;
-		DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES?: number | null;
-		DIAS_LIMITE_AGENDAMENTO?: number | null;
-		FINALIZAR_AUTO_SEGUNDOS?: number | null;
-		INTERVALO_CHAMADAS?: number | null;
-		LIBERAR_FINALIZAR_SEGUNDOS?: number | null;
-		LOCAL_GRAVACAO?: number | null;
-		METODO_GRAVACAO?: number | null;
-		QTD_HISTORICO_CLI?: number | null;
-		QTDE_ULTIMAS_LIGACOES?: number | null;
-		RAMALDESPAUSA?: number | null;
-		RAMALPAUSA?: number | null;
-		SALDO?: number | null;
-		SEGMENTO?: number | null;
-		TEMPO_MINIMO_CONVERSA_SEGUNDOS?: number | null;
-		TEMPO_PREVISTO_ATENDIMENTO_RECEPTIVO?: number | null;
-		TELEFONE?: number | null;
-		TEL_CONTATO?: number | null;
-		POTENCIAL?: number | null;
-		FILA?: string | null;
-		UNIDADE?: string | null;
-		VERSAO_SISTEMA?: string | null;
-	}>({});
+type configParamsType = {
+	AGENDA_PRIORIDADE_SUPERVISOR?: string | null;
+	AGENDA_SABADO?: string | null;
+	ALTERAR_RAZAO_SOCIAL?: string | null;
+	AVISO_RECOMPRA_OPERADOR?: string | null;
+	AVISO_RECOMPRA_SUPERVISOR?: string | null;
+	BAIRRO?: string | null;
+	BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA?: string | null;
+	BLOQUEAR_GRUPO?: string | null;
+	BLOQUEAR_MIDIA?: string | null;
+	BLOQUEAR_ORIGEM?: string | null;
+	CARGO_CONTATO?: string | null;
+	CEP?: string | null;
+	CIDADE?: string | null;
+	CNPJ?: string | null;
+	CONTATO?: string | null;
+	DESLIGA_COMPUTADOR?: string | null;
+	EMAIL?: string | null;
+	EMAIL_CONTATO?: string | null;
+	ENDERECO?: string | null;
+	ESTADO?: string | null;
+	EXIBE_ALERTA_ATUALIZACAO_CLIENTES?: string | null;
+	EXIBIR_ALERTA_API_CEP?: string | null;
+	EXIBIR_FASE_CONTATO?: string | null;
+	EXIBIR_PEDIDOS_FECHADOS?: string | null;
+	EXIBIR_PRODUTIVIDADE?: string | null;
+	EXPIRAR_TRANSFERENCIA_CLIENTES?: string | null;
+	EXIGIR_FASE_CONTATO?: string | null;
+	FANTASIA?: string | null;
+	GRAVAR_LIGACAO?: string | null;
+	GRAVARLOG?: string | null;
+	HABILITAR_CADASTRO_MARCAS?: string | null;
+	HABILITAR_SUSPENDER_SISTEMA?: string | null;
+	IMP_OPERADOR?: string | null;
+	INCLUI_CLIENTE_CAMP_PRINC_IMP?: string | null;
+	MOSTRAR_REPRESENTANTE_LIG?: string | null;
+	OCULTAR_ALTA_PRIORIDADE?: string | null;
+	OCULTAR_OPERADORES_CHAT?: string | null;
+	OPERADOR_QUALIFICADOR?: string | null;
+	PESQUISAR_CLIENTES_NO_ATIVO?: string | null;
+	PERMITIR_USO_API_CEP?: string | null;
+	RAZAO?: string | null;
+	SOBREPOR_CHAT?: string | null;
+	UTILIZA_REGUA?: string | null;
+	UTILIZAR_QTDCLIENTEBASE?: string | null;
+	VALIDA_CPF_CNPJ?: string | null;
+	PAUSARRAMAL?: string | null;
+	ATUALIZACAO_HORA?: number | null;
+	DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES?: number | null;
+	DIAS_LIMITE_AGENDAMENTO?: number | null;
+	FINALIZAR_AUTO_SEGUNDOS?: number | null;
+	INTERVALO_CHAMADAS?: number | null;
+	LIBERAR_FINALIZAR_SEGUNDOS?: number | null;
+	LOCAL_GRAVACAO?: number | null;
+	METODO_GRAVACAO?: number | null;
+	QTD_HISTORICO_CLI?: number | null;
+	QTDE_ULTIMAS_LIGACOES?: number | null;
+	RAMALDESPAUSA?: number | null;
+	RAMALPAUSA?: number | null;
+	SALDO?: number | null;
+	SEGMENTO?: number | null;
+	TEMPO_MINIMO_CONVERSA_SEGUNDOS?: number | null;
+	TEMPO_PREVISTO_ATENDIMENTO_RECEPTIVO?: number | null;
+	TELEFONE?: number | null;
+	TEL_CONTATO?: number | null;
+	POTENCIAL?: number | null;
+	FILA?: string | null;
+	UNIDADE?: string | null;
+	VERSAO_SISTEMA?: string | null;
+};
 
-	console.log(configInputsState.value);
+const MainParameterConfigs = () => {
+	const configInputsState = useCustomState<configParamsType>({});
+	const paramsState = useCustomState<configParamsType>({});
+
+	useEffect(() => {
+		useCustomRequest<
+			{
+				message: String;
+				data: configParamsType[];
+			},
+			undefined
+		>({
+			endpoint: "/parameterss",
+			method: "get",
+			service: "campaigns",
+			onSuccess: (responseData) => {
+				paramsState.set(responseData.data[0]);
+				agendamentosFields.map((f) => {
+					if (f.type === "checkbox") {
+						configInputsState.set((prev) => ({ ...prev, [f.field]: responseData.data[0][f.field] }));
+					}
+				});
+				importacaoClientesComprasFields.map((f) => {
+					if (f.type === "checkbox" || f.type === "checkbox-number") {
+						configInputsState.set((prev) => ({ ...prev, [f.field]: responseData.data[0][f.field] }));
+					}
+				});
+				atualizarCamposFields.map((f) => {
+					if (f.type === "checkbox") {
+						configInputsState.set((prev) => ({ ...prev, [f.field]: responseData.data[0][f.field] }));
+					}
+				});
+				ativoFields.map((f) => {
+					if (f.type === "checkbox") {
+						configInputsState.set((prev) => ({ ...prev, [f.field]: responseData.data[0][f.field] }));
+					}
+				});
+				clientFields.map((f) => {
+					if (f.type === "checkbox") {
+						configInputsState.set((prev) => ({ ...prev, [f.field]: responseData.data[0][f.field] }));
+					}
+				});
+				gravacoesFields.map((f) => {
+					if (f.type === "checkbox") {
+						configInputsState.set((prev) => ({ ...prev, [f.field]: responseData.data[0][f.field] }));
+					}
+				});
+
+				configInputsState.set((prev) => ({
+					...prev,
+					PAUSARRAMAL: responseData.data[0].PAUSARRAMAL,
+					FILA: responseData.data[0].FILA,
+					UTILIZAR_QTDCLIENTEBASE: responseData.data[0].UTILIZAR_QTDCLIENTEBASE,
+					GRAVARLOG: responseData.data[0].GRAVARLOG,
+					VERSAO_SISTEMA: responseData.data[0].VERSAO_SISTEMA,
+					RAMALPAUSA: responseData.data[0].RAMALPAUSA,
+					RAMALDESPAUSA: responseData.data[0].RAMALDESPAUSA,
+					OCULTAR_OPERADORES_CHAT: responseData.data[0].OCULTAR_OPERADORES_CHAT,
+					SOBREPOR_CHAT: responseData.data[0].SOBREPOR_CHAT,
+					AVISO_RECOMPRA_OPERADOR: responseData.data[0].AVISO_RECOMPRA_OPERADOR,
+					AVISO_RECOMPRA_SUPERVISOR: responseData.data[0].AVISO_RECOMPRA_SUPERVISOR,
+					BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA: responseData.data[0].BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA,
+				}));
+			},
+		});
+	}, []);
+
 	function updateParams() {
 		useCustomRequest({
 			endpoint: "/parameterss/1",
@@ -188,10 +254,10 @@ const MainParameterConfigs = () => {
 		});
 	}
 
-	const gravacoesDisabled = !configInputsState.value.GRAVAR_LIGACAO;
-	const expirarTransfDisabled = !configInputsState.value.EXPIRAR_TRANSFERENCIA_CLIENTES;
-	const baseCliDisabled = !configInputsState.value.UTILIZAR_QTDCLIENTEBASE;
-	const ramalDisabled = !configInputsState.value.PAUSARRAMAL;
+	const expirarTransfDisabled = configInputsState.value.EXPIRAR_TRANSFERENCIA_CLIENTES === "N" ? true : false;
+	const baseCliDisabled = configInputsState.value.UTILIZAR_QTDCLIENTEBASE === "N" ? true : false;
+	const gravacoesDisabled = configInputsState.value.GRAVAR_LIGACAO === "N" ? true : false;
+	const ramalDisabled = configInputsState.value.PAUSARRAMAL === "N" ? true : false;
 
 	return (
 		<StyledParamsForm>
@@ -202,14 +268,24 @@ const MainParameterConfigs = () => {
 				<div className="inputs">
 					{agendamentosFields.map((field) => {
 						if (field.type === "checkbox") {
+							const checked =
+								configInputsState.value[field.field] === "S"
+									? true
+									: paramsState.value[field.field] === "S"
+									? true
+									: undefined;
 							return (
 								<div className="checkbox-input">
 									<Input
 										{...defaultInput}
 										type="checkbox"
-										onChange={(e) => {
-											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										onClick={() => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: prev[field.field] === "S" ? "N" : "S",
+											}));
 										}}
+										defaultChecked={checked}
 									/>
 									{field.text}
 								</div>
@@ -233,7 +309,7 @@ const MainParameterConfigs = () => {
 											}));
 										}}
 										label={field.text}
-										placeholder={field.text}
+										placeholder={paramsState.value[field.field] ?? field.text}
 									/>
 								</div>
 							);
@@ -243,20 +319,7 @@ const MainParameterConfigs = () => {
 						<div className="sub-title"> Atendimento</div>
 						<div className="sub-inputs">
 							{atendimentoFields.map((field) => {
-								if (field.type === "checkbox") {
-									return (
-										<div className="checkbox-input">
-											<Input
-												{...defaultInput}
-												type="checkbox"
-												onChange={(e) => {
-													configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
-												}}
-											/>
-											{field.text}
-										</div>
-									);
-								} else if (field.type === "number") {
+								if (field.type === "number") {
 									return (
 										<div className="number-input">
 											<Input
@@ -270,7 +333,7 @@ const MainParameterConfigs = () => {
 													}));
 												}}
 												label={field.text}
-												placeholder={field.text}
+												placeholder={paramsState.value[field.field] ?? field.text}
 											/>
 										</div>
 									);
@@ -291,14 +354,24 @@ const MainParameterConfigs = () => {
 				<div className="inputs">
 					{importacaoClientesComprasFields.map((field) => {
 						if (field.type === "checkbox") {
+							const checked =
+								configInputsState.value[field.field] === "S"
+									? true
+									: paramsState.value[field.field] === "S"
+									? true
+									: undefined;
 							return (
 								<div className="checkbox-input">
 									<Input
 										{...defaultInput}
 										type="checkbox"
-										onChange={(e) => {
-											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										onClick={() => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: prev[field.field] === "S" ? "N" : "S",
+											}));
 										}}
+										defaultChecked={checked}
 									/>
 									{field.text}
 								</div>
@@ -322,7 +395,7 @@ const MainParameterConfigs = () => {
 											}));
 										}}
 										label={field.text}
-										placeholder={field.text}
+										placeholder={paramsState.value[field.field] ?? field.text}
 									/>
 								</div>
 							);
@@ -330,14 +403,24 @@ const MainParameterConfigs = () => {
 					})}
 					{importacaoClientesComprasFields.map((field) => {
 						if (field.type === "checkbox-number") {
+							const checked =
+								configInputsState.value[field.field] === "S"
+									? true
+									: paramsState.value[field.field] === "S"
+									? true
+									: undefined;
 							return (
 								<div className="checkbox-number">
 									<Input
 										{...defaultInput}
 										type="checkbox"
-										onChange={(e) => {
-											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										onClick={() => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: prev[field.field] === "S" ? "N" : "S",
+											}));
 										}}
+										defaultChecked={checked}
 									/>
 									<Input
 										{...defaultInput}
@@ -345,13 +428,17 @@ const MainParameterConfigs = () => {
 										type="number"
 										disabled={expirarTransfDisabled}
 										label={field.text}
-										placeholder="Quantidade de dias"
 										onChange={(e) => {
 											configInputsState.set((prev) => ({
 												...prev,
 												DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES: e.target.value != "" ? +e.target.value : null,
 											}));
 										}}
+										placeholder={
+											paramsState.value.DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES != null
+												? paramsState.value.DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES.toString()
+												: "Quantidade de dias"
+										}
 									/>
 								</div>
 							);
@@ -364,34 +451,26 @@ const MainParameterConfigs = () => {
 					<div className="sub-inputs">
 						{atualizarCamposFields.map((field) => {
 							if (field.type === "checkbox") {
+								const checked =
+									configInputsState.value[field.field] === "S"
+										? true
+										: paramsState.value[field.field] === "S"
+										? true
+										: undefined;
 								return (
 									<div className="checkbox-input">
 										<Input
 											{...defaultInput}
 											type="checkbox"
-											onChange={(e) => {
-												configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
-											}}
-										/>
-										{field.text}
-									</div>
-								);
-							} else if (field.type === "number") {
-								return (
-									<div className="number-input">
-										<Input
-											{...defaultInput}
-											min={1}
-											type="number"
-											onChange={(e) => {
+											onClick={() => {
 												configInputsState.set((prev) => ({
 													...prev,
-													[field.field]: e.target.value != "" ? e.target.value : null,
+													[field.field]: prev[field.field] === "S" ? "N" : "S",
 												}));
 											}}
-											label={field.text}
-											placeholder={field.text}
+											defaultChecked={checked}
 										/>
+										{field.text}
 									</div>
 								);
 							}
@@ -400,18 +479,28 @@ const MainParameterConfigs = () => {
 				</div>
 			</FormTemplate>
 
-			<FormTemplate buttonText="Salvar" disabled={true} submitForm={() => {}} noButton title="Aitvo">
+			<FormTemplate buttonText="Salvar" disabled={true} submitForm={() => {}} noButton title="Ativo">
 				<div className="inputs">
 					{ativoFields.map((field) => {
 						if (field.type === "checkbox") {
+							const checked =
+								configInputsState.value[field.field] === "S"
+									? true
+									: paramsState.value[field.field] === "S"
+									? true
+									: undefined;
 							return (
 								<div className="checkbox-input">
 									<Input
 										{...defaultInput}
 										type="checkbox"
-										onChange={(e) => {
-											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										onClick={() => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: prev[field.field] === "S" ? "N" : "S",
+											}));
 										}}
+										defaultChecked={checked}
 									/>
 									{field.text}
 								</div>
@@ -435,7 +524,7 @@ const MainParameterConfigs = () => {
 											}));
 										}}
 										label={field.text}
-										placeholder={field.text}
+										placeholder={paramsState.value[field.field] ?? field.text}
 									/>
 								</div>
 							);
@@ -448,14 +537,24 @@ const MainParameterConfigs = () => {
 				<div className="inputs">
 					{clientFields.map((field) => {
 						if (field.type === "checkbox") {
+							const checked =
+								configInputsState.value[field.field] === "S"
+									? true
+									: paramsState.value[field.field] === "S"
+									? true
+									: undefined;
 							return (
 								<div className="checkbox-input">
 									<Input
 										{...defaultInput}
 										type="checkbox"
-										onChange={(e) => {
-											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										onClick={() => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: prev[field.field] === "S" ? "N" : "S",
+											}));
 										}}
+										defaultChecked={checked}
 									/>
 									{field.text}
 								</div>
@@ -479,7 +578,7 @@ const MainParameterConfigs = () => {
 											}));
 										}}
 										label={field.text}
-										placeholder={field.text}
+										placeholder={paramsState.value[field.field] ?? field.text}
 									/>
 								</div>
 							);
@@ -493,14 +592,24 @@ const MainParameterConfigs = () => {
 					<div className="checkbox-number">
 						{gravacoesFields.map((field) => {
 							if (field.type === "checkbox") {
+								const checked =
+									configInputsState.value[field.field] === "S"
+										? true
+										: paramsState.value[field.field] === "S"
+										? true
+										: undefined;
 								return (
 									<>
 										<Input
 											{...defaultInput}
 											type="checkbox"
-											onChange={(e) => {
-												configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+											onClick={() => {
+												configInputsState.set((prev) => ({
+													...prev,
+													[field.field]: prev[field.field] === "S" ? "N" : "S",
+												}));
 											}}
+											defaultChecked={checked}
 										/>
 										{field.text}
 									</>
@@ -519,7 +628,9 @@ const MainParameterConfigs = () => {
 										}}
 										label={field.text}
 										disabled={gravacoesDisabled}
-										placeholder={field.text}
+										placeholder={
+											paramsState.value[field.field] != null ? paramsState.value[field.field].toString() : [field.text]
+										}
 									/>
 								);
 							}
@@ -537,9 +648,19 @@ const MainParameterConfigs = () => {
 								<Input
 									{...defaultInput}
 									type="checkbox"
-									onChange={(e) => {
-										configInputsState.set((prev) => ({ ...prev, UTILIZAR_QTDCLIENTEBASE: e.target.checked }));
+									onClick={() => {
+										configInputsState.set((prev) => ({
+											...prev,
+											UTILIZAR_QTDCLIENTEBASE: prev.UTILIZAR_QTDCLIENTEBASE === "S" ? "N" : "S",
+										}));
 									}}
+									defaultChecked={
+										configInputsState.value.UTILIZAR_QTDCLIENTEBASE === "S"
+											? true
+											: paramsState.value.UTILIZAR_QTDCLIENTEBASE === "S"
+											? true
+											: undefined
+									}
 								/>
 								<Input
 									{...defaultInput}
@@ -547,7 +668,11 @@ const MainParameterConfigs = () => {
 									type="number"
 									disabled={baseCliDisabled}
 									label="Quantidade de clientes base"
-									placeholder="Quantidade base"
+									/* placeholder={
+										paramsState.value.DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES != null
+											? paramsState.value.DIAS_EXPIRAR_TRANSFERENCIA_CLIENTES.toString()
+											: "Quantidade base"
+									} */
 								/>
 							</div>
 						</div>
@@ -561,13 +686,13 @@ const MainParameterConfigs = () => {
 										{...defaultInput}
 										type="text"
 										label="Fila"
-										placeholder="Fila"
 										onChange={(e) => {
 											configInputsState.set((prev) => ({
 												...prev,
 												FILA: e.target.value.trim() != "" ? e.target.value.trim() : null,
 											}));
 										}}
+										placeholder={paramsState.value.FILA != null ? paramsState.value.FILA : "Fila"}
 									/>
 								</div>
 							</div>
@@ -582,9 +707,19 @@ const MainParameterConfigs = () => {
 								<Input
 									{...defaultInput}
 									type="checkbox"
-									onChange={(e) => {
-										configInputsState.set((prev) => ({ ...prev, GRAVARLOG: e.target.checked }));
+									onClick={() => {
+										configInputsState.set((prev) => ({
+											...prev,
+											GRAVARLOG: prev.GRAVARLOG === "S" ? "N" : "S",
+										}));
 									}}
+									defaultChecked={
+										configInputsState.value.GRAVARLOG === "S"
+											? true
+											: paramsState.value.GRAVARLOG === "S"
+											? true
+											: undefined
+									}
 								/>
 								Gravar log de clientes e agendamentos
 							</div>
@@ -598,7 +733,7 @@ const MainParameterConfigs = () => {
 									{...defaultInput}
 									type="text"
 									label="Versão"
-									placeholder="Versão"
+									placeholder={paramsState.value.VERSAO_SISTEMA ?? "Versão"}
 									onChange={(e) => {
 										configInputsState.set((prev) => ({
 											...prev,
@@ -619,15 +754,32 @@ const MainParameterConfigs = () => {
 									{...defaultInput}
 									type="checkbox"
 									onChange={(e) => {
-										configInputsState.set((prev) => ({ ...prev, PAUSARRAMAL: e.target.checked }));
+										configInputsState.set((prev) => ({ ...prev, PAUSARRAMAL: e.target.checked ? "S" : "N" }));
 									}}
+									onClick={() => {
+										configInputsState.set((prev) => ({
+											...prev,
+											PAUSARRAMAL: prev.PAUSARRAMAL === "S" ? "N" : "S",
+										}));
+									}}
+									defaultChecked={
+										configInputsState.value.PAUSARRAMAL === "S"
+											? true
+											: paramsState.value.PAUSARRAMAL === "S"
+											? true
+											: undefined
+									}
 								/>
 								<Input
 									{...defaultInput}
 									min={1}
 									type="number"
 									label="Ramal pausa"
-									placeholder="Minutos para pausa"
+									placeholder={
+										paramsState.value.RAMALPAUSA != null
+											? paramsState.value.RAMALPAUSA.toString()
+											: "Minutos para pausa"
+									}
 									disabled={ramalDisabled}
 									onChange={(e) => {
 										configInputsState.set((prev) => ({
@@ -641,8 +793,12 @@ const MainParameterConfigs = () => {
 									min={1}
 									type="number"
 									label="Ramal despausa"
-									placeholder="Minutos para despausa"
 									disabled={ramalDisabled}
+									placeholder={
+										paramsState.value.RAMALDESPAUSA != null
+											? paramsState.value.RAMALDESPAUSA.toString()
+											: "Minutos para despausa"
+									}
 									onChange={(e) => {
 										configInputsState.set((prev) => ({
 											...prev,
@@ -660,9 +816,19 @@ const MainParameterConfigs = () => {
 								<Input
 									{...defaultInput}
 									type="checkbox"
-									onChange={(e) => {
-										configInputsState.set((prev) => ({ ...prev, OCULTAR_OPERADORES_CHAT: e.target.checked }));
+									onClick={() => {
+										configInputsState.set((prev) => ({
+											...prev,
+											OCULTAR_OPERADORES_CHAT: prev.OCULTAR_OPERADORES_CHAT === "S" ? "N" : "S",
+										}));
 									}}
+									defaultChecked={
+										configInputsState.value.OCULTAR_OPERADORES_CHAT === "S"
+											? true
+											: paramsState.value.OCULTAR_OPERADORES_CHAT === "S"
+											? true
+											: undefined
+									}
 								/>
 								Ocultar operadores chat
 							</div>
@@ -670,9 +836,19 @@ const MainParameterConfigs = () => {
 								<Input
 									{...defaultInput}
 									type="checkbox"
-									onChange={(e) => {
-										configInputsState.set((prev) => ({ ...prev, SOBREPOR_CHAT: e.target.checked }));
+									onClick={() => {
+										configInputsState.set((prev) => ({
+											...prev,
+											SOBREPOR_CHAT: prev.SOBREPOR_CHAT === "S" ? "N" : "S",
+										}));
 									}}
+									defaultChecked={
+										configInputsState.value.SOBREPOR_CHAT === "S"
+											? true
+											: paramsState.value.SOBREPOR_CHAT === "S"
+											? true
+											: undefined
+									}
 								/>
 								Sobrepor chat
 							</div>
@@ -686,9 +862,19 @@ const MainParameterConfigs = () => {
 							<Input
 								{...defaultInput}
 								type="checkbox"
-								onChange={(e) => {
-									configInputsState.set((prev) => ({ ...prev, AVISO_RECOMPRA_SUPERVISOR: e.target.checked }));
+								onClick={() => {
+									configInputsState.set((prev) => ({
+										...prev,
+										AVISO_RECOMPRA_SUPERVISOR: prev.AVISO_RECOMPRA_SUPERVISOR === "S" ? "N" : "S",
+									}));
 								}}
+								defaultChecked={
+									configInputsState.value.AVISO_RECOMPRA_SUPERVISOR === "S"
+										? true
+										: paramsState.value.AVISO_RECOMPRA_SUPERVISOR === "S"
+										? true
+										: undefined
+								}
 							/>
 							Avisar supervisor
 						</div>
@@ -696,9 +882,19 @@ const MainParameterConfigs = () => {
 							<Input
 								{...defaultInput}
 								type="checkbox"
-								onChange={(e) => {
-									configInputsState.set((prev) => ({ ...prev, AVISO_RECOMPRA_OPERADOR: e.target.checked }));
+								onClick={() => {
+									configInputsState.set((prev) => ({
+										...prev,
+										AVISO_RECOMPRA_OPERADOR: prev.AVISO_RECOMPRA_OPERADOR === "S" ? "N" : "S",
+									}));
 								}}
+								defaultChecked={
+									configInputsState.value.AVISO_RECOMPRA_OPERADOR === "S"
+										? true
+										: paramsState.value.AVISO_RECOMPRA_OPERADOR === "S"
+										? true
+										: undefined
+								}
 							/>
 							Avisar operador
 						</div>
@@ -706,12 +902,20 @@ const MainParameterConfigs = () => {
 							<Input
 								{...defaultInput}
 								type="checkbox"
-								onChange={(e) => {
+								onClick={() => {
 									configInputsState.set((prev) => ({
 										...prev,
-										BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA: e.target.checked,
+										BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA:
+											prev.BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA === "S" ? "N" : "S",
 									}));
 								}}
+								defaultChecked={
+									configInputsState.value.BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA === "S"
+										? true
+										: paramsState.value.BLOQUEAR_AGENDAMENTO_FORA_PERIODO_RECOMPRA === "S"
+										? true
+										: undefined
+								}
 							/>
 							Bloquear agendamento
 						</div>

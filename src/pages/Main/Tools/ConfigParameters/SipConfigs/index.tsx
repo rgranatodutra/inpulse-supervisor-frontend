@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useCustomRequest } from "../../../../../api";
 import { defaultInput } from "../../../../../components-variants/defaultInputs";
@@ -8,33 +9,58 @@ import useCustomState from "../../../../../utils/customState.hook";
 import StyledParamsForm from "../../../configsStyle";
 
 const sipFields = [
-	{ type: "checkbox", text: "Emite bip entre as ligações", field: "EMITE_BIP_ENTRE_LIGACOES" },
-	{ type: "checkbox", text: "Controle de volume automático", field: "CONTROLE_VOLUME_AUTOMATICO" },
-	{ type: "checkbox", text: "Produtividade em linha", field: "PRODUTIVIDADE_LINHA" },
+	{ type: "number", text: "Servidor", field: "ASTERISK_SERVER" },
+	{ type: "number", text: "Proxy (Padrão igual ao Servidor)", field: "ASTERISK_PROXY" },
+	{ type: "number", text: "Porta de comunicação (Padrão 5060)", field: "ASTERISK_PORTA" },
+	{ type: "checkbox", text: "Emite bip entre as ligações", field: "SIP_EMITE_BIP" },
+	{ type: "checkbox", text: "Controle de volume automático", field: "SIP_VOLUME_AUTOMATICO" },
 	{ type: "checkbox", text: "Ocultar botão de transferência", field: "OCULTAR_BOTAO_TRANSFERENCIA" },
-	{ type: "number", text: "Servidor", field: "SERVIDOR" },
-	{ type: "number", text: "Proxy (Padrão igual ao Servidor)", field: "PROXY" },
-	{ type: "number", text: "Porta de comunicação (Padrão 5060)", field: "PORTA_COMUNICACAO" },
+	{ type: "checkbox", text: "Produtividade em linha", field: "PRODUTIVIDADE_EM_LINHA" },
 ];
 
 const weonFields = [
-	{ type: "number", text: "WSDL Versão 01", field: "WSDL_VERSAO_01" },
-	{ type: "number", text: "WSDL Versão 02", field: "WSDL_VERSAO_02" },
+	{ type: "number", text: "WSDL Versão 01", field: "WSDL_WEON_V1" },
+	{ type: "number", text: "WSDL Versão 02", field: "WSDL_WEON_V2" },
 ];
-const SipConfigs = () => {
-	const configInputsState = useCustomState<{
-		EMITE_BIP_ENTRE_LIGACOES?: boolean | null;
-		CONTROLE_VOLUME_AUTOMATICO?: boolean | null;
-		PRODUTIVIDADE_LINHA?: boolean | null;
-		OCULTAR_BOTAO_TRANSFERENCIA?: boolean | null;
-		SERVIDOR?: number | null;
-		PROXY?: number | null;
-		PORTA_COMUNICACAO?: number | null;
-		WSDL_VERSAO_01?: number | null;
-		WSDL_VERSAO_02?: number | null;
-	}>({});
 
-	console.log(configInputsState.value);
+type sipConfigsType = {
+	SIP_EMITE_BIP?: string | null;
+	CONTROLE_VOLUME_AUTOMATICO?: string | null;
+	PRODUTIVIDADE_LINHA?: string | null;
+	OCULTAR_BOTAO_TRANSFERENCIA?: string | null;
+	SERVIDOR?: number | null;
+	PROXY?: number | null;
+	PORTA_COMUNICACAO?: number | null;
+	WSDL_VERSAO_01?: number | null;
+	WSDL_VERSAO_02?: number | null;
+};
+
+const SipConfigs = () => {
+	const configInputsState = useCustomState<sipConfigsType>({});
+	const sipParamsState = useCustomState<Partial<sipConfigsType>>({});
+
+	useEffect(() => {
+		useCustomRequest<
+			{
+				message: String;
+				data: sipConfigsType[];
+			},
+			undefined
+		>({
+			endpoint: "/parameterss",
+			method: "get",
+			service: "campaigns",
+			onSuccess: (responseData) => {
+				sipParamsState.set(responseData.data[0]);
+				sipFields.map((f) => {
+					if (f.type === "checkbox") {
+						configInputsState.set((prev) => ({ ...prev, [f.field]: responseData.data[0][f.field] }));
+					}
+				});
+			},
+		});
+	}, []);
+
 	function updateParams() {
 		useCustomRequest({
 			endpoint: "/parameterss/1",
@@ -56,13 +82,23 @@ const SipConfigs = () => {
 				<div className="inputs">
 					{sipFields.map((field) => {
 						if (field.type === "checkbox") {
+							const checked =
+								configInputsState.value[field.field] === "S"
+									? true
+									: sipParamsState.value[field.field] === "S"
+									? true
+									: undefined;
 							return (
 								<div className="checkbox-input">
 									<Input
 										{...defaultInput}
 										type="checkbox"
-										onChange={(e) => {
-											configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
+										defaultChecked={checked}
+										onClick={() => {
+											configInputsState.set((prev) => ({
+												...prev,
+												[field.field]: prev[field.field] === "S" ? "N" : "S",
+											}));
 										}}
 									/>
 									{field.text}
@@ -87,7 +123,7 @@ const SipConfigs = () => {
 											}));
 										}}
 										label={field.text}
-										placeholder={field.text}
+										placeholder={sipParamsState.value[field.field] ?? field.text}
 									/>
 								</div>
 							);
@@ -97,20 +133,7 @@ const SipConfigs = () => {
 						<div className="sub-title"> Configurações WeON</div>
 						<div className="sub-inputs">
 							{weonFields.map((field) => {
-								if (field.type === "checkbox") {
-									return (
-										<div className="checkbox-input">
-											<Input
-												{...defaultInput}
-												type="checkbox"
-												onChange={(e) => {
-													configInputsState.set((prev) => ({ ...prev, [field.field]: e.target.checked }));
-												}}
-											/>
-											{field.text}
-										</div>
-									);
-								} else if (field.type === "number") {
+								if (field.type === "number") {
 									return (
 										<div className="number-input">
 											<Input
@@ -124,7 +147,7 @@ const SipConfigs = () => {
 													}));
 												}}
 												label={field.text}
-												placeholder={field.text}
+												placeholder={sipParamsState.value[field.field] ?? field.text}
 											/>
 										</div>
 									);

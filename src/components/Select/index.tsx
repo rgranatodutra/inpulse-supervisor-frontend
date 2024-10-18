@@ -19,6 +19,7 @@ type SelectOptions<T> = {
 	disableInput?: boolean;
 	leftIcon?: ReactNode;
 	label?: string;
+	disableInitOncChange?: boolean;
 };
 
 type SelectProps<T> = SelectOptions<T> & Omit<StyledSelectProps, "$icons">;
@@ -42,10 +43,12 @@ function Select<T>({
 	disableInput,
 	leftIcon,
 	label,
+	disableInitOncChange,
 }: SelectProps<T>) {
 	const optionState = useCustomState<Option<T> | null>(defaultValue || null);
 	const displayMenuState = useCustomState<boolean>(false);
 	const inputValue = useCustomState<string>("");
+	const initInputCount = useCustomState<number>(0);
 	const filteredOptions =
 		optionState.value?.name === inputValue.value
 			? options
@@ -56,13 +59,18 @@ function Select<T>({
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	useEffect(() => {
-		if (optionState.value !== null) {
-			onChange && onChange(optionState.value.value);
-			inputValue.set(optionState.value.name);
+		if (disableInitOncChange && initInputCount.value === 0) {
+			initInputCount.set(1);
 		} else {
-			onChange && onChange(null);
-			inputValue.set("");
+			if (optionState.value !== null) {
+				onChange && onChange(optionState.value.value);
+				inputValue.set(optionState.value.name);
+			} else {
+				onChange && onChange(null);
+				inputValue.set("");
+			}
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [optionState.value]);
 
@@ -71,6 +79,7 @@ function Select<T>({
 			optionState.set(defaultValue);
 			inputValue.set(defaultValue?.name);
 		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

@@ -39,6 +39,7 @@ import MailConfigs from "../pages/Main/Tools/ConfigParameters/EmailConfigs";
 import ImportConfigs from "../pages/Main/Tools/ConfigParameters/ImportConfigs";
 import InactivationConfigs from "../pages/Main/Tools/ConfigParameters/InactivationConfigs";
 import MainParameterConfigs from "../pages/Main/Tools/ConfigParameters/MainConfigs";
+import OtherConfigs from "../pages/Main/Tools/ConfigParameters/OtherConfigs";
 import SipConfigs from "../pages/Main/Tools/ConfigParameters/SipConfigs";
 import DeactivatedCustomers from "../pages/Main/Tools/deactivateCustomers";
 import TransferCostumers from "../pages/Main/Tools/transferCustomers";
@@ -142,7 +143,7 @@ export const RenderingPage = () => {
 					<Route path="importacao" element={<ImportConfigs />} />
 					<Route path="email" element={<MailConfigs />} />
 					<Route path="inativacao" element={<InactivationConfigs />} />
-					<Route path="outros" element={<ExceptionsSegmentsTable />} />
+					<Route path="outros" element={<OtherConfigs />} />
 				</Route>
 			</>
 			<>

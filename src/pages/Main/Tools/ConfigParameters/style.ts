@@ -5,7 +5,7 @@ const StyledExceptionsPage = styled.div`
 	padding: 1rem;
 	height: calc(100% - 4rem);
 
-	> div:nth-child(1) {
+	> .top-menu {
 		margin: 1rem;
 		width: calc(100% - 1.5rem);
 		background-color: var(--color-grey-7-h);

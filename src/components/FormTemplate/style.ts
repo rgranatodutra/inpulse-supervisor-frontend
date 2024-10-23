@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const StyledCustomForm = styled.div`
-	padding-left: 1rem;
 	box-sizing: border-box;
 
 	> form {

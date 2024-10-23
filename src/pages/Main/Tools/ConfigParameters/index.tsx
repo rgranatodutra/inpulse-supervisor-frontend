@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import AddException from "./SaveConfig/AddException";
 import StyledExceptionsPage from "./style";
 
 const ConfigParametersPage = () => {
@@ -15,7 +14,7 @@ const ConfigParametersPage = () => {
 
 	return (
 		<StyledExceptionsPage>
-			<div>
+			<div className="top-menu">
 				<h1
 					onClick={() => {
 						navigate("main");
@@ -82,8 +81,6 @@ const ConfigParametersPage = () => {
 					Outros
 				</h1>
 			</div>
-
-			<AddException />
 
 			<Outlet />
 		</StyledExceptionsPage>

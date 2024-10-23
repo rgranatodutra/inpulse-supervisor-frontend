@@ -8,7 +8,7 @@ import Select from "../../../../../components/Select";
 import { User } from "../../../../../contexts/global/interfaces";
 import { ButtonType2 } from "../../../../../styles/buttons.style";
 import useCustomState from "../../../../../utils/customState.hook";
-import StyledParamsForm from "../../../configsStyle";
+import StyledParamsForm from "../configsStyle";
 
 const importFields = [
 	{ type: "string", text: "Campos importação clientes", field: "CAMPOS_IMPORTACAO_CLIENTES" },
@@ -70,8 +70,6 @@ const ImportConfigs = () => {
 	const selectedUser = paramsState.value.OPERADOR_QUALIFICADOR
 		? usersState.value.find((u) => u.CODIGO === paramsState.value.OPERADOR_QUALIFICADOR)
 		: undefined;
-
-	console.log(configInputsState.value);
 
 	return (
 		<StyledParamsForm>

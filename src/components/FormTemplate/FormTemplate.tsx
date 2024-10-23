@@ -8,13 +8,23 @@ type FormTemplate = PropsWithChildren<{
 	buttonText: string;
 	submitForm: () => void;
 	widthRem?: string;
+	selfPadding?: string;
 	title?: string;
 	noButton?: boolean;
 }>;
 
-const FormTemplate = ({ disabled, children, submitForm, buttonText, title, widthRem, noButton }: FormTemplate) => {
+const FormTemplate = ({
+	disabled,
+	children,
+	submitForm,
+	buttonText,
+	title,
+	widthRem,
+	selfPadding,
+	noButton,
+}: FormTemplate) => {
 	return (
-		<StyledCustomForm style={{ width: widthRem ?? "100%" }}>
+		<StyledCustomForm style={{ width: widthRem ?? "100%", padding: selfPadding ?? "0 0 0 1rem" }}>
 			{title && <h2> {title} </h2>}
 			<form
 				onSubmit={(e) => {

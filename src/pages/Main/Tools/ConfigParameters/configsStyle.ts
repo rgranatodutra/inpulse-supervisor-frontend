@@ -8,7 +8,7 @@ const StyledParamsForm = styled.div`
 
 	.save-button {
 		position: absolute;
-		padding-left: calc(100% - 18rem);
+		padding-left: calc(100% - 20rem);
 		top: 90%;
 		button {
 			font-size: 1.5rem;
@@ -43,6 +43,7 @@ const StyledParamsForm = styled.div`
 		background-color: var(--color-grey-7-h);
 		outline: 1px solid var(--color-grey-6);
 		border-radius: 0.5rem;
+		width: 100%;
 
 		> .inputs {
 			display: flex;
@@ -85,6 +86,19 @@ const StyledParamsForm = styled.div`
 		&.halved {
 			width: 45%;
 		}
+	}
+
+	> ul {
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		max-height: calc(100% - 10rem);
+		overflow: auto;
+
+		border: 2px solid var(--color-grey-6-h);
+		background-color: var(--color-grey-7);
+
+		height: calc(100vh - 18rem);
 	}
 `;
 

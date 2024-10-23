@@ -8,7 +8,7 @@ import Select from "../../../../../components/Select";
 import { EmailParameter } from "../../../../../interfaces/EmailParameter.type";
 import { ButtonType2 } from "../../../../../styles/buttons.style";
 import useCustomState from "../../../../../utils/customState.hook";
-import StyledParamsForm from "../../../configsStyle";
+import StyledParamsForm from "../configsStyle";
 
 const importFields = [
 	{ type: "checkbox", text: "Autenticar", field: "AUTENTICAR" },

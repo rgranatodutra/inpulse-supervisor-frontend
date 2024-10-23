@@ -27,7 +27,7 @@ type otherConfigsType = {
 	IP_SERVIDOR?: string | null;
 };
 
-const OtherConfigs = () => {
+const OtherParamConfigs = () => {
 	const configInputsState = useCustomState<otherConfigsType>({});
 	const otherParamsState = useCustomState<Partial<otherConfigsType>>({});
 
@@ -146,4 +146,4 @@ const OtherConfigs = () => {
 	);
 };
 
-export default OtherConfigs;
+export default OtherParamConfigs;

@@ -35,6 +35,7 @@ import OperatorsPage from "../pages/Main/Operators/Main";
 import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
 import ConfigParametersPage from "../pages/Main/Tools/ConfigParameters";
+import DDDsConfigs from "../pages/Main/Tools/ConfigParameters/DDDsConfigs";
 import MailConfigs from "../pages/Main/Tools/ConfigParameters/EmailConfigs";
 import ImportConfigs from "../pages/Main/Tools/ConfigParameters/ImportConfigs";
 import InactivationConfigs from "../pages/Main/Tools/ConfigParameters/InactivationConfigs";
@@ -137,7 +138,7 @@ export const RenderingPage = () => {
 				<Route path="/ferramentas/rotinas" element={<DeactivatedCustomers />} />
 				<Route path="/ferramentas/parametros" element={<ConfigParametersPage />}>
 					<Route path="main" element={<MainParameterConfigs />} />
-					<Route path="DDDS" element={<ExceptionsCitiesTable />} />
+					<Route path="DDDS" element={<DDDsConfigs />} />
 					<Route path="SIP" element={<SipConfigs />} />
 					<Route path="agenda" element={<ExceptionsSegmentsTable />} />
 					<Route path="importacao" element={<ImportConfigs />} />

@@ -1,12 +1,11 @@
-import { FaTag } from "react-icons/fa6";
-import StyledRoleCard from "./style";
-import { ButtonType3 } from "../../../../../styles/buttons.style";
-import { Position } from "../../../../../interfaces/Position.type";
 import { useContext } from "react";
+import { FaTag } from "react-icons/fa6";
 import { GlobalContext } from "../../../../../contexts/global";
-import EditRoleModal from "../EditRoleModal";
+import { Position } from "../../../../../interfaces/Position.type";
+import { ButtonType3 } from "../../../../../styles/buttons.style";
 import DeleteRoleModal from "../DeleteRoleModal";
-import { Link } from "react-router-dom";
+import EditRoleModal from "../EditRoleModal";
+import StyledRoleCard from "./style";
 
 interface RoleCardProps {
 	roleData: Position;
@@ -14,11 +13,7 @@ interface RoleCardProps {
 	updateOnDelete: (roleData: Position) => void;
 }
 
-const RoleCard = ({
-	roleData,
-	updateOnEdit,
-	updateOnDelete,
-}: RoleCardProps) => {
+const RoleCard = ({ roleData, updateOnEdit, updateOnDelete }: RoleCardProps) => {
 	const { modalState } = useContext(GlobalContext);
 
 	return (
@@ -33,21 +28,14 @@ const RoleCard = ({
 			<div>
 				<ButtonType3
 					onClick={() => {
-						modalState.set(
-							<EditRoleModal role={roleData} update={updateOnEdit} />
-						);
+						modalState.set(<EditRoleModal role={roleData} update={updateOnEdit} />);
 					}}
 				>
 					<a> Editar </a>
 				</ButtonType3>
 				<ButtonType3
 					onClick={() => {
-						modalState.set(
-							<DeleteRoleModal
-								role={roleData}
-								updateOnDelete={updateOnDelete}
-							/>
-						);
+						modalState.set(<DeleteRoleModal role={roleData} updateOnDelete={updateOnDelete} />);
 					}}
 				>
 					<a> Remover </a>

@@ -100,6 +100,16 @@ const StyledParamsForm = styled.div`
 
 		height: calc(100vh - 18rem);
 	}
+
+	.display-table {
+		padding: 0;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		max-height: calc(100% - 11rem);
+		overflow: auto;
+		border: 2px solid var(--color-grey-6-h);
+	}
 `;
 
 export default StyledParamsForm;

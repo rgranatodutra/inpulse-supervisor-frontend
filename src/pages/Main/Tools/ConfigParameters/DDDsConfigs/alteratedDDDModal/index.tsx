@@ -2,45 +2,57 @@ import { useContext } from "react";
 import { toast } from "react-toastify";
 import { useCustomRequest } from "../../../../../../api";
 import { defaultInput100 } from "../../../../../../components-variants/defaultInputs";
-import Input from "../../../../../../components/Input";
 import Modal from "../../../../../../components/Modal";
+import Select from "../../../../../../components/Select";
 import { GlobalContext } from "../../../../../../contexts/global";
-import { SegmentException } from "../../../../../../interfaces/SegmentException.type";
 import useCustomState from "../../../../../../utils/customState.hook";
 import StyledDealModal from "./style";
 
-interface DeleteSegmentExceptionModal {
-	segment: SegmentException;
+type cityDDD = {
+	CODIGO: number;
+	CIDADE?: string;
+	DDD?: string;
+	USAR?: string;
+};
+
+interface AlteratedDDDModalProps {
+	cityDDD: cityDDD;
 }
 
-function DeleteSegmentExceptionModal({ segment }: DeleteSegmentExceptionModal) {
+function AlteratedDDDModal({ cityDDD }: AlteratedDDDModalProps) {
 	const { modalState } = useContext(GlobalContext);
-	const segmentName = useCustomState(0);
+	const useDDD = useCustomState<string | undefined | null>(cityDDD.USAR);
 
 	async function deleteException() {
 		useCustomRequest({
-			endpoint: `/segment-exceptions/${segment.CODIGO}`,
-			method: "delete",
+			endpoint: `/cityDDDs/${cityDDD.CODIGO}`,
+			method: "patch",
+			requestData: { USAR: useDDD.value },
 			service: "campaigns",
 			onSuccess: () => {
-				toast.success("Excessão deletada com sucesso");
+				toast.success("Parametro atualizado com sucesso");
 				modalState.reset();
 			},
 		});
 	}
 
-	const disabled = !segmentName.value || !(segmentName.value === segment.SEGMENTO);
+	const disabled = useDDD.value === null || useDDD.value === undefined;
 
 	return (
-		<Modal modalState={modalState} title="Remover Excessão">
+		<Modal modalState={modalState} title="Utilizar DDD">
 			<StyledDealModal>
-				<Input
+				<Select
 					{...defaultInput100}
-					placeholder={`Digite '${segment.SEGMENTO}' para confirmar`}
+					options={[
+						{ name: "Sim", value: "SIM" },
+						{ name: "Não", value: "NAO" },
+					]}
 					onChange={(e) => {
-						segmentName.set(+e.target.value);
+						useDDD.set(e);
 					}}
+					placeholder={cityDDD.USAR === "SIM" ? "Sim" : "Não"}
 				/>
+
 				<button onClick={deleteException} disabled={disabled}>
 					Confirmar
 				</button>
@@ -49,4 +61,4 @@ function DeleteSegmentExceptionModal({ segment }: DeleteSegmentExceptionModal) {
 	);
 }
 
-export default DeleteSegmentExceptionModal;
+export default AlteratedDDDModal;

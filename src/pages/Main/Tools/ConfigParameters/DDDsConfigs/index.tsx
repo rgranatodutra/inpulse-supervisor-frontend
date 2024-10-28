@@ -131,9 +131,6 @@ const DDDsConfigs = () => {
 
 	return (
 		<StyledParamsForm>
-			<div className="save-button">
-				<ButtonType2 onClick={updateParams}> Salvar </ButtonType2>
-			</div>
 			<FormTemplate
 				buttonText="Salvar"
 				disabled={true}
@@ -186,6 +183,9 @@ const DDDsConfigs = () => {
 				requestEndpoint="/cityDDDs"
 				service="campaigns"
 			/>
+			<div className="save-button">
+				<ButtonType2 onClick={updateParams}> Salvar </ButtonType2>
+			</div>
 		</StyledParamsForm>
 	);
 };

@@ -36,6 +36,7 @@ export type TableProps<T> = {
 	requestEndpoint: `/${string}` | `/${string}/${string}`;
 	enableAutoUpdate?: boolean;
 	service: ServiceName;
+	updateTableFn?: (updateFn: () => void) => void;
 };
 
 export type StyledTableProps = {

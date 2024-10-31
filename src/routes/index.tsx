@@ -25,6 +25,7 @@ import CustomerSegmentPage from "../pages/Main/Customers/Segments";
 import Home from "../pages/Main/Home";
 import BreaksTaken from "../pages/Main/Monitor/BreaksTaken";
 import ClientsQueue from "../pages/Main/Monitor/ClientsToAttend";
+import ClientsToBlock from "../pages/Main/Monitor/ClientsToBlock";
 import PurchaseToExpire from "../pages/Main/Monitor/PurchaseToExpire";
 import ReceptiveCalls from "../pages/Main/Monitor/ReceptiveCalls";
 import MonitorSchedules from "../pages/Main/Monitor/Schedules";
@@ -41,6 +42,7 @@ import ImportConfigs from "../pages/Main/Tools/ConfigParameters/ImportConfigs";
 import InactivationConfigs from "../pages/Main/Tools/ConfigParameters/InactivationConfigs";
 import MainParameterConfigs from "../pages/Main/Tools/ConfigParameters/MainConfigs";
 import OtherParamsConfigs from "../pages/Main/Tools/ConfigParameters/OtherConfigs";
+import ScheduleConfigs from "../pages/Main/Tools/ConfigParameters/ScheduleConfigs";
 import SipConfigs from "../pages/Main/Tools/ConfigParameters/SipConfigs";
 import DeactivatedCustomers from "../pages/Main/Tools/deactivateCustomers";
 import TransferCostumers from "../pages/Main/Tools/transferCustomers";
@@ -130,7 +132,9 @@ export const RenderingPage = () => {
 				<Route path="/monitor/pausas_realizadas" element={<BreaksTaken />} />
 				<Route path="/monitor/chamadas_recebidas" element={<ReceptiveCalls />} />
 				<Route path="/monitor/recompra_a_expirar" element={<PurchaseToExpire />} />
+				clientes_a_bloquear
 				<Route path="/monitor/fila_de_atendimento" element={<ClientsQueue />} />
+				<Route path="/monitor/clientes_a_bloquear" element={<ClientsToBlock />} />
 			</>
 			<>
 				{/* Rotas de Ferramentas */}
@@ -140,7 +144,7 @@ export const RenderingPage = () => {
 					<Route path="main" element={<MainParameterConfigs />} />
 					<Route path="DDDS" element={<DDDsConfigs />} />
 					<Route path="SIP" element={<SipConfigs />} />
-					<Route path="agenda" element={<ExceptionsSegmentsTable />} />
+					<Route path="agenda" element={<ScheduleConfigs />} />
 					<Route path="importacao" element={<ImportConfigs />} />
 					<Route path="email" element={<MailConfigs />} />
 					<Route path="inativacao" element={<InactivationConfigs />} />

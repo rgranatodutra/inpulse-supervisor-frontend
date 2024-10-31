@@ -15,6 +15,7 @@ function Table<T>({
 	enableAutoUpdate,
 	service,
 	className,
+	updateTableFn,
 	...styleProps
 }: TableProps<T>) {
 	const tableRef = useRef<null | HTMLTableElement>(null);
@@ -30,12 +31,24 @@ function Table<T>({
 	const isMaximizedState = useCustomState<boolean>(false);
 	const autoUpdateState = useCustomState<boolean>(false);
 	const autoUpdateIntervalState = useCustomState<number | null>(5);
+	const resetState = useCustomState(false);
+
+	function updateTable() {
+		loadingState.set(true);
+		setTimeout(() => {
+			loadingState.set(false);
+			resetState.set((prev) => !prev);
+		}, 100);
+	}
 
 	useEffect(() => {
 		setSearchParams("");
 	}, [requestEndpoint]);
 
 	useEffect(() => {
+		if (updateTableFn) {
+			updateTableFn(updateTable);
+		}
 		useCustomRequest<PaginatedResponse<Array<T>>, undefined>({
 			method: "get",
 			service,
@@ -47,9 +60,8 @@ function Table<T>({
 			},
 			loadingState,
 		});
-
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [searchParams, requestEndpoint]);
+	}, [searchParams, requestEndpoint, resetState.value]);
 
 	useEffect(() => {
 		let intervalId: NodeJS.Timeout | null = null;

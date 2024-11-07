@@ -81,6 +81,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 				{ text: "Funcionalidades telefonicas", path: "/ferramentas/funcionalidades_telefonicas" },
 				{ text: "Transferências de clientes", path: "/ferramentas/transferencia_clientes" },
 				{ text: "Configurar parametros", path: "/ferramentas/parametros" },
+				{ text: "Configurar e-mails", path: "/ferramentas/emails" },
 			],
 		},
 	},

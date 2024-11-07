@@ -76,7 +76,7 @@ const ImportConfigs = () => {
 			<div className="save-button">
 				<ButtonType2 onClick={updateParams}> Salvar </ButtonType2>
 			</div>
-			<FormTemplate buttonText="Salvar" disabled={true} submitForm={() => {}} noButton title="Configurações de SIP">
+			<FormTemplate buttonText="Salvar" disabled={true} submitForm={() => {}} noButton title="Importação de clientes">
 				<div className="number-inputs">
 					{importFields.map((field) => {
 						if (field.type === "string") {

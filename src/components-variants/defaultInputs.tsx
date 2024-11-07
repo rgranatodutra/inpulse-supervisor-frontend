@@ -35,9 +35,16 @@ const defaultSelect100 = {
 	rightIcon: <FaAngleDown />,
 };
 
+const defaultSelect = {
+	...defaultInput,
+	$focusColor: undefined,
+	leftIcon: null,
+	rightIcon: <FaAngleDown />,
+};
+
 const defaultSelect50 = {
 	...defaultSelect100,
 	$width: "calc(50% - 0.5rem)",
 };
 
-export { defaultInput, defaultInput100, defaultInput50, defaultSelect100, defaultSelect50 };
+export { defaultInput, defaultInput100, defaultInput50, defaultSelect, defaultSelect100, defaultSelect50 };

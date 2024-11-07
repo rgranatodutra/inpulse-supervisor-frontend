@@ -9,9 +9,6 @@ import useCustomState from "../../../../../utils/customState.hook";
 import StyledParamsForm from "../configsStyle";
 
 const agendamentosFields = [
-	{ type: "checkbox", text: "Agenda no sábado", field: "AGENDA_SABADO" },
-	{ type: "checkbox", text: "Agenda no domingo", field: "AGENDA_DOMINGO" },
-	{ type: "checkbox", text: "Agenda no feriado", field: "AGENDA_FERIADO" },
 	{ type: "checkbox", text: "Utiliza fuso horário", field: "FUSO_HORARIO" },
 	{ type: "checkbox", text: "Valida agendamentos simultâneos", field: "VALIDA_AGENDAMENTOS" },
 	{ type: "checkbox", text: "Agendamento para o supervisor/backoffice", field: "AGENDAMENTO_SUPERVISOR" },
@@ -170,7 +167,6 @@ type configParamsType = {
 	TELEFONE?: number | null;
 	TEL_CONTATO?: number | null;
 	POTENCIAL?: number | null;
-	FILA?: string | null;
 	UNIDADE?: string | null;
 	VERSAO_SISTEMA?: string | null;
 };
@@ -226,7 +222,6 @@ const MainParameterConfigs = () => {
 				configInputsState.set((prev) => ({
 					...prev,
 					PAUSARRAMAL: responseData.data[0].PAUSARRAMAL,
-					FILA: responseData.data[0].FILA,
 					UTILIZAR_QTDCLIENTEBASE: responseData.data[0].UTILIZAR_QTDCLIENTEBASE,
 					GRAVARLOG: responseData.data[0].GRAVARLOG,
 					VERSAO_SISTEMA: responseData.data[0].VERSAO_SISTEMA,
@@ -674,27 +669,6 @@ const MainParameterConfigs = () => {
 											: "Quantidade base"
 									} */
 								/>
-							</div>
-						</div>
-					</div>
-					<div className="sub-form halved">
-						<div className="sub-title"> Telefonia</div>
-						<div className="sub-inputs">
-							<div className="number-inputs">
-								<div className="number-input">
-									<Input
-										{...defaultInput}
-										type="text"
-										label="Fila"
-										onChange={(e) => {
-											configInputsState.set((prev) => ({
-												...prev,
-												FILA: e.target.value.trim() != "" ? e.target.value.trim() : null,
-											}));
-										}}
-										placeholder={paramsState.value.FILA != null ? paramsState.value.FILA : "Fila"}
-									/>
-								</div>
 							</div>
 						</div>
 					</div>

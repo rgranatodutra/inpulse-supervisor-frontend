@@ -37,6 +37,9 @@ const clientsQueueColumns: Array<TableColumn<ClientsToAttend>> = [
 		key: "OPERADOR",
 		header: "Operador código",
 		width: 6,
+		format: (r) => {
+			return r.OPERADOR ?? "Não cadastrado";
+		},
 		filter: {
 			type: "input",
 			width: "19.5rem",
@@ -46,6 +49,9 @@ const clientsQueueColumns: Array<TableColumn<ClientsToAttend>> = [
 		key: "nome",
 		header: "Nome do operador",
 		width: 24,
+		format: (r) => {
+			return r.nome ?? "Não cadastrado";
+		},
 		filter: {
 			type: "input",
 			width: "19.5rem",

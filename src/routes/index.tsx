@@ -28,6 +28,7 @@ import ClientsQueue from "../pages/Main/Monitor/ClientsToAttend";
 import ClientsToBlock from "../pages/Main/Monitor/ClientsToBlock";
 import PurchaseToExpire from "../pages/Main/Monitor/PurchaseToExpire";
 import ReceptiveCalls from "../pages/Main/Monitor/ReceptiveCalls";
+import SatisfactionResearchPage from "../pages/Main/Monitor/SatisfactionResearch";
 import MonitorSchedules from "../pages/Main/Monitor/Schedules";
 import OperatorsDealsPage from "../pages/Main/Operators/Deals";
 import OperatorsGoalsPage from "../pages/Main/Operators/Goals";
@@ -134,9 +135,10 @@ export const RenderingPage = () => {
 				<Route path="/monitor/pausas_realizadas" element={<BreaksTaken />} />
 				<Route path="/monitor/chamadas_recebidas" element={<ReceptiveCalls />} />
 				<Route path="/monitor/recompra_a_expirar" element={<PurchaseToExpire />} />
-				clientes_a_bloquear
+
 				<Route path="/monitor/fila_de_atendimento" element={<ClientsQueue />} />
 				<Route path="/monitor/clientes_a_bloquear" element={<ClientsToBlock />} />
+				<Route path="/monitor/pesquisa" element={<SatisfactionResearchPage />} />
 			</>
 			<>
 				{/* Rotas de Ferramentas */}

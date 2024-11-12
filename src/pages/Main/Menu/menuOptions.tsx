@@ -66,6 +66,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 				{ text: "Recompra a expirar", path: "/monitor/recompra_a_expirar" },
 				{ text: "Fila de atendimento", path: "/monitor/fila_de_atendimento" },
 				{ text: "Clientes a bloquear", path: "/monitor/clientes_a_bloquear" },
+				{ text: "Pesquisa de satisfação", path: "/monitor/pesquisa" },
 			],
 		},
 	},

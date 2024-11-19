@@ -8,7 +8,7 @@ const ConfigEmailsPage = () => {
 
 	useEffect(() => {
 		if (location.pathname === "/ferramentas/emails") {
-			navigate("emails");
+			navigate("emailConfigs");
 		}
 	}, []);
 
@@ -17,19 +17,19 @@ const ConfigEmailsPage = () => {
 			<div className="top-menu">
 				<h1
 					onClick={() => {
-						navigate("emails");
+						navigate("emailConfigs");
 					}}
-					className={location.pathname.includes("emails") ? "selected" : undefined}
+					className={location.pathname.includes("emailConfigs") ? "selected" : undefined}
 				>
-					E-Mails
+					Configurar E-Mails
 				</h1>
 				<h1
 					onClick={() => {
-						navigate("teste");
+						navigate("testEmail");
 					}}
-					className={location.pathname.includes("teste") ? "selected" : undefined}
+					className={location.pathname.includes("testEmail") ? "selected" : undefined}
 				>
-					E-Mail Teste
+					Enviar E-Mail Teste
 				</h1>
 			</div>
 

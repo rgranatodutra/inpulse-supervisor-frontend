@@ -38,6 +38,7 @@ import OperatorsPausesPage from "../pages/Main/Operators/Pauses";
 import OperatorsShiftsPage from "../pages/Main/Operators/Shifts";
 import ConfigEmailsPage from "../pages/Main/Tools/ConfigEmails";
 import EmailAccountConfigs from "../pages/Main/Tools/ConfigEmails/EmailAccountConfigs";
+import SendTestEmail from "../pages/Main/Tools/ConfigEmails/SendTestEmail";
 import ConfigParametersPage from "../pages/Main/Tools/ConfigParameters";
 import DDDsConfigs from "../pages/Main/Tools/ConfigParameters/DDDsConfigs";
 import MailConfigs from "../pages/Main/Tools/ConfigParameters/EmailConfigs";
@@ -155,8 +156,8 @@ export const RenderingPage = () => {
 					<Route path="outros" element={<OtherParamsConfigs />} />
 				</Route>
 				<Route path="/ferramentas/emails" element={<ConfigEmailsPage />}>
-					<Route path="emails" element={<EmailAccountConfigs />} />
-					<Route path="teste" element={<DDDsConfigs />} />
+					<Route path="emailConfigs" element={<EmailAccountConfigs />} />
+					<Route path="testEmail" element={<SendTestEmail />} />
 				</Route>
 			</>
 			<>

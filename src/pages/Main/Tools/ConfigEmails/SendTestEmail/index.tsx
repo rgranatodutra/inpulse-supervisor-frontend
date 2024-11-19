@@ -1,5 +1,6 @@
 import { Editor } from "primereact/editor";
 import { useEffect } from "react";
+import { FaSpinner } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { useCustomRequest } from "../../../../../api";
 import { defaultInput, defaultSelect } from "../../../../../components-variants/defaultInputs";
@@ -8,14 +9,13 @@ import Input from "../../../../../components/Input";
 import Select from "../../../../../components/Select";
 import { ButtonType2 } from "../../../../../styles/buttons.style";
 import useCustomState from "../../../../../utils/customState.hook";
+import { smtpexpressClient } from "../../../../../utils/smtp";
 import StyledParamsForm from "../configsStyle";
 
 const emailConfigFields = [
-	{ type: "string", text: "Descrição do E-Mail", field: "DESCRICAO" },
 	{ type: "string", text: "Assunto do E-Mail", field: "ASSUNTO" },
 	{ type: "string", text: "Cópia", field: "COPIA" },
 	{ type: "string", text: "Cópia oculta", field: "COPIAOCULTA" },
-	{ type: "checkbox", text: "Alterar dados antes de enviar", field: "ALTERAR_DADOS_EMAIL" },
 ];
 
 type emailAccountConfigsType = {
@@ -28,13 +28,34 @@ type emailAccountConfigsType = {
 	TEXTO?: string | null;
 };
 
-const EmailAccountConfigs = () => {
+const SendTestEmail = () => {
 	const configInputsState = useCustomState<Partial<emailAccountConfigsType>>({});
 	const emailConfigsState = useCustomState<Partial<emailAccountConfigsType[]>>([]);
 	const currentEmail = useCustomState(1);
+	const readOnly = useCustomState(false);
+	const reloadForm = useCustomState(true);
 
 	useEffect(() => {
-		configInputsState.reset();
+		const newValue = emailConfigsState.value[currentEmail.value - 1];
+		if (newValue != undefined) {
+			configInputsState.set(newValue);
+		}
+	}, [currentEmail.value]);
+
+	useEffect(() => {
+		if (emailConfigsState.value[currentEmail.value - 1]?.ALTERAR_DADOS_EMAIL === "S") {
+			readOnly.set(false);
+			reloadForm.set(true);
+			setTimeout(() => {
+				reloadForm.set(false);
+			}, 50);
+		} else {
+			readOnly.set(true);
+			reloadForm.set(true);
+			setTimeout(() => {
+				reloadForm.set(false);
+			}, 50);
+		}
 	}, [currentEmail.value]);
 
 	useEffect(() => {
@@ -50,23 +71,35 @@ const EmailAccountConfigs = () => {
 			service: "campaigns",
 			onSuccess: (responseData) => {
 				emailConfigsState.set(responseData.data);
+				configInputsState.set(responseData.data[0]);
 			},
 		});
 	}, []);
 
-	function updateParams() {
-		if (currentEmail.value) {
-			useCustomRequest({
-				endpoint: `/email-configs/${currentEmail.value}`,
-				requestData: configInputsState.value,
-				method: "patch",
-				service: "campaigns",
-				onSuccess: () => {
-					toast.success("Configurações de E-Mail atualizadas com sucesso");
+	async function sendEmail() {
+		try {
+			// Sending an email using SMTP
+			await smtpexpressClient.sendApi.sendMail({
+				// Subject of the email
+				subject: configInputsState.value.ASSUNTO ?? "Houve um erro na mensagem automatica",
+				// Body of the email
+				message: configInputsState.value.TEXTO ?? "Houve um erro na mensagem automatica",
+				// Sender's details
+				sender: {
+					// Sender's name
+					name: "SMTP Article by DevYoma",
+					// Sender's email address
+					email: "inpulse-sgr-a14b31@smtpexpress.email",
+				},
+				// Recipient's details
+				recipients: {
+					email: "giovannioliveira1020@gmail.com",
 				},
 			});
-		} else {
-			toast.error("Selecione um E-Mail");
+			toast("E-Mail Enviado com sucesso");
+		} catch (error) {
+			toast("Ouve um erro, tente novamente mais tarde ou contate o suporte técnico");
+			console.log(error);
 		}
 	}
 
@@ -75,12 +108,14 @@ const EmailAccountConfigs = () => {
 		value: em?.CODIGO,
 	}));
 
+	console.log(emailConfigsState.value[currentEmail.value - 1]?.ALTERAR_DADOS_EMAIL === "S" ? false : true);
+
 	return (
 		<StyledParamsForm>
 			<div className="save-button">
-				<ButtonType2 onClick={updateParams}> Salvar </ButtonType2>
+				<ButtonType2 onClick={sendEmail}> Enviar </ButtonType2>
 			</div>
-			<FormTemplate buttonText="Salvar" disabled={true} submitForm={() => {}} noButton title="Configurações de e-mail">
+			<FormTemplate buttonText="Salvar" disabled={true} submitForm={() => {}} noButton title="Enviar E-Mail de Teste">
 				<div className="number-inputs">
 					<div className="number-input">
 						<Select
@@ -114,50 +149,23 @@ const EmailAccountConfigs = () => {
 						}
 					})}
 				</div>
-				<div className="inputs">
-					{emailConfigFields.map((field) => {
-						if (field.type === "checkbox") {
-							const checked =
-								configInputsState.value[field.field] === "S"
-									? true
-									: configInputsState.value[field.field] === "N"
-									? false
-									: emailConfigsState.value[currentEmail.value - 1]?.[field.field] === "S"
-									? true
-									: false;
 
-							console.log(configInputsState.value.ALTERAR_DADOS_EMAIL);
-
-							return (
-								<div className="checkbox-input">
-									<Input
-										{...defaultInput}
-										type="checkbox"
-										checked={checked}
-										onClick={() => {
-											configInputsState.set((prev) => ({
-												...prev,
-												[field.field]: prev[field.field] === "S" ? "N" : "S",
-											}));
-										}}
-									/>
-									{field.text}
-								</div>
-							);
-						}
-					})}
-				</div>
 				<div className="inputs" style={{ marginBottom: "3rem" }}>
-					<Editor
-						value={emailConfigsState.value[currentEmail.value - 1]?.TEXTO ?? "Não cadastrado"}
-						onTextChange={(e) => {
-							configInputsState.set((prev) => ({ ...prev, TEXTO: e.htmlValue }));
-						}}
-					/>
+					{reloadForm.value ? (
+						<FaSpinner />
+					) : (
+						<Editor
+							value={emailConfigsState.value[currentEmail.value - 1]?.TEXTO ?? "Não cadastrado"}
+							onTextChange={(e) => {
+								configInputsState.set((prev) => ({ ...prev, TEXTO: e.htmlValue }));
+							}}
+							readOnly={readOnly.value}
+						/>
+					)}
 				</div>
 			</FormTemplate>
 		</StyledParamsForm>
 	);
 };
 
-export default EmailAccountConfigs;
+export default SendTestEmail;

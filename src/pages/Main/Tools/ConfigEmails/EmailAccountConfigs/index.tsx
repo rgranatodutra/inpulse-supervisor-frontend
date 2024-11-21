@@ -126,8 +126,6 @@ const EmailAccountConfigs = () => {
 									? true
 									: false;
 
-							console.log(configInputsState.value.ALTERAR_DADOS_EMAIL);
-
 							return (
 								<div className="checkbox-input">
 									<Input

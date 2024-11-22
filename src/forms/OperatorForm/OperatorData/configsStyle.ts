@@ -35,9 +35,8 @@ const StyledParamsForm = styled.div`
 	}
 
 	form {
-		margin: 1rem;
-		margin-right: 0;
-		margin-left: 0;
+		margin-top: 1rem;
+		margin-bottom: 0.5rem;
 		display: flex;
 		background-color: var(--color-grey-7-h);
 		outline: 1px solid var(--color-grey-6);

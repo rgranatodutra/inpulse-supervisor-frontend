@@ -6,9 +6,9 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 import { User } from "../../interfaces/User.type";
 import useCustomState from "../../utils/customState.hook";
 import SwitchSectionButton from "../CustomerForm/SwitchSectionButton";
-import StyledCustomerForm from "../CustomerForm/styles";
 import OperatorData from "./OperatorData";
 import { OperatorContext } from "./context";
+import StyledOperatorForm from "./styles";
 
 type OperatorFormProps = {
 	mode: "edit" | "create";
@@ -50,7 +50,7 @@ const OperatorForm = ({ mode }: OperatorFormProps) => {
 	}, [isCreateMode]);
 
 	return (
-		<StyledCustomerForm>
+		<StyledOperatorForm>
 			<header>
 				<button title="voltar" type="button" onClick={onClickBack}>
 					<FaArrowLeftLong />
@@ -84,7 +84,7 @@ const OperatorForm = ({ mode }: OperatorFormProps) => {
 			) : (
 				<LoadingSpinner />
 			)}
-		</StyledCustomerForm>
+		</StyledOperatorForm>
 	);
 };
 

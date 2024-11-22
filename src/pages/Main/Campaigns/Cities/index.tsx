@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useCustomRequest } from "../../../../api";
 import { defaultInput } from "../../../../components-variants/defaultInputs";
@@ -7,7 +6,7 @@ import Input from "../../../../components/Input";
 import Select from "../../../../components/Select";
 import { City } from "../../../../interfaces/City.type";
 import useCustomState from "../../../../utils/customState.hook";
-import CityCard from "./CityCard";
+import CityTable from "./CityTable";
 import StyledCustomersCitysPage from "./style";
 
 const selectOptions = [
@@ -42,33 +41,6 @@ const selectOptions = [
 
 const OtherCitiesPage = () => {
 	const newCity = useCustomState<Partial<City>>({});
-	const cities = useCustomState<Array<City>>([]);
-
-	useEffect(() => {
-		useCustomRequest<{ message: String; data: City[] }, undefined>({
-			endpoint: "/cities",
-			method: "get",
-			service: "campaigns",
-			onSuccess: (responseData) => {
-				cities.set(responseData.data);
-			},
-		});
-	}, []);
-
-	const updateOnDelete = (data: City) => {
-		cities.set((prev) => prev.filter((v) => v.CODIGO != data.CODIGO));
-	};
-
-	const updateOnEdit = (data: City) => {
-		cities.set((prev) =>
-			prev.map((v) => {
-				if (v.CODIGO === data.CODIGO) {
-					return data;
-				}
-				return v;
-			})
-		);
-	};
 
 	function addCity() {
 		useCustomRequest<{ message: String; data: City }, Partial<City>>({
@@ -76,9 +48,7 @@ const OtherCitiesPage = () => {
 			method: "post",
 			service: "campaigns",
 			requestData: newCity.value,
-			onSuccess: (responseData) => {
-				const newCitys = [...cities.value, responseData.data];
-				cities.set(newCitys);
+			onSuccess: () => {
 				toast.success("Cidade adicionada com sucesso");
 			},
 		});
@@ -110,20 +80,7 @@ const OtherCitiesPage = () => {
 					onChange={(e) => newCity.set((prev) => ({ ...prev, UF: e ?? undefined }))}
 				/>
 			</FormTemplate>
-			<div className="padded">
-				<ul>
-					{cities.value.map((city) => {
-						return (
-							<CityCard
-								key={`city_${city.CODIGO}`}
-								cityData={city}
-								updateOnEdit={updateOnEdit}
-								updateOnDelete={updateOnDelete}
-							/>
-						);
-					})}
-				</ul>
-			</div>
+			<CityTable />
 		</StyledCustomersCitysPage>
 	);
 };

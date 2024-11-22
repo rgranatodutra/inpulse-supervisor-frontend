@@ -11,10 +11,9 @@ import StyledRoleModal from "./style";
 
 interface DeleteCityModalProps {
 	city: City;
-	updateOnDelete: (data: City) => void;
 }
 
-function DeleteCityModal({ city, updateOnDelete }: DeleteCityModalProps) {
+function DeleteCityModal({ city }: DeleteCityModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const CityNameState = useCustomState("");
 
@@ -26,7 +25,6 @@ function DeleteCityModal({ city, updateOnDelete }: DeleteCityModalProps) {
 			onSuccess: () => {
 				toast.success("Cidade deletada com sucesso");
 				modalState.reset();
-				updateOnDelete(city);
 			},
 		});
 	}

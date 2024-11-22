@@ -42,10 +42,9 @@ const selectOptions = [
 
 interface EditCityModalProps {
 	city: City;
-	update: (data: City) => void;
 }
 
-function EditCityModal({ city, update }: EditCityModalProps) {
+function EditCityModal({ city }: EditCityModalProps) {
 	const { modalState } = useContext(GlobalContext);
 	const EditedCityState = useCustomState<Partial<City>>(city);
 
@@ -55,10 +54,9 @@ function EditCityModal({ city, update }: EditCityModalProps) {
 			requestData: EditedCityState.value,
 			method: "patch",
 			service: "campaigns",
-			onSuccess: (res) => {
+			onSuccess: () => {
 				toast.success("Cidade atualizada com sucesso");
 				modalState.reset();
-				update(res.data);
 			},
 		});
 	}

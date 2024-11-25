@@ -7,6 +7,7 @@ import { OperatorProvider } from "../forms/OperatorForm/context";
 import CampaignsPage from "../pages/Main/Campaigns/Campaigns";
 import CampaignsChangesPage from "../pages/Main/Campaigns/CampaignsChanges";
 import OtherCitiesPage from "../pages/Main/Campaigns/Cities";
+import CityStatesPage from "../pages/Main/Campaigns/CityStates";
 import ExceptionsPage from "../pages/Main/Campaigns/Exceptions";
 import ExceptionsCitiesTable from "../pages/Main/Campaigns/Exceptions/ExceptionsCities";
 import ExceptionsClientsTable from "../pages/Main/Campaigns/Exceptions/ExceptionsClientsTable";
@@ -121,6 +122,7 @@ export const RenderingPage = () => {
 				<Route path="/campanhas/cadastro" element={<CampaignsPage />} />
 				<Route path="/campanhas/ordem" element={<OrderPage />} />
 				<Route path="/campanhas/cidades" element={<OtherCitiesPage />} />
+				<Route path="/campanhas/estados" element={<CityStatesPage />} />
 				<Route path="/campanhas/excecoes/*" element={<ExceptionsPage />}>
 					<Route path="clientes" element={<ExceptionsClientsTable />} />
 					<Route path="cidades" element={<ExceptionsCitiesTable />} />

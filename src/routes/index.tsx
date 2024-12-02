@@ -50,6 +50,7 @@ import OtherParamsConfigs from "../pages/Main/Tools/ConfigParameters/OtherConfig
 import ScheduleConfigs from "../pages/Main/Tools/ConfigParameters/ScheduleConfigs";
 import SipConfigs from "../pages/Main/Tools/ConfigParameters/SipConfigs";
 import DeactivatedCustomers from "../pages/Main/Tools/deactivateCustomers";
+import ImportMailListPage from "../pages/Main/Tools/ImportMailList/ConfigEmails";
 import TransferCostumers from "../pages/Main/Tools/transferCustomers";
 
 const setTitle = (title: string) => (document.title = title);
@@ -145,8 +146,9 @@ export const RenderingPage = () => {
 			</>
 			<>
 				{/* Rotas de Ferramentas */}
-				<Route path="/ferramentas/transferencia_clientes" element={<TransferCostumers />} />
+				<Route path="/ferramentas/importar" element={<ImportMailListPage />} />
 				<Route path="/ferramentas/rotinas" element={<DeactivatedCustomers />} />
+				<Route path="/ferramentas/transferencia_clientes" element={<TransferCostumers />} />
 				<Route path="/ferramentas/parametros" element={<ConfigParametersPage />}>
 					<Route path="main" element={<MainParameterConfigs />} />
 					<Route path="DDDS" element={<DDDsConfigs />} />

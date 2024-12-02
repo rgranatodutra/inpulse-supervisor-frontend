@@ -79,7 +79,7 @@ const menuOptions: Array<NagivationMenuButton> = [
 		path: "/ferramentas",
 		subMenu: {
 			options: [
-				{ text: "Importador", path: "/ferramentas/importador" },
+				{ text: "Importar mail list", path: "/ferramentas/importar" },
 				{ text: "Excluir clientes sem ação", path: "/ferramentas/rotinas" },
 				{ text: "Funcionalidades telefonicas", path: "/ferramentas/funcionalidades_telefonicas" },
 				{ text: "Transferências de clientes", path: "/ferramentas/transferencia_clientes" },
